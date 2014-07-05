@@ -36,11 +36,13 @@ TARGET_BOARD_PLATFORM := msm8226
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
-TARGET_CPU_VARIANT := cortex-a7
+TARGET_CPU_VARIANT := cortex-a5
 ARCH_ARM_HAVE_TLS_REGISTER := true
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno305
 
 TARGET_BOOTLOADER_BOARD_NAME := htc_a5dwg
 
+BOARD_KERNEL_SEPARATED_DT := true
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom user_debug=31 ehci-hcd.park=3
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
@@ -53,8 +55,6 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x08000000
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 TARGET_PREBUILT_KERNEL := device/htc/htc_a5dwg/prebuilt/kernel
-#TARGET_KERNEL_SOURCE := kernel/htc/htc_a5dwg
-#TARGET_KERNEL_CONFIG := a5ul_defconfig
 
 BOARD_HAS_NO_SELECT_BUTTON := true
 
@@ -86,7 +86,7 @@ TARGET_POWERHAL_VARIANT := qcom
 TARGET_SPECIFIC_HEADER_PATH := device/htc/htc_a5dwg/include
 
 # Recovery
-TARGET_RECOVERY_FSTAB := device/htc/htc_a5dwg/rootdir/etc/fstab.qcom
+TARGET_RECOVERY_FSTAB := device/htc/htc_a5dwg/rootdir/fstab.qcom
 DEVICE_RESOLUTION := 720x1280
 TARGET_SCREEN_WIDTH := 720
 TARGET_SCREEN_HEIGHT := 1280

@@ -62,25 +62,9 @@ PRODUCT_COPY_FILES += \
     device/htc/htc_a5dwg/config/WCNSS_qcom_wlan_nv.bin:system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
 # Symlinks
 PRODUCT_PACKAGES += WCNSS_qcom_wlan_factory_nv.bin
-# Ramdisk
-PRODUCT_PACKAGES += \
-    bbx \
-    fstab.qcom \
-    gpecheck.sh \
-    gpe-fstab.qcom \
-    init.qcom.rc \
-    init.recovery.qcom.rc \
-    init.target.rc \
-    ueventd.qcom.rc
-# Init scripts
-PRODUCT_PACKAGES += \
-    init.mmi.boot.sh \
-    init.mmi.rc \
-    init.mmi.touch.sh \
-    init.qcom.post_boot.sh \
-    init.qcom.sh \
-    init.qcom.ssr.sh \
-    init.qcom.wifi.sh
+# Ramdisk and init files
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,device/htc/htc_a5dwg/rootdir,root)
 # TWRP
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/recovery.fstab:recovery/root/etc/recovery.fstab
