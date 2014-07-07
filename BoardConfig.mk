@@ -46,7 +46,7 @@ BOARD_KERNEL_SEPARATED_DT := true
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom user_debug=31 ehci-hcd.park=3
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02008000 --dt device/htc/htc_a5dwg/prebuilt/dt.img
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02008000 --dt device/htc/htc_a5dwg/prebuilt/dt.img --tags_offset 0x01e00000
 
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x01000000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x01000000
