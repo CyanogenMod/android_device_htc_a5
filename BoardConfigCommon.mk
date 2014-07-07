@@ -136,7 +136,7 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/htc_lpm/lpm_mode
 
 # Recovery
-TARGET_RECOVERY_FSTAB := device/htc/a5/rootdir/etc/fstab.qcom
+TARGET_RECOVERY_FSTAB := device/htc/a5-common/rootdir/etc/fstab.qcom
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 TARGET_USERIMAGES_USE_EXT4 := true
