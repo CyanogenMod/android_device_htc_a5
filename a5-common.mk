@@ -143,7 +143,7 @@ PRODUCT_COPY_FILES += \
 
 # EGL config
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/config/egl.cfg:system/lib/egl/egl.cfg
+    $(LOCAL_PATH)/configs/egl.cfg:system/lib/egl/egl.cfg
 
 # NFC
 PRODUCT_COPY_FILES += \
