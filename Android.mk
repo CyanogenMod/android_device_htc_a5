@@ -21,10 +21,6 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(BOARD_VENDOR),htc)
-ifeq ($(TARGET_BOARD_PLATFORM),msm8226)
 ifneq ($(filter a5ul a5dwg,$(TARGET_DEVICE)),)
 include $(call all-subdir-makefiles,$(LOCAL_PATH))
-endif
-endif
 endif
