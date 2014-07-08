@@ -45,6 +45,8 @@ function extract() {
     done
 }
 
+mkdir -p ../../../vendor/$VENDOR/$DEVICE
+
 DEVICE_BASE=../../../vendor/$VENDOR/$DEVICE/proprietary
 rm -rf $DEVICE_BASE/*
 
