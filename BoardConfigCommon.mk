@@ -21,6 +21,8 @@
 # definition file).
 #
 
+USE_CAMERA_STUB := true
+
 BOARD_VENDOR := htc
 
 # Bootloader
