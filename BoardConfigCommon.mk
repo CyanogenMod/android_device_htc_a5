@@ -21,10 +21,7 @@
 # definition file).
 #
 
-USE_CAMERA_STUB := true
-
-# inherit from the proprietary version
--include vendor/htc/a5-common/proprietary/BoardConfigVendor.mk
+BOARD_VENDOR := htc
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := MSM8226
@@ -41,7 +38,7 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
 TARGET_CPU_VARIANT := krait
-TARGET_USE_KINGFISHER_OPTIMIZATION := true
+TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
 
 # Flags
 COMMON_GLOBAL_CFLAGS += -DHTCLOG
@@ -137,11 +134,12 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/htc_lpm/lpm_mode
 
 # Recovery
-TARGET_RECOVERY_FSTAB := device/htc/a5-common/rootdir/etc/fstab.qcom
+BOARD_HAS_LARGE_FILESYSTEM := true
+BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_HAS_NO_SELECT_BUTTON := true
-BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
-TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_RECOVERY_SWIPE := true
+BOARD_USES_MMCUTILS := true
+TARGET_RECOVERY_FSTAB := device/htc/a5-common/rootdir/etc/fstab.qcom
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 
 # Webkit

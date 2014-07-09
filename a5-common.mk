@@ -15,7 +15,6 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
-$(call inherit-product-if-exists, vendor/htc/m5-common/m5-common-vendor.mk)
 
 # overlays
 DEVICE_PACKAGE_OVERLAYS += device/htc/a5-common/overlay
@@ -31,7 +30,7 @@ PRODUCT_AAPT_PREF_CONFIG := xhdpi
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.qcom \
-    init.project.rc \
+    init.qcom.rc \
     init.qcom.audio.sh \
     init.qcom.class_core.sh \
     init.qcom.early_boot.sh \
@@ -274,13 +273,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.nfc.fw_download=true \
     debug.nfc.fw_boot_download=false
-
-# Recovery
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.cwm.enable_key_repeat=true \
-    ro.cwm.repeatable_keys=114,115 \
-    ro.cwm.forbid_format=/boot,/devlog,/fataldevlog,/ramdump,/carrier,/custdata,/firmware/radio,/firmware/adsp,/firmware/wcnss \
-    ro.cwm.forbid_mount=/boot,/devlog,/fataldevlog,/ramdump,/carrier,/custdata,/firmware/radio,/firmware/adsp,/firmware/wcnss
 
 # USB
 PRODUCT_PROPERTY_OVERRIDES += \
