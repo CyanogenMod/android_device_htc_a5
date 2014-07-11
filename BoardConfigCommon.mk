@@ -50,9 +50,10 @@ BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom user
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x02008000 --tags_offset 0x01e00000
-BOARD_CUSTOM_BOOTIMG_MK := device/htc/a5-common/mkbootimg.mk
-TARGET_KERNEL_SOURCE := kernel/htc/a5
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x02008000 --dt device/htc/a5-common/prebuilt/dt.img --tags_offset 0x01e00000
+#BOARD_CUSTOM_BOOTIMG_MK := device/htc/a5-common/mkbootimg.mk
+#TARGET_KERNEL_SOURCE := kernel/htc/a5
+TARGET_PREBUILT_KERNEL := device/htc/a5-common/prebuilt/kernel
 
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
