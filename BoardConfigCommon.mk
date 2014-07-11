@@ -54,6 +54,7 @@ BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x02008000 -
 #BOARD_CUSTOM_BOOTIMG_MK := device/htc/a5-common/mkbootimg.mk
 #TARGET_KERNEL_SOURCE := kernel/htc/a5
 TARGET_PREBUILT_KERNEL := device/htc/a5-common/prebuilt/kernel
+TARGET_SPECIFIC_HEADER_PATH += device/htc/a5-common/include
 
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
