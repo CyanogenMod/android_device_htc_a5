@@ -35,6 +35,7 @@ bin/hci_qcomm_init
 bin/mm-qcamera-app
 bin/mm-qcamera-daemon
 lib/hw/camera.msm8226.so
+lib/libcamerapp.so
 lib/libtuning_aec_s5k5e_onelane_hdr_16_9.so
 lib/libtuning_aec_s5k5e_onelane_hdr.so
 lib/libtuning_aec_s5k5e_onelane_video_16_9.so
@@ -45,6 +46,7 @@ lib/libtuning_awb_s5k5e_onelane.so
 lib/libmmcamera_interface.so
 lib/libmmjpeg_interface.so
 lib/libmm-qcamera.so
+lib/libposteffect.so
 lib/libqomx_core.so
 vendor/lib/libchromatix_ov13850_common.so
 vendor/lib/libchromatix_ov13850_hdr.so
