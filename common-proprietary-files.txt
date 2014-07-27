@@ -34,7 +34,7 @@ bin/hci_qcomm_init
 # Camera
 bin/mm-qcamera-app
 bin/mm-qcamera-daemon
-lib/hw/camera.msm8226.so
+lib/hw/camera.vendor.msm8226.so
 lib/libcamerapp.so
 lib/libtuning_aec_s5k5e_onelane_hdr_16_9.so
 lib/libtuning_aec_s5k5e_onelane_hdr.so
