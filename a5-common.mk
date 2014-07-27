@@ -35,22 +35,13 @@ PRODUCT_AAPT_PREF_CONFIG := xhdpi
 PRODUCT_PACKAGES += \
     fstab.qcom \
     init.qcom.rc \
-    init.qcom.audio.sh \
-    init.qcom.class_core.sh \
-    init.qcom.early_boot.sh \
-    init.qcom.post_boot.sh \
-    init.qcom.ril.sh \
-    init.qcom.sh \
-    init.qcom.syspart_fixup.sh \
-    init.ril.rc \
-    init.target.rc \
+    init.qcom.usb.rc \
     ueventd.qcom.rc
 
-# Qcom init scripts for /etc
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/system/etc/init.qcom.bt.bluedroid.sh:system/etc/init.qcom.bt.bluedroid.sh \
-    $(LOCAL_PATH)/rootdir/etc/system/etc/init.qcom.bt.sh:system/etc/init.qcom.bt.sh \
-    $(LOCAL_PATH)/rootdir/etc/system/etc/init.qcom.fm.sh:system/etc/init.qcom.fm.sh
+# Bluetooth
+PRODUCT_PACKAGES += \
+   init.qcom.bt.bluedroid.sh \
+   init.qcom.bt.sh
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -120,10 +111,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
     $(LOCAL_PATH)/keylayout/keylayout.mk:system/usr/keylayout/keylayout.mk \
     $(LOCAL_PATH)/keylayout/qwerty.kl:system/usr/keylayout/qwerty.kl
-
-# Lights
-PRODUCT_PACKAGES += \
-    lights.MSM8226
 
 # Media config
 PRODUCT_COPY_FILES += \
