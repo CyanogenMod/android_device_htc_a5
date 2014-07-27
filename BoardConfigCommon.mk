@@ -21,8 +21,6 @@
 # definition file).
 #
 
-USE_CAMERA_STUB := true
-
 BOARD_VENDOR := htc
 
 # Bootloader
@@ -64,11 +62,8 @@ TARGET_USES_QCOM_BSP := true
 
 # Audio
 BOARD_USES_ALSA_AUDIO := true
-BOARD_USES_FLUENCE_INCALL := true  # use DMIC in call only
-BOARD_USES_SEPERATED_AUDIO_INPUT := true  # use distinct voice recognition use case
-BOARD_USES_SEPERATED_VOICE_SPEAKER := true  # use distinct voice speaker use case
-BOARD_USES_SEPERATED_VOIP := true  # use distinct VOIP use cases
-BOARD_HAVE_HTC_CSDCLIENT := true
+AUDIO_FEATURE_SEPARATE_SPKR_BACKEND := true
+AUDIO_FEATURE_DISABLED_MULTI_VOICE_SESSIONS := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true

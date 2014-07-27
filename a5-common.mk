@@ -64,21 +64,19 @@ PRODUCT_COPY_FILES += \
 
 # Audio
 PRODUCT_PACKAGES += \
+    audio.a2dp.default \
     audio_policy.msm8226 \
+    audio.primary.msm8226 \
+    audio.r_submix.default \
+    audio.usb.default \
     libaudio-resampler \
-    libaudioparameter \
-    libqcomvisualizer \
-    libqcompostprocbundle \
-    libqcomvoiceprocessing \
-    tinycap \
-    tinymix \
-    tinypcminfo \
-    tinyplay
+    libaudioamp \
+    tinymix
 
 # Audio configuration
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/dsp/snd_soc_msm/snd_soc_msm_Tapan:system/etc/snd_soc_msm/snd_soc_msm_Tapan \
-    $(LOCAL_PATH)/audio/audio_effects.conf:system/etc/audio_effects.conf \
+    $(LOCAL_PATH)/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
     $(LOCAL_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf \
     $(LOCAL_PATH)/audio/mixer_paths.xml:system/etc/mixer_paths.xml \
     $(LOCAL_PATH)/audio/soundimage/srsfx_trumedia_ext.cfg:system/etc/soundimage/srsfx_trumedia_ext.cfg \
@@ -92,15 +90,21 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs
 
+# FM radio
+PRODUCT_PACKAGES += \
+     qcom.fmradio \
+     libqcomfm_jni \
+     FM2 \
+     FMRecord
+
 # Graphics
 PRODUCT_PACKAGES += \
-    copybit.msm8226\
-    gralloc.msm8226 \
+    copybit.msm8226 \
     hwcomposer.msm8226 \
-    keystore.msm8226 \
-    lights.msm8226 \
+    gralloc.msm8226 \
     memtrack.msm8226 \
-    power.msm8226
+    libgenlock \
+    liboverlay
 
 # IPC router config
 PRODUCT_COPY_FILES += \
@@ -111,6 +115,14 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
     $(LOCAL_PATH)/keylayout/keylayout.mk:system/usr/keylayout/keylayout.mk \
     $(LOCAL_PATH)/keylayout/qwerty.kl:system/usr/keylayout/qwerty.kl
+
+# Keystore
+PRODUCT_PACKAGES += \
+    keystore.msm8226
+
+# Lights
+PRODUCT_PACKAGES += \
+    lights.msm8226
 
 # Media config
 PRODUCT_COPY_FILES += \
@@ -138,13 +150,16 @@ PRODUCT_PACKAGES += \
     libOmxAmrEnc \
     libOmxEvrcEnc \
     libOmxQcelp13Enc \
-    libstagefrighthw \
-    libdashplayer
+    libstagefrighthw
 
 # QCOM rngd
 PRODUCT_PACKAGES += \
     qrngd \
     qrngp
+
+# Power
+PRODUCT_PACKAGES += \
+    power.msm8226
 
 # Thermal
 PRODUCT_COPY_FILES += \
@@ -158,6 +173,10 @@ PRODUCT_PACKAGES += \
 # USB
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
+
+# WiFi
+PRODUCT_PACKAGES += \
+    wcnss_service
 
 # QCOM Display
 PRODUCT_PROPERTY_OVERRIDES += \
