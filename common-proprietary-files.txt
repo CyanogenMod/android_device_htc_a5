@@ -142,6 +142,13 @@ etc/firmware/a300_pm4.fw
 etc/firmware/a330_pfp.fw
 etc/firmware/a330_pm4.fw
 
+# Keymaster
+vendor/firmware/keymaster.b00
+vendor/firmware/keymaster.b01
+vendor/firmware/keymaster.b02
+vendor/firmware/keymaster.b03
+vendor/firmware/keymaster.mdt
+
 # Media
 vendor/lib/libDivxDrm.so
 vendor/lib/libI420colorconvert.so
