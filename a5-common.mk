@@ -64,9 +64,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
     frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.compass.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
-    frameworks/base/nfc-extras/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
-    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
-    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml
 
@@ -138,19 +135,6 @@ PRODUCT_COPY_FILES += \
 # EGL config
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/egl.cfg:system/lib/egl/egl.cfg
-
-# NFC
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/nfc/nfcee_access.xml:system/etc/nfcee_access.xml \
-    $(LOCAL_PATH)/nfc/nfc-nci.conf:system/etc/nfc-nci.conf
-
-PRODUCT_PACKAGES += \
-    libnfc \
-    libnfc_ndef \
-    libnfc_jni \
-    Nfc \
-    Tag \
-    com.android.nfc_extras
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -263,11 +247,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Input
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.input.noresample=1
-
-# NFC
-PRODUCT_PROPERTY_OVERRIDES += \
-    debug.nfc.fw_download=true \
-    debug.nfc.fw_boot_download=false
 
 # Recovery
 PRODUCT_PROPERTY_OVERRIDES += \
