@@ -265,8 +265,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # USB
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
-
+    persist.sys.usb.config=mtp,adb
+    ro.adb.secure=0
 # Wifi
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0
