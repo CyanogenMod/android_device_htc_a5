@@ -107,7 +107,7 @@ on fs
     mkdir /fataldevlog
 
     # mount all mmc partitions
-    mount_all /fstab.qcom
+    mount_all ./fstab.qcom
 
     mkdir /mnt/qcks 0700 root system
     mount tmpfs tmpfs /mnt/qcks size=20m,mode=0750,gid=1000
@@ -194,10 +194,6 @@ on boot
 
     # Create directory for gpsone daemon
     mkdir /data/misc/gpsone_d 0770 system gps
-
-# NFC
-    mkdir /data/nfc 0770 nfc nfc
-    mkdir /data/nfc/param 0770 nfc nfc
 
 # For Flashlight Restriction
     chown system system /sys/camera_led_status/led_hotspot_status
