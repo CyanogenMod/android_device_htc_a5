@@ -190,34 +190,33 @@ PRODUCT_COPY_FILES += \
 
 # RIL
 PRODUCT_PROPERTY_OVERRIDES += \
-    DEVICE_PROVISIONED=1
-    mobiledata.interfaces=rmnet0,rmnet1
-    ro.baseband.arch=msm
-    ro.telephony.call_ring.multiple=0
-    ro.telephony.default_network=0
-    ro.telephony.ril_class=HTCQualcommRIL
-    ro.use_data_netmgrd=true
-    ro.ril.enable.a52=0
-    ro.ril.enable.a53=1
-    ro.ril.gprsclass=10
-    ro.ril.hsdpa.category=24
-    ro.ril.hsupa.category=6
-    ro.ril.hsxpa=4
-    ro.ril.fast.dormancy.rule=1
-    ro.ril.enable.managed.roaming=1
-    ro.ril.enable.sdr=0
-    ro.ril.enable.r8fd=1
-    ro.ril.disable.cpc=1
-    ro.ril.enable.pre_r8fd=1
-    persist.rild.nitz_plmn=
-    persist.rild.nitz_long_ons_0=
-    persist.rild.nitz_long_ons_1=
-    persist.rild.nitz_long_ons_2=
-    persist.rild.nitz_long_ons_3=
-    persist.rild.nitz_short_ons_0=
-    persist.rild.nitz_short_ons_1=
-    persist.rild.nitz_short_ons_2=
-    persist.rild.nitz_short_ons_3=
+    DEVICE_PROVISIONED=1 \
+    mobiledata.interfaces=rmnet0,rmnet1 \
+    ro.baseband.arch=msm \
+    ro.telephony.call_ring.multiple=0 \
+    ro.telephony.ril_class=HTCQualcommRIL \
+    ro.use_data_netmgrd=true \
+    ro.ril.enable.a52=0 \
+    ro.ril.enable.a53=1 \
+    ro.ril.gprsclass=10 \
+    ro.ril.hsdpa.category=24 \
+    ro.ril.hsupa.category=6 \
+    ro.ril.hsxpa=4 \
+    ro.ril.fast.dormancy.rule=1 \
+    ro.ril.enable.managed.roaming=1 \
+    ro.ril.enable.sdr=0 \
+    ro.ril.enable.r8fd=1 \
+    ro.ril.disable.cpc=1 \
+    ro.ril.enable.pre_r8fd=1 \
+    persist.rild.nitz_plmn= \
+    persist.rild.nitz_long_ons_0= \
+    persist.rild.nitz_long_ons_1= \
+    persist.rild.nitz_long_ons_2= \
+    persist.rild.nitz_long_ons_3= \
+    persist.rild.nitz_short_ons_0= \
+    persist.rild.nitz_short_ons_1= \
+    persist.rild.nitz_short_ons_2= \
+    persist.rild.nitz_short_ons_3= \
     ril.subscription.types=NV,RUIM
 
 # QCOM
@@ -228,33 +227,35 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Audio
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qc.sdk.audio.fluencetype=fluence \
+    audio.offload.buffer.size.kb=1024 \
+    audio.offload.gapless.enabled=true \
+    av.offload.enable=0 \
+    ro.qc.sdk.audio.fluencetype=none \
     af.resampler.quality=4
 
 # AV
 PRODUCT_PROPERTY_OVERRIDES += \
-    media.aac_51_output_enabled=true \
-    mm.enable.smoothstreaming=true
+    mm.enable.smoothstreaming=true \
+    media.aac_51_output_enabled=true
 
 # GPS
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.gps.qc_nlp_in_use=0 \
-    ro.gps.agps_provider=1
+    ro.gps.agps_provider=1 \
+    ro.qc.sdk.izat.premium_enabled=0 \
+    ro.qc.sdk.izat.service_mask=0x0
 
 # Graphics
 PRODUCT_PROPERTY_OVERRIDES += \
-    debug.composition.type=dyn \
+    debug.composition.type=gpu \
     debug.egl.hw=1 \
     debug.mdpcomp.logs=0 \
     debug.sf.hw=1 \
     dev.pm.dyn_samplingrate=1 \
     persist.hwc.mdpcomp.enable=true \
+    ro.hwui.renderer.disable_opaque=true \
     ro.opengles.version=196608 \
     ro.sf.lcd_density=320
-
-# Input
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.input.noresample=1
 
 # Recovery
 PRODUCT_PROPERTY_OVERRIDES += \
