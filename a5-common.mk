@@ -190,46 +190,45 @@ PRODUCT_COPY_FILES += \
 
 # RIL
 PRODUCT_PROPERTY_OVERRIDES += \
-    ril.subscription.types=NV,RUIM \
-    ro.baseband.arch=msm \
-    ro.data.large_tcp_window_size=true \
-    ro.ril.hsdpa.category=14 \
-    ro.ril.hsupa.category=6 \
-    ro.ril.hsxpa=4 \
-    ro.ril.disable.cpc=1 \
-    ro.ril.def.agps.mode=1 \
-    ro.telephony.call_ring.multiple=false \
-    ro.use_data_netmgrd=true \
-    persist.data.netmgrd.qos.enable=true \
-    persist.radio.jbims=1 \
-    persist.rild.nitz_plmn= \
-    persist.rild.nitz_long_ons_0= \
-    persist.rild.nitz_long_ons_1= \
-    persist.rild.nitz_long_ons_2= \
-    persist.rild.nitz_long_ons_3= \
-    persist.rild.nitz_short_ons_0= \
-    persist.rild.nitz_short_ons_1= \
-    persist.rild.nitz_short_ons_2= \
-    persist.rild.nitz_short_ons_3= \
     DEVICE_PROVISIONED=1
+    mobiledata.interfaces=rmnet0,rmnet1
+    ro.baseband.arch=msm
+    ro.telephony.call_ring.multiple=0
+    ro.telephony.default_network=0
+    ro.telephony.ril_class=HTCQualcommRIL
+    ro.use_data_netmgrd=true
+    ro.ril.enable.a52=0
+    ro.ril.enable.a53=1
+    ro.ril.gprsclass=10
+    ro.ril.hsdpa.category=24
+    ro.ril.hsupa.category=6
+    ro.ril.hsxpa=4
+    ro.ril.fast.dormancy.rule=1
+    ro.ril.enable.managed.roaming=1
+    ro.ril.enable.sdr=0
+    ro.ril.enable.r8fd=1
+    ro.ril.disable.cpc=1
+    ro.ril.enable.pre_r8fd=1
+    persist.rild.nitz_plmn=
+    persist.rild.nitz_long_ons_0=
+    persist.rild.nitz_long_ons_1=
+    persist.rild.nitz_long_ons_2=
+    persist.rild.nitz_long_ons_3=
+    persist.rild.nitz_short_ons_0=
+    persist.rild.nitz_short_ons_1=
+    persist.rild.nitz_short_ons_2=
+    persist.rild.nitz_short_ons_3=
+    ril.subscription.types=NV,RUIM
 
 # QCOM
 PRODUCT_PROPERTY_OVERRIDES += \
     com.qc.hardware=true \
     persist.thermal.monitor=true \
-    ro.qc.sdk.sensors.gestures=true \
     ro.vendor.extension_library=/vendor/lib/libqc-opt.so
 
 # Audio
 PRODUCT_PROPERTY_OVERRIDES += \
-    audio.offload.buffer.size.kb=32 \
-    audio.offload.gapless.enabled=false \
-    av.offload.enable=true \
-    av.streaming.offload.enable=true \
-    persist.audio.fluence.voicecall=true \
-    persist.audio.fluence.speaker=true \
     ro.qc.sdk.audio.fluencetype=fluence \
-    tunnel.audio.encode=true \
     af.resampler.quality=4
 
 # AV
@@ -240,12 +239,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # GPS
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.gps.qc_nlp_in_use=0 \
-    ro.gps.agps_provider=1 \
-    ro.qc.sdk.izat.premium_enabled=0 \
-    ro.qc.sdk.izat.service_mask=0x0
+    ro.gps.agps_provider=1
 
 # Graphics
 PRODUCT_PROPERTY_OVERRIDES += \
+    debug.composition.type=dyn \
     debug.egl.hw=1 \
     debug.mdpcomp.logs=0 \
     debug.sf.hw=1 \
@@ -262,6 +260,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.cwm.forbid_format=/boot,/devlog,/fataldevlog,/ramdump,/carrier,/custdata,/firmware/radio,/firmware/adsp,/firmware/wcnss \
     ro.cwm.forbid_mount=/boot,/devlog,/fataldevlog,/ramdump,/carrier,/custdata,/firmware/radio,/firmware/adsp,/firmware/wcnss
+
+# Time services
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.timed.enable=true
 
 # USB
 PRODUCT_PROPERTY_OVERRIDES += \
