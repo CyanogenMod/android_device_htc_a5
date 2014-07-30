@@ -36,7 +36,7 @@ $(ADSP_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 ALL_DEFAULT_INSTALLED_MODULES += $(ADSP_SYMLINKS)
 
 MBA_IMAGES := \
-    mba.b00 mba.mdt
+    mba.b00 mba.mbn mba.mdt
 
 MBA_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/firmware/,$(notdir $(MBA_IMAGES)))
 $(MBA_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -49,9 +49,9 @@ ALL_DEFAULT_INSTALLED_MODULES += $(MBA_SYMLINKS)
 
 MODEM_IMAGES := \
     modem.b00 modem.b01 modem.b02 modem.b03 modem.b04 modem.b05 \
-    modem.b08 modem.b10 modem.b11 modem.b13 modem.b14 modem.b15 \
-    modem.b16 modem.b17 modem.b18 modem.b19 modem.b20 modem.b21 \
-    modem.b22 modem.b25 modem.b26 modem.b27 modem.mdt
+    modem.b06 modem.b09 modem.b11 modem.b12 modem.b14 modem.b16 \
+    modem.b17 modem.b18 modem.b19 modem.b20 modem.b21 modem.b22 \
+    modem.b23 modem.b24 modem.b27 modem.b28 modem.b29 modem.mdt
 
 MODEM_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/firmware/,$(notdir $(MODEM_IMAGES)))
 $(MODEM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -64,7 +64,7 @@ ALL_DEFAULT_INSTALLED_MODULES += $(MODEM_SYMLINKS)
 
 WCNSS_IMAGES := \
     wcnss.b00 wcnss.b01 wcnss.b02 wcnss.b04 wcnss.b06 wcnss.b07 \
-    wcnss.b08 wcnss.b09 wcnss.mdt
+    wcnss.b08 wcnss.b09 wcnss.mdt wcnssver.cfg
 
 WCNSS_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/firmware/,$(notdir $(WCNSS_IMAGES)))
 $(WCNSS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
