@@ -30,6 +30,8 @@ import init.qcom.usb.rc
 on early-init
     mount debugfs debugfs /sys/kernel/debug
     chown system system /sys/kernel/debug/kgsl/proc
+    write /sys/block/mmcblk0/bdi/read_ahead_kb 512
+    write /sys/block/mmcblk1/bdi/read_ahead_kb 512
 
 on init
     # Set permissions for persist partition
@@ -60,11 +62,43 @@ on init
     symlink /storage/usbdisk /usbdisk
     symlink /storage/usbdisk /mnt/usbdisk
 
+    chmod 664 /sys/power/pnpmgr/apps/media_mode
+    chown media system /sys/power/pnpmgr/apps/media_mode
+    chown system /sys/power/pnpmgr/apps/activity_trigger
+    chown system /sys/power/pnpmgr/apps/non_activity_trigger
+    chown system /sys/power/perflock
+    chown system /sys/power/launch_event
+    chown system /sys/power/powersave
+    chown system /sys/power/cpufreq_ceiling
+    chown system /sys/power/cpunum_floor
+    chown system /sys/power/cpunum_ceiling
+    chown system /sys/power/pnpmgr/hotplug/touch_boost
+    chown root system /sys/module/lowmemorykiller/parameters/adj
+    chmod 0664 /sys/module/lowmemorykiller/parameters/adj
+    chown root system /sys/module/lowmemorykiller/parameters/minfree
+    chmod 0664 /sys/module/lowmemorykiller/parameters/minfree
+    chown system /sys/power/wait_for_fb_status
+
+    write /sys/power/pnpmgr/hotplug/mp_decision_ms 50
+    write /sys/power/pnpmgr/hotplug/mp_max_cpus 4
+    write /sys/power/pnpmgr/hotplug/mp_min_cpus 1
+    write /sys/power/pnpmgr/hotplug/mp_ns "0 1.1 2.1 3.1"
+    write /sys/power/pnpmgr/hotplug/mp_nw "0 1.9 2.7 3.5"
+    write /sys/power/pnpmgr/hotplug/mp_ts "0 190 240 240"
+    write /sys/power/pnpmgr/hotplug/mp_tw "0 140 90 90"
+    write /sys/power/pnpmgr/hotplug/mp_util_high_and "0 35 0 0"
+    write /sys/power/pnpmgr/hotplug/mp_util_high_or "0 75 400 400"
+    write /sys/power/pnpmgr/hotplug/mp_util_low_and "0 30 400 400"
+    write /sys/power/pnpmgr/hotplug/mp_util_low_or "0 20 0 0"
+    write /sys/power/pnpmgr/apps/activity_trigger "booting"
+
 # HTC SSD Battery - BEGIN
     chown system system /sys/class/power_supply/battery/full_level_dis_batt_chg
     chmod 0220 /sys/class/power_supply/battery/full_level_dis_batt_chg
     chown radio radio /sys/class/power_supply/battery/phone_call
     chmod 0660 /sys/class/power_supply/battery/phone_call
+    chown media media /sys/class/power_supply/battery/play_music
+    chmod 0220 /sys/class/power_supply/battery/play_music
     chown radio radio /sys/class/power_supply/battery/network_search
     chmod 0220 /sys/class/power_supply/battery/network_search
     chown system system /sys/class/power_supply/battery/navigation
@@ -72,6 +106,122 @@ on init
     chown system system /sys/class/power_supply/battery/disable_limit_chg
     chmod 0220 /sys/class/power_supply/battery/disable_limit_chg
 # HTC SSD Battery - END
+
+    #set G-Sensor and Compass permissions
+    chown system system /sys/class/htc_accelerometer/accelerometer/enable_cir_interrupt
+    chown system system /sys/class/htc_g_sensor/g_sensor/enable_cir_interrupt
+    chown system system /sys/class/bma250_powerkey/bma250/clear_powerkey_flag
+    chmod 0660 /sys/class/htc_accelerometer/accelerometer/enable_cir_interrupt
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/enable_cir_interrupt
+    chmod 0660 /sys/class/bma250_powerkey/bma250/clear_powerkey_flag
+
+    # for AKM8963
+    chown system system /dev/akm8963_dev
+    chown system system /sys/class/compass/akm8963/enable_acc
+    chown system system /sys/class/compass/akm8963/enable_mag
+    chown system system /sys/class/compass/akm8963/enable_ori
+    chown system system /sys/class/compass/akm8963/enable_fusion
+    chown system system /sys/class/compass/akm8963/delay_acc
+    chown system system /sys/class/compass/akm8963/delay_mag
+    chown system system /sys/class/compass/akm8963/delay_ori
+    chown system system /sys/class/compass/akm8963/delay_fusion
+    chown system system /sys/class/compass/akm8963/accel
+    chmod 0660 /dev/akm8963_dev
+    chmod 0660 /sys/class/compass/akm8963/enable_acc
+    chmod 0660 /sys/class/compass/akm8963/enable_mag
+    chmod 0660 /sys/class/compass/akm8963/enable_ori
+    chmod 0660 /sys/class/compass/akm8963/enable_fusion
+    chmod 0660 /sys/class/compass/akm8963/delay_acc
+    chmod 0660 /sys/class/compass/akm8963/delay_mag
+    chmod 0660 /sys/class/compass/akm8963/delay_ori
+    chmod 0660 /sys/class/compass/akm8963/delay_fusion
+    chmod 0660 /sys/class/compass/akm8963/accel
+
+    # for BMA250 BOSCH
+    chown system system /sys/class/htc_g_sensor/g_sensor/bandwidth
+    chown system system /sys/class/htc_g_sensor/g_sensor/chip_layout
+    chown system system /sys/class/htc_g_sensor/g_sensor/delay
+    chown system system /sys/class/htc_g_sensor/g_sensor/eeprom_writing
+    chown system system /sys/class/htc_g_sensor/g_sensor/enable
+    chown system system /sys/class/htc_g_sensor/g_sensor/enable_int
+    chown system system /sys/class/htc_g_sensor/g_sensor/fast_calibration_x
+    chown system system /sys/class/htc_g_sensor/g_sensor/fast_calibration_y
+    chown system system /sys/class/htc_g_sensor/g_sensor/fast_calibration_z
+    chown system system /sys/class/htc_g_sensor/g_sensor/flat_hold_time
+    chown system system /sys/class/htc_g_sensor/g_sensor/flat_theta
+    chown system system /sys/class/htc_g_sensor/g_sensor/get_raw_data
+    chown system system /sys/class/htc_g_sensor/g_sensor/high_g_duration
+    chown system system /sys/class/htc_g_sensor/g_sensor/high_g_threshold
+    chown system system /sys/class/htc_g_sensor/g_sensor/int_mode
+    chown system system /sys/class/htc_g_sensor/g_sensor/low_g_duration
+    chown system system /sys/class/htc_g_sensor/g_sensor/low_g_threshold
+    chown system system /sys/class/htc_g_sensor/g_sensor/mode
+    chown system system /sys/class/htc_g_sensor/g_sensor/orient_blocking
+    chown system system /sys/class/htc_g_sensor/g_sensor/orient_hyst
+    chown system system /sys/class/htc_g_sensor/g_sensor/orient_mode
+    chown system system /sys/class/htc_g_sensor/g_sensor/orient_theta
+    chown system system /sys/class/htc_g_sensor/g_sensor/range
+    chown system system /sys/class/htc_g_sensor/g_sensor/reg
+    chown system system /sys/class/htc_g_sensor/g_sensor/selftest
+    chown system system /sys/class/htc_g_sensor/g_sensor/set_k_value
+    chown system system /sys/class/htc_g_sensor/g_sensor/slope_duration
+    chown system system /sys/class/htc_g_sensor/g_sensor/slope_threshold
+    chown system system /sys/class/htc_g_sensor/g_sensor/tap_duration
+    chown system system /sys/class/htc_g_sensor/g_sensor/tap_quiet
+    chown system system /sys/class/htc_g_sensor/g_sensor/tap_samp
+    chown system system /sys/class/htc_g_sensor/g_sensor/tap_shock
+    chown system system /sys/class/htc_g_sensor/g_sensor/tap_threshold
+    chown media audio /sys/class/power_supply/battery/rbatt_temp
+    chmod 0444 /sys/class/power_supply/battery/rbatt_temp
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/bandwidth
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/chip_layout
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/delay
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/eeprom_writing
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/enable
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/enable_int
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/fast_calibration_x
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/fast_calibration_y
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/fast_calibration_z
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/flat_hold_time
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/flat_theta
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/get_raw_data
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/high_g_duration
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/high_g_threshold
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/int_mode
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/low_g_duration
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/low_g_threshold
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/mode
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/orient_blocking
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/orient_hyst
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/orient_mode
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/orient_theta
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/range
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/reg
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/selftest
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/set_k_value
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/slope_duration
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/slope_threshold
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/tap_duration
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/tap_quiet
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/tap_samp
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/tap_shock
+    chmod 0660 /sys/class/htc_g_sensor/g_sensor/tap_threshold
+
+    # htc cir
+    chown irda irda /sys/class/htc_cir/cir/reset_cir
+    chmod 0660 /sys/class/htc_cir/cir/reset_cir
+    chown irda irda /sys/class/htc_cir/cir/enable_cir
+    chmod 0660 /sys/class/htc_cir/cir/enable_cir
+
+    # HTC camera
+    chown system camera /dev/rawchip0
+    chmod 0660 /dev/rawchip0
+
+    # HTC Embedded Log
+    chown root root /devlog
+    chmod 0700 /devlog
+    chown root root /fataldevlog
+    chmod 0700 /fataldevlog
 
 on fs
     mkdir /devlog 0700 root root
@@ -88,20 +238,27 @@ on fs
     mkdir /vendor/firmware 0771 system system
 
     mount_all /fstab.qcom
-
     setprop ro.crypto.fuse_sdcard true
 
+    mkdir /mnt/qcks 0700 root system
+    mount tmpfs tmpfs /mnt/qcks size=20m,mode=0750,gid=1000
+    mkdir /mnt/efs 0700 root system
+    mount tmpfs tmpfs /mnt/efs size=20m,mode=0750,gid=1000
+    mkdir /mnt/securedata 0755 system system
+    mount tmpfs tmpfs /mnt/securedata mode=0755,gid=1000
+
 on post-fs-data
+    # Create symbolic links to mount points outside of /data
+    symlink /mnt/qcks /data/qcks
+    symlink /mnt/efs /data/efs
+    symlink /mnt/securedata /data/secure/data
+
     mkdir /data/tombstones 0771 system system
     symlink /data/tombstones /tombstones
     mkdir /tombstones/modem 0771 system system
     mkdir /tombstones/lpass 0771 system system
     mkdir /tombstones/wcnss 0771 system system
     mkdir /tombstones/dsps 0771 system system
-
-    # We will remap this as /mnt/sdcard with the sdcard fuse tool
-    mkdir /data/media 0770 media_rw media_rw
-    chown media_rw media_rw /data/media
 
     mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
 
@@ -120,19 +277,24 @@ on post-fs-data
     # Create directory used by audio subsystem
     mkdir /data/misc/audio 0770 audio audio
 
+    # Mounting of persist is moved to 'on emmc-fs' and 'on fs' sections
+    # We chown/chmod /persist again so because mount is run as root + defaults
+    chown system system /persist
+    chmod 0771 /persist
+    chmod 0664 /sys/devices/platform/msm_sdcc.1/polling
+    chmod 0664 /sys/devices/platform/msm_sdcc.2/polling
+    chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
+    chmod 0664 /sys/devices/platform/msm_sdcc.4/polling
+
     # Chown polling nodes as needed from UI running on system server
     chown system system /sys/devices/platform/msm_sdcc.1/polling
     chown system system /sys/devices/platform/msm_sdcc.2/polling
     chown system system /sys/devices/platform/msm_sdcc.3/polling
     chown system system /sys/devices/platform/msm_sdcc.4/polling
 
-    chmod 0664 /sys/devices/platform/msm_sdcc.1/polling
-    chmod 0664 /sys/devices/platform/msm_sdcc.2/polling
-    chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
-    chmod 0664 /sys/devices/platform/msm_sdcc.4/polling
-
     #Create the symlink to qcn wpa_supplicant folder for ar6000 wpa_supplicant
     mkdir /data/system 0775 system system
+    #symlink /data/misc/wifi/wpa_supplicant /data/system/wpa_supplicant
 
     #Create directories for gpsone_daemon services
     mkdir /data/misc/gpsone_d 0770 system gps
@@ -146,33 +308,33 @@ on post-fs-data
     mkdir /data/misc/location/xtwifi 0770 gps gps
 
     #Create directory from IMS services
-    mkdir /data/shared 0755 system system
+    mkdir /data/shared 0755
+    chown system system /data/shared
 
     #Create directory for FOTA
-    mkdir /data/fota 0771 system system
+    mkdir /data/fota 0771
+    chown system system /data/fota
 
     #Create directory for hostapd
     mkdir /data/hostapd 0770 system wifi
 
     # Create /data/time folder for time-services
-    mkdir /data/time/ 0700 system system
+    mkdir /data/time 0700 system system
 
-    mkdir /data/audio/ 0775 media audio
-    # Enable the setgid bit on the directory
-    chmod 2775 /data/audio
+    # Camera blobs want debugfs in /data
+    symlink /sys/kernel/debug /data/d
+
+    # QC audio/radio
+    mkdir /data/audio 2775 media audio
+    mkdir /data/radio 2770 radio radio
 
     mkdir /data/misc/radio 0770 system radio
     mkdir /data/misc/sms 0770 system radio
 
     setprop vold.post_fs_data_done 1
 
-    # Hardware tunables
-    chown root system /sys/devices/platform/kcal_ctrl.0/kcal
-    chown root system /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
-    chmod 0664 /sys/devices/platform/kcal_ctrl.0/kcal
-    chmod 0664 /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
-    restorecon /sys/devices/platform/kcal_ctrl.0/kcal
-    restorecon /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
+    #Create a folder for SRS to be able to create a usercfg file
+    mkdir /data/data/media 0770 media media
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
@@ -187,6 +349,9 @@ on early-boot
     chmod 0200 /sys/bus/platform/drivers/msm_hsic_host/unbind
 
 on boot
+    mkdir /data/media 0775 media_rw media_rw
+    chown media_rw media_rw /data/media    
+
     # bring CPUs online
     write /sys/module/msm_thermal/core_control/enabled 0
     write /sys/devices/system/cpu/cpu1/online 1
@@ -194,19 +359,33 @@ on boot
     write /sys/devices/system/cpu/cpu3/online 1
     write /sys/module/msm_thermal/core_control/enabled 1
 
-    # bluetooth
-    chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
-    chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
-
+    chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /proc/bluetooth/sleep/proto
+    chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_lpm
+    chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_btwrite
+    chown system system /sys/module/sco/parameters/disable_esco
+    chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
+    chmod 0660 /sys/module/bluetooth_power/parameters/power
+    chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
     chmod 0660 /sys/class/rfkill/rfkill0/state
+    chmod 0660 /proc/bluetooth/sleep/proto
+#SSD_BT remove    chown bluetooth bluetooth /dev/ttyHS0
+    chmod 0660 /sys/module/hci_uart/parameters/ath_lpm
+    chmod 0660 /sys/module/hci_uart/parameters/ath_btwrite
+#SSD_BT remove    chmod 0660 /dev/ttyHS0
+    chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
+    chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
 
-    # Create QMUX deamon socket area
-    mkdir /dev/socket/qmux_radio 0770 radio radio
-    mkdir /dev/socket/qmux_audio 0770 media audio
-    mkdir /dev/socket/qmux_bluetooth 0770 bluetooth bluetooth
-    mkdir /dev/socket/qmux_gps 0770 gps gps
+#SSD_BT remove    chmod 0660 /dev/ttyHS2
+#SSD_BT remove    chown bluetooth bluetooth /dev/ttyHS2
+
+    #Create QMUX deamon socket area
+    mkdir /dev/socket/qmux_radio 2770 radio radio
+    mkdir /dev/socket/qmux_audio 2770 audio audio
+    mkdir /dev/socket/qmux_bluetooth 2770 bluetooth bluetooth
+    mkdir /dev/socket/qmux_gps 2770 gps gps
 
     chown system system /sys/class/leds/green/brightness
     chown system system /sys/class/leds/green/blink
@@ -219,41 +398,31 @@ on boot
     chown system system /sys/class/leds/flashlight/brightness
     chmod 0666 /sys/class/leds/flashlight/brightness
 
-# Define TCP buffer sizes for various networks
-#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
-    setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
-    setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
-    setprop net.tcp.buffersize.lte     524288,1048576,5120000,262144,524288,1220608
-    setprop net.tcp.buffersize.hspap   4096,174760,1572864,4096,16384,1220608
-    setprop net.tcp.buffersize.hspa    4096,174760,1572864,4096,16384,1220608
-    setprop net.tcp.buffersize.hsupa   4096,174760,1572864,4096,16384,1220608
-    setprop net.tcp.buffersize.hsdpa   4096,174760,1572864,4096,16384,1220608
-    setprop net.tcp.buffersize.umts    4096,174760,1572864,4096,16384,110208
-    setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
-    setprop net.tcp.buffersize.gprs    4092,8760,11680,4096,8760,11680
-    setprop net.tcp.buffersize.evdo_b  4094,87380,262144,4096,16384,262144
+    #Set SUID bit for usbhub
+    chmod 4755 /system/bin/usbhub
+    chmod 755 /system/bin/usbhub_init
 
-# Assign TCP buffer thresholds to be ceiling value of technology maximums
-# Increased technology maximums should be reflected here.
-    write /proc/sys/net/core/rmem_max  1220608
-    write /proc/sys/net/core/wmem_max  1220608
+    #Remove SUID bit for iproute2 ip tool
+    chmod 0755 /system/bin/ip
 
 #SSD_HDMI start
     # setup permissions for fb1 related nodes
     chown system graphics /sys/class/graphics/fb1/hpd
     chown system graphics /sys/class/graphics/fb1/vendor_name
     chown system graphics /sys/class/graphics/fb1/product_description
+
     chmod 0664 /sys/class/graphics/fb1/hpd
     chmod 0664 /sys/class/graphics/fb1/vendor_name
     chmod 0664 /sys/class/graphics/fb1/product_description
 
-    chmod 0664 /sys/devices/virtual/graphics/fb1/hpd
-    chmod 0664 /sys/devices/virtual/graphics/fb1/vendor_name
-    chmod 0664 /sys/devices/virtual/graphics/fb1/product_description
-
     # create symlink for fb1 as HDMI
     symlink /sys/class/graphics/fb1 /dev/graphics/hdmi
 #SSD_HDMI end
+
+    chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
+
+    #For bridgemgr daemon to inform the USB driver of the correct transport
+    chown radio radio /sys/class/android_usb/f_rmnet_smd_sdio/transport
 
     #To allow interfaces to get v6 address when tethering is enabled
     write /proc/sys/net/ipv6/conf/rmnet0/accept_ra 2
@@ -285,8 +454,13 @@ on boot
     # an ack packet comes out of order
     write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
 
+#remote kill
+    chown system system /dev/htc_msgservice
+#remote kill
+
 # load ADSP
     write /sys/kernel/boot_adsp/boot 1
+    insmod /system/lib/modules/adsprpc.ko
 
 ## Service start here
 service adsprpcd /system/bin/adsprpcd
@@ -367,9 +541,8 @@ service ftp_del /system/bin/sdptool del 0x1ff20
 # FUSE
 service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
     class late_start
-    disabled
 
-service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
+service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
     class late_start
     disabled
 
@@ -450,6 +623,12 @@ service mpdecision /system/bin/mpdecision --avg_comp
 service netmgrd /system/bin/netmgrd
     class core
 
+service ptt_socket_app /system/bin/ptt_socket_app
+    class main
+    user system
+    group system
+    oneshot
+
 service p2p_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf -N \
@@ -460,12 +639,6 @@ service p2p_supplicant /system/bin/wpa_supplicant \
     class main
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
-    oneshot
-
-service ptt_socket_app /system/bin/ptt_socket_app
-    class main
-    user system
-    group system
     oneshot
 
 service qcamerasvr /system/bin/mm-qcamera-daemon
@@ -538,10 +711,29 @@ on property:bluetooth.sap.status=running
 on property:bluetooth.sap.status=stopped
     stop bt-sap
 
+on property:crypto.driver.load=1
+     insmod /system/lib/modules/qce.ko
+     insmod /system/lib/modules/qcedev.ko
+
+on property:crypto.driver.load=0
+     exec /system/bin/rmmod qcedev.ko
+     exec /system/bin/rmmod qce.ko
+
 on property:init.svc.bootanim=stopped
     # Overwrite ActivityManager's low memory killer settings
     write /sys/module/lowmemorykiller/parameters/adj "2,4,7,8,9,12"
-    write /sys/module/lowmemorykiller/parameters/minfree "15360,18432,21504,23040,24576,30720"
+    write /sys/module/lowmemorykiller/parameters/minfree "15360,18432,21504,23040,34576,40720"
+
+on property:init.svc.thermal-engine=stopped
+    write /sys/power/pnpmgr/thermal/thermal_final 9999999
+    write /sys/power/pnpmgr/thermal/thermal_final_cpu 9999999
+    write /sys/power/pnpmgr/thermal/thermal_c0 9999999
+    write /sys/power/pnpmgr/thermal/thermal_c1 9999999
+    write /sys/power/pnpmgr/thermal/thermal_c2 9999999
+    write /sys/power/pnpmgr/thermal/thermal_c3 9999999
+    write /sys/power/pnpmgr/thermal/thermal_g0 999999999
+    write /sys/power/pnpmgr/thermal/thermal_final_gpu 999999999
+    write /sys/power/pnpmgr/thermal/thermal_batt 0
 
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
