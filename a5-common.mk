@@ -110,11 +110,16 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:system/etc/sec_config
 
+# Idc
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/idc/himax-touchscreen.idc:system/usr/idc/himax-touchscreen.idc \
+    $(LOCAL_PATH)/idc/hsml_touchscreen.idc:system/usr/idc/hsml_touchscreen.idc \
+    $(LOCAL_PATH)/idc/projector_input.idc:system/usr/idc/projector_input.idc
+
 # Keylayouts and Keychars
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
-    $(LOCAL_PATH)/keylayout/keylayout.mk:system/usr/keylayout/keylayout.mk \
-    $(LOCAL_PATH)/keylayout/qwerty.kl:system/usr/keylayout/qwerty.kl
+    $(LOCAL_PATH)/keylayout/device-keypad.kl:system/usr/keylayout/device-keypad.kl \
+    $(LOCAL_PATH)/keylayout/projector-Keypad.kl:system/usr/keylayout/projector-Keypad.kl
 
 # Keystore
 PRODUCT_PACKAGES += \
