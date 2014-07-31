@@ -195,11 +195,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_TAGS += dalvik.gc.type-precise
 
 # build.prop
-# QCOM Display
-PRODUCT_PROPERTY_OVERRIDES += \
-    debug.sf.fb_always_on=1 \
-    ro.hdmi.enable=true
-
 # RIL
 PRODUCT_PROPERTY_OVERRIDES += \
     DEVICE_PROVISIONED=1 \
@@ -220,15 +215,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.ril.enable.r8fd=1 \
     ro.ril.disable.cpc=1 \
     ro.ril.enable.pre_r8fd=1 \
-    persist.rild.nitz_plmn= \
-    persist.rild.nitz_long_ons_0= \
-    persist.rild.nitz_long_ons_1= \
-    persist.rild.nitz_long_ons_2= \
-    persist.rild.nitz_long_ons_3= \
-    persist.rild.nitz_short_ons_0= \
-    persist.rild.nitz_short_ons_1= \
-    persist.rild.nitz_short_ons_2= \
-    persist.rild.nitz_short_ons_3= \
     ril.subscription.types=NV,RUIM
 
 # QCOM
@@ -259,15 +245,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Graphics
 PRODUCT_PROPERTY_OVERRIDES += \
-    debug.composition.type=gpu \
+    debug.composition.type=dyn \
     debug.egl.hw=1 \
     debug.mdpcomp.logs=0 \
     debug.sf.hw=1 \
     dev.pm.dyn_samplingrate=1 \
     persist.hwc.mdpcomp.enable=true \
-    ro.hwui.renderer.disable_opaque=true \
-    ro.opengles.version=196608 \
-    ro.sf.lcd_density=320
+    ro.sf.lcd_density=320 \
+    ro.opengles.version=196608
 
 # Recovery
 PRODUCT_PROPERTY_OVERRIDES += \
