@@ -38,6 +38,9 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
     ueventd.qcom.rc
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/twrp.fstab:recovery/root/etc/twrp.fstab
+
 # Bluetooth
 PRODUCT_PACKAGES += \
    init.qcom.bt.bluedroid.sh \

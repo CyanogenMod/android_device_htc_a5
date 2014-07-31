@@ -159,3 +159,17 @@ TARGET_FORCE_CPU_UPLOAD := true
 
 # inherit from the proprietary version
 -include vendor/htc/a5-common/BoardConfigVendor.mk
+
+#TWRP
+DEVICE_RESOLUTION := 720x1280
+RECOVERY_SDCARD_ON_DATA := true
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+TW_EXTERNAL_STORAGE_PATH := "/usb-otg"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "usb-otg"
+TW_NO_USB_STORAGE := true
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+TW_INCLUDE_JB_CRYPTO := true
+TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
+TW_HTC_LED := true
