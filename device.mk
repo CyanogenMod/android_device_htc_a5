@@ -155,7 +155,8 @@ PRODUCT_PACKAGES += \
     libOmxAmrEnc \
     libOmxEvrcEnc \
     libOmxQcelp13Enc \
-    libstagefrighthw
+    libstagefrighthw \
+    libdashplayer
 
 # QCOM rngd
 PRODUCT_PACKAGES += \
