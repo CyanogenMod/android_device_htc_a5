@@ -318,11 +318,11 @@ etc/firmware/hcheck.b03
 etc/firmware/hcheck.mdt
 
 # DRM
-etc/firmware/cmnlib.b00
-etc/firmware/cmnlib.b01
-etc/firmware/cmnlib.b02
-etc/firmware/cmnlib.b03
-etc/firmware/cmnlib.mdt
+vendor/firmware/cmnlib.b00
+vendor/firmware/cmnlib.b01
+vendor/firmware/cmnlib.b02
+vendor/firmware/cmnlib.b03
+vendor/firmware/cmnlib.mdt
 vendor/firmware/keymaster/keymaster.b00
 vendor/firmware/keymaster/keymaster.b01
 vendor/firmware/keymaster/keymaster.b02
