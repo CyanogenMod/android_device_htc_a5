@@ -200,25 +200,27 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 # build.prop
 # RIL
 PRODUCT_PROPERTY_OVERRIDES += \
-    DEVICE_PROVISIONED=1 \
-    mobiledata.interfaces=rmnet0,rmnet1 \
+    rild.libargs=-d /dev/smd0 \
+    rild.libpath=/vendor/lib/libril-qc-qmi-1.so \
     ro.baseband.arch=msm \
-    ro.telephony.call_ring.multiple=0 \
-    ro.telephony.ril_class=HTCQualcommRIL \
-    ro.use_data_netmgrd=true \
-    ro.ril.enable.a52=0 \
-    ro.ril.enable.a53=1 \
-    ro.ril.gprsclass=10 \
+    ro.data.large_tcp_window_size=true \
     ro.ril.hsdpa.category=24 \
     ro.ril.hsupa.category=6 \
     ro.ril.hsxpa=4 \
-    ro.ril.fast.dormancy.rule=1 \
-    ro.ril.enable.managed.roaming=1 \
-    ro.ril.enable.sdr=0 \
-    ro.ril.enable.r8fd=1 \
     ro.ril.disable.cpc=1 \
-    ro.ril.enable.pre_r8fd=1 \
-    ril.subscription.types=NV,RUIM
+    ro.use_data_netmgrd=true \
+    persist.data.netmgrd.qos.enable=true \
+    persist.rild.nitz_plmn="" \
+    persist.rild.nitz_long_ons_0="" \
+    persist.rild.nitz_long_ons_1="" \
+    persist.rild.nitz_long_ons_2="" \
+    persist.rild.nitz_long_ons_3="" \
+    persist.rild.nitz_short_ons_0="" \
+    persist.rild.nitz_short_ons_1="" \
+    persist.rild.nitz_short_ons_2="" \
+    persist.rild.nitz_short_ons_3="" \
+    ril.subscription.types=NV,RUIM \
+    DEVICE_PROVISIONED=1
 
 # QCOM
 PRODUCT_PROPERTY_OVERRIDES += \
