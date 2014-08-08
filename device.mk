@@ -169,8 +169,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/thermal-engine.conf:system/etc/thermal-engine.conf \
-    $(LOCAL_PATH)/configs/thermal-engine-8226.conf:system/etc/thermal-engine-8226.conf
+    $(LOCAL_PATH)/configs/thermal-engine.conf:system/etc/thermal-engine.conf
 
 # Torch
 PRODUCT_PACKAGES += \
@@ -225,6 +224,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     com.qc.hardware=true \
     persist.thermal.monitor=true \
+    ro.qc.sdk.sensors.gestures=true \
     ro.vendor.extension_library=/vendor/lib/libqc-opt.so
 
 # Audio
@@ -266,6 +266,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Time services
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.timed.enable=true
+
+# Input
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.input.noresample=1
 
 # USB
 PRODUCT_PROPERTY_OVERRIDES += \

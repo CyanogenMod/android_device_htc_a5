@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014, The CyanogenMod Project
+ * Copyright (C) 2012, The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ camera_module_t HAL_MODULE_INFO_SYM = {
          version_major: 1,
          version_minor: 0,
          id: CAMERA_HARDWARE_MODULE_ID,
-         name: "MEMUL Camera Wrapper",
+         name: "A5 Camera Wrapper",
          author: "The CyanogenMod Project",
          methods: &camera_module_methods,
          dso: NULL, /* remove compilation warnings */
@@ -123,10 +123,8 @@ static char *camera_fixup_getparams(int id, const char *settings)
     }
 
     /* Disable face detection */
-    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "0");
-    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_SW, "0");
-    params.set("qc-max-num-requested-faces", "0");
-    params.set(android::CameraParameters::KEY_FACE_DETECTION, "off");
+    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "off");
+    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_SW, "off");
 
     /* Advertise video HDR values */
     params.set(KEY_VIDEO_HDR_VALUES, "off,on");
@@ -169,7 +167,7 @@ static char *camera_fixup_getparams(int id, const char *settings)
         params.set(android::CameraParameters::KEY_VERTICAL_VIEW_ANGLE, "43.0");
     }
     if (id == 1) {
-        params.set(android::CameraParameters::KEY_FOCAL_LENGTH, "2.79");
+        params.set(android::CameraParameters::KEY_FOCAL_LENGTH, "1.59");
     }
 
 #ifdef LOG_PARAMETERS
@@ -210,10 +208,8 @@ static char *camera_fixup_setparams(int id, const char *settings)
     }
 
     /* Disable face detection */
-    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "0");
-    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_SW, "0");
-    params.set("qc-max-num-requested-faces", "0");
-    params.set(android::CameraParameters::KEY_FACE_DETECTION, "off");
+    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "off");
+    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_SW, "off");
 
     /* Enable fixed fps mode */
     params.set("preview-frame-rate-mode", "frame-rate-fixed");
