@@ -141,9 +141,6 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 4429185024
 BOARD_FLASH_BLOCK_SIZE := 131072
 TARGET_USERIMAGES_USE_EXT4 := true
 
-# Tuning
-BOARD_HARDWARE_CLASS := device/htc/a5-common/cmhw
-
 # Vold
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
 
