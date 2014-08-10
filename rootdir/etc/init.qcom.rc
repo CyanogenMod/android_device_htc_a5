@@ -1,28 +1,29 @@
-# Copyright (c) 2009-2012, The Linux Foundation. All rights reserved.
+# Copyright (c) 2011, Code Aurora Forum. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
+# modification, are permitted provided that the following conditions are
+# met:
 #     * Redistributions of source code must retain the above copyright
 #       notice, this list of conditions and the following disclaimer.
-#     * Redistributions in binary form must reproduce the above copyright
-#       notice, this list of conditions and the following disclaimer in the
-#       documentation and/or other materials provided with the distribution.
-#     * Neither the name of The Linux Foundation nor
-#       the names of its contributors may be used to endorse or promote
-#       products derived from this software without specific prior written
-#       permission.
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#     * Neither the name of Code Aurora Forum, Inc. nor the names of its
+#       contributors may be used to endorse or promote products derived
+#       from this software without specific prior written permission.
 #
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
 import init.qcom.usb.rc
@@ -207,38 +208,22 @@ on init
     chmod 0660 /sys/class/htc_g_sensor/g_sensor/tap_shock
     chmod 0660 /sys/class/htc_g_sensor/g_sensor/tap_threshold
 
-    # htc cir
-    chown irda irda /sys/class/htc_cir/cir/reset_cir
-    chmod 0660 /sys/class/htc_cir/cir/reset_cir
-    chown irda irda /sys/class/htc_cir/cir/enable_cir
-    chmod 0660 /sys/class/htc_cir/cir/enable_cir
-
-    # HTC camera
-    chown system camera /dev/rawchip0
-    chmod 0660 /dev/rawchip0
-
-    # HTC Embedded Log
-    chown root root /devlog
-    chmod 0700 /devlog
-    chown root root /fataldevlog
-    chmod 0700 /fataldevlog
-
+# On emmc mount the partition containing firmware
 on fs
+    # create firmware mount points
     mkdir /devlog 0700 root root
-    mkdir /fataldevlog 0700 root root
-    mkdir /ramdump 0700 root root
-    mkdir /carrier 0770 system carrier
-    mkdir /custdata 0771 system system
 
+    # Create firmware linking directories
     mkdir /firmware 0771 system system
+    mkdir /vendor 0771 system system
+    mkdir /vendor/firmware 0771 system system
     mkdir /firmware/radio 0771 system system
     mkdir /firmware/adsp 0771 system system
     mkdir /firmware/wcnss 0771 system system
-    mkdir /vendor 0771 system system
-    mkdir /vendor/firmware 0771 system system
+    mkdir /fataldevlog
 
-    mount_all /fstab.qcom
-    setprop ro.crypto.fuse_sdcard true
+    # mount all mmc partitions
+    mount_all ./fstab.qcom
 
     mkdir /mnt/qcks 0700 root system
     mount tmpfs tmpfs /mnt/qcks size=20m,mode=0750,gid=1000
@@ -247,79 +232,14 @@ on fs
     mkdir /mnt/securedata 0755 system system
     mount tmpfs tmpfs /mnt/securedata mode=0755,gid=1000
 
+    setprop ro.crypto.fuse_sdcard true
+    write /sys/kernel/boot_adsp/boot 1
+
 on post-fs-data
     # Create symbolic links to mount points outside of /data
     symlink /mnt/qcks /data/qcks
     symlink /mnt/efs /data/efs
     symlink /mnt/securedata /data/secure/data
-
-    mkdir /data/tombstones 0771 system system
-    symlink /data/tombstones /tombstones
-    mkdir /tombstones/modem 0771 system system
-    mkdir /tombstones/lpass 0771 system system
-    mkdir /tombstones/wcnss 0771 system system
-    mkdir /tombstones/dsps 0771 system system
-
-    mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
-
-    # Create the directories used by the Wireless subsystem
-    mkdir /data/misc/wifi 0771 wifi wifi
-    mkdir /data/misc/wifi/hostapd 0770 wifi wifi
-    mkdir /data/misc/wifi/sockets 0770 wifi wifi
-    mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
-    mkdir /data/misc/dhcp 0770 dhcp dhcp
-    chown dhcp dhcp /data/misc/dhcp
-
-    # Create the directory used by CnE subsystem
-    mkdir /data/connectivity 0771 system system
-    chown system system /data/connectivity
-
-    # Create directory used by audio subsystem
-    mkdir /data/misc/audio 0770 audio audio
-
-    # Mounting of persist is moved to 'on emmc-fs' and 'on fs' sections
-    # We chown/chmod /persist again so because mount is run as root + defaults
-    chown system system /persist
-    chmod 0771 /persist
-    chmod 0664 /sys/devices/platform/msm_sdcc.1/polling
-    chmod 0664 /sys/devices/platform/msm_sdcc.2/polling
-    chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
-    chmod 0664 /sys/devices/platform/msm_sdcc.4/polling
-
-    # Chown polling nodes as needed from UI running on system server
-    chown system system /sys/devices/platform/msm_sdcc.1/polling
-    chown system system /sys/devices/platform/msm_sdcc.2/polling
-    chown system system /sys/devices/platform/msm_sdcc.3/polling
-    chown system system /sys/devices/platform/msm_sdcc.4/polling
-
-    #Create the symlink to qcn wpa_supplicant folder for ar6000 wpa_supplicant
-    mkdir /data/system 0775 system system
-    #symlink /data/misc/wifi/wpa_supplicant /data/system/wpa_supplicant
-
-    #Create directories for gpsone_daemon services
-    mkdir /data/misc/gpsone_d 0770 system gps
-
-    #Create directories for QuIPS
-    mkdir /data/misc/quipc 0770 gps system
-
-    #Create directories for Location services
-    mkdir /data/misc/location 0770 gps gps
-    mkdir /data/misc/location/mq 0770 gps gps
-    mkdir /data/misc/location/xtwifi 0770 gps gps
-
-    #Create directory from IMS services
-    mkdir /data/shared 0755
-    chown system system /data/shared
-
-    #Create directory for FOTA
-    mkdir /data/fota 0771
-    chown system system /data/fota
-
-    #Create directory for hostapd
-    mkdir /data/hostapd 0770 system wifi
-
-    # Create /data/time folder for time-services
-    mkdir /data/time 0700 system system
 
     # Camera blobs want debugfs in /data
     symlink /sys/kernel/debug /data/d
@@ -328,30 +248,39 @@ on post-fs-data
     mkdir /data/audio 2775 media audio
     mkdir /data/radio 2770 radio radio
 
-    mkdir /data/misc/radio 0770 system radio
-    mkdir /data/misc/sms 0770 system radio
+    # Link widevine drm library path
+    symlink /system/vendor/lib /vendor/lib
 
+    # time-services
+    mkdir /data/time 0700 system system
+
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/wifi/hostapd 0770 wifi wifi
+    mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0771 wifi wifi
+
+    mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
+
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+
+    mkdir /data/misc/audio 0770 audio audio
+
+    # Tombstones
+    mkdir /data/tombstones 0771 system system
+    symlink /data/tombstones /tombstones
+    mkdir /tombstones/mdm 0771 system system
+    mkdir /tombstones/modem 0771 system system
+    mkdir /tombstones/lpass 0771 system system
+    mkdir /tombstones/dsps 0771 system system
+
+    # If there is no fs-post-data action in the init.<device>.rc file, you
+    # must uncomment this line, otherwise encrypted filesystems
+    # won't work.
+    # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
 
-    #Create a folder for SRS to be able to create a usercfg file
-    mkdir /data/data/media 0770 media media
-
-on early-boot
-    # set RLIMIT_MEMLOCK to 64MB
-    setrlimit 8 67108864 67108864
-
-    write /sys/bus/platform/drivers/msm_hsic_host/unbind "msm_hsic_host"
-
-    chown system system /sys/bus/platform/drivers/msm_hsic_host/bind
-    chmod 0200 /sys/bus/platform/drivers/msm_hsic_host/bind
-
-    chown system system /sys/bus/platform/drivers/msm_hsic_host/unbind
-    chmod 0200 /sys/bus/platform/drivers/msm_hsic_host/unbind
-
 on boot
-    mkdir /data/media 0775 media_rw media_rw
-    chown media_rw media_rw /data/media    
-
     # bring CPUs online
     write /sys/module/msm_thermal/core_control/enabled 0
     write /sys/devices/system/cpu/cpu1/online 1
@@ -359,33 +288,15 @@ on boot
     write /sys/devices/system/cpu/cpu3/online 1
     write /sys/module/msm_thermal/core_control/enabled 1
 
-    chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
-    chown bluetooth bluetooth /proc/bluetooth/sleep/proto
-    chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_lpm
-    chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_btwrite
-    chown system system /sys/module/sco/parameters/disable_esco
-    chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
-    chmod 0660 /sys/module/bluetooth_power/parameters/power
-    chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
-    chmod 0660 /sys/class/rfkill/rfkill0/state
-    chmod 0660 /proc/bluetooth/sleep/proto
-#SSD_BT remove    chown bluetooth bluetooth /dev/ttyHS0
-    chmod 0660 /sys/module/hci_uart/parameters/ath_lpm
-    chmod 0660 /sys/module/hci_uart/parameters/ath_btwrite
-#SSD_BT remove    chmod 0660 /dev/ttyHS0
-    chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
-    chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
+    mount debugfs /sys/kernel/debug /sys/kernel/debug
 
-#SSD_BT remove    chmod 0660 /dev/ttyHS2
-#SSD_BT remove    chown bluetooth bluetooth /dev/ttyHS2
+    mkdir /data/media 0775 media_rw media_rw
+    chown media_rw media_rw /data/media
 
-    #Create QMUX deamon socket area
+    # radio
     mkdir /dev/socket/qmux_radio 2770 radio radio
     mkdir /dev/socket/qmux_audio 2770 audio audio
     mkdir /dev/socket/qmux_bluetooth 2770 bluetooth bluetooth
-    mkdir /dev/socket/qmux_gps 2770 gps gps
 
     chown system system /sys/class/leds/green/brightness
     chown system system /sys/class/leds/green/blink
@@ -398,12 +309,10 @@ on boot
     chown system system /sys/class/leds/flashlight/brightness
     chmod 0666 /sys/class/leds/flashlight/brightness
 
-    #Set SUID bit for usbhub
-    chmod 4755 /system/bin/usbhub
-    chmod 755 /system/bin/usbhub_init
-
-    #Remove SUID bit for iproute2 ip tool
-    chmod 0755 /system/bin/ip
+    # NETWORK: NAT setting
+    # To prevent out of WINDOW ACK from making
+    # connection tracking to treat them as INVALID packet
+    write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
 
 #SSD_HDMI start
     # setup permissions for fb1 related nodes
@@ -418,6 +327,33 @@ on boot
     # create symlink for fb1 as HDMI
     symlink /sys/class/graphics/fb1 /dev/graphics/hdmi
 #SSD_HDMI end
+
+# GPS
+    mkdir /dev/socket/qmux_gps 2770 gps gps
+
+    #Create directories for Location services
+    mkdir /data/misc/location 0770 gps gps
+    mkdir /data/misc/location/mq 0770 gps gps
+
+    # Create directory for gpsone daemon
+    mkdir /data/misc/gpsone_d 0770 system gps
+
+# For Flashlight Restriction
+    chown system system /sys/camera_led_status/led_hotspot_status
+    chown radio system /sys/camera_led_status/led_ril_status
+
+# Set touch permissions
+    chown system system /sys/android_touch/unlock
+
+# Set volume key wake up attribute file permission
+    chown media media /sys/keyboard/vol_wakeup
+
+# Set touch permissions
+    chown system system /sys/android_touch/unlock
+
+# Bluetooth
+    chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
+    chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
 
     chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
 
@@ -454,68 +390,26 @@ on boot
     # an ack packet comes out of order
     write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
 
-#remote kill
-    chown system system /dev/htc_msgservice
-#remote kill
-
-# load ADSP
-    write /sys/kernel/boot_adsp/boot 1
-    insmod /system/lib/modules/adsprpc.ko
-
-## Service start here
-service adsprpcd /system/bin/adsprpcd
+# Services start here
+service akmd /system/bin/akmd
     class main
-    user media
-    group media
-
-service audiod /system/bin/audiod
-    class late_start
     user system
-    group system
+    group system misc input
 
 service config_bluetooth /system/bin/sh /system/etc/init.qcom.bt.sh "onboot"
     class late_start
     user root
     oneshot
 
-service cir_fw_update /system/bin/cir_fw_update -u cir.img
-    class main
-    user root
-    group root
-    oneshot
-
-service dhcpcd_bnep0 /system/bin/dhcpcd -BKLG
-    disabled
-    oneshot
-
-service dhcpcd_bnep1 /system/bin/dhcpcd -BKLG
-    disabled
-    oneshot
-
-service dhcpcd_bnep2 /system/bin/dhcpcd -BKLG
-    disabled
-    oneshot
-
-service dhcpcd_bnep3 /system/bin/dhcpcd -BKLG
-    disabled
-    oneshot
-
-service dhcpcd_bnep4 /system/bin/dhcpcd -BKLG
-    disabled
-    oneshot
-
 service dhcpcd_bt-pan /system/bin/dhcpcd -BKLG
-    class late_start
     disabled
     oneshot
 
-service dhcpcd_p2p /system/bin/dhcpcd -ABKLG
-    class late_start
+service dhcpcd_p2p /system/bin/dhcpcd -ABKL
     disabled
     oneshot
 
 service dhcpcd_wlan0 /system/bin/dhcpcd -ABKLG
-    class late_start
     disabled
     oneshot
 
@@ -523,18 +417,6 @@ service fm_dl /system/bin/setprop hw.fm.init 1
     class late_start
     user root
     group system fm_radio
-    disabled
-    oneshot
-
-service ftp /system/bin/sdptool add --handle=0x1ff20 --psm=5257 --channel=20 FTP
-    user bluetooth
-    group bluetooth net_bt_admin
-    disabled
-    oneshot
-
-service ftp_del /system/bin/sdptool del 0x1ff20
-    user bluetooth
-    group bluetooth net_bt_admin
     disabled
     oneshot
 
@@ -551,12 +433,6 @@ service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk
     disabled
 # End FUSE
 
-service hcheck /system/bin/hcheck
-    class late_start
-    user system
-    group system
-    oneshot
-
 service hciattach /system/bin/sh /system/etc/init.qcom.bt.bluedroid.sh
     class late_start
     user bluetooth
@@ -564,78 +440,34 @@ service hciattach /system/bin/sh /system/etc/init.qcom.bt.bluedroid.sh
     disabled
     oneshot
 
-service hostapd /system/bin/hostapd -dddd /data/hostapd/hostapd.conf
-    class late_start
-    user root
-    group root
-    oneshot
-    disabled
-
 service iprenew_bt-pan /system/bin/dhcpcd -n
-    class late_start
     disabled
     oneshot
 
 service iprenew_p2p /system/bin/dhcpcd -n
-    class late_start
     disabled
     oneshot
 
 service iprenew_wlan0 /system/bin/dhcpcd -n
-    class late_start
     disabled
     oneshot
 
-service irsc_util /system/bin/logwrapper /system/bin/irsc_util "/etc/sec_config"
+service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
     class main
-    user root
-    oneshot
-
-service map0 /system/bin/sdptool add --handle=0x1ff16 --channel=16 MAS0
-    user bluetooth
-    group bluetooth net_bt_admin
-    disabled
-    oneshot
-
-service map0_del /system/bin/sdptool del 0x1ff16
-    user bluetooth
-    group bluetooth net_bt_admin
-    disabled
-    oneshot
-
-service map1 /system/bin/sdptool add --handle=0x1ff17 --channel=17 MAS1
-    user bluetooth
-    group bluetooth net_bt_admin
-    disabled
-    oneshot
-
-service map1_del /system/bin/sdptool del 0x1ff17
-    user bluetooth
-    group bluetooth net_bt_admin
-    disabled
-    oneshot
-
-service mpdecision /system/bin/mpdecision --avg_comp
-    class core
     user root
     disabled
 
 service netmgrd /system/bin/netmgrd
     class core
 
-service ptt_socket_app /system/bin/ptt_socket_app
-    class main
-    user system
-    group system
-    oneshot
-
 service p2p_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
-    -I/system/etc/wifi/wpa_supplicant_overlay.conf -N \
+    -I/system/etc/wifi/wpa_supplicant_overlay.conf \
+    -O/data/misc/wifi/sockets -N \
     -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
     -I/system/etc/wifi/p2p_supplicant_overlay.conf \
-    -O/data/misc/wifi/sockets -puse_p2p_group_interface=1 \
-    -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
+    -puse_p2p_group_interface=1 -e/data/misc/wifi/entropy.bin \
+    -g@android:wpa_wlan0
     class main
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
@@ -649,7 +481,7 @@ service qcamerasvr /system/bin/mm-qcamera-daemon
 service qmuxd /system/bin/qmuxd
     class core
     user radio
-    group radio audio bluetooth gps qcom_diag
+    group radio audio gps bluetooth
 
 service qrngd /system/bin/qrngd -f
    class main
@@ -663,24 +495,20 @@ service qrngp /system/bin/qrngp
     oneshot
     disabled
 
-service qseecomd /system/bin/qseecomd
-   class main
-   user root
-   group root
-
 service rmt_storage /system/bin/rmt_storage modem_st1 modem_st2 fsc recovery radio_config cdma_record
     class core
     user root
 
 service thermal-engine /system/bin/thermal-engine
-   class main
-   user root
-   group root
+    class main
+    user root
+    group root
 
 service time_daemon /system/bin/time_daemon
-   class late_start
-   user root
-   group root
+    user root
+    group root
+    oneshot
+    disabled
 
 service wcnss-service /system/bin/wcnss_service
     class main
@@ -698,26 +526,12 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     disabled
     oneshot
 
-## Properties start here
+# Properties start here
 on property:bluetooth.hciattach=true
     start hciattach
 
 on property:bluetooth.hciattach=false
     setprop bluetooth.status off
-
-on property:bluetooth.sap.status=running
-    start bt-sap
-
-on property:bluetooth.sap.status=stopped
-    stop bt-sap
-
-on property:crypto.driver.load=1
-     insmod /system/lib/modules/qce.ko
-     insmod /system/lib/modules/qcedev.ko
-
-on property:crypto.driver.load=0
-     exec /system/bin/rmmod qcedev.ko
-     exec /system/bin/rmmod qce.ko
 
 on property:init.svc.bootanim=stopped
     # Overwrite ActivityManager's low memory killer settings
@@ -738,15 +552,7 @@ on property:init.svc.thermal-engine=stopped
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
 
-on property:ro.data.large_tcp_window_size=true
-    # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
-    write /proc/sys/net/ipv4/tcp_adv_win_scale  2
-
-on property:ro.use_data_netmgrd=true
-   start netmgrd
-
 on property:ro.use_data_netmgrd=false
-    # netmgr not supported on specific target
     stop netmgrd
 
 on property:service.adb.root=1
@@ -754,106 +560,62 @@ on property:service.adb.root=1
 
 on property:sys.boot_completed=1
     start qrngp
-
-# Performance
-on property:service.bootanim.exit=1
-    write /sys/module/lpm_resources/enable_low_power/l2 "2"
-    write /sys/module/lpm_resources/enable_low_power/pxo "1"
-    write /sys/module/lpm_resources/enable_low_power/vdd_dig "1"
-    write /sys/module/lpm_resources/enable_low_power/vdd_mem "1"
-    write /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled "1"
-    write /sys/module/msm_pm/modes/cpu1/power_collapse/suspend_enabled "1"
-    write /sys/module/msm_pm/modes/cpu2/power_collapse/suspend_enabled "1"
-    write /sys/module/msm_pm/modes/cpu3/power_collapse/suspend_enabled "1"
-    write /sys/module/msm_pm/modes/cpu0/power_collapse/idle_enabled "1"
-    write /sys/module/msm_pm/modes/cpu1/power_collapse/idle_enabled "0"
-    write /sys/module/msm_pm/modes/cpu2/power_collapse/idle_enabled "0"
-    write /sys/module/msm_pm/modes/cpu3/power_collapse/idle_enabled "0"
-    write /sys/module/msm_pm/modes/cpu0/standalone_power_collapse/suspend_enabled "1"
-    write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/suspend_enabled "1"
-    write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/suspend_enabled "1"
-    write /sys/module/msm_pm/modes/cpu3/standalone_power_collapse/suspend_enabled "1"
-    write /sys/module/msm_pm/modes/cpu0/standalone_power_collapse/idle_enabled "1"
-    write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/idle_enabled "1"
-    write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/idle_enabled "1"
-    write /sys/module/msm_pm/modes/cpu3/standalone_power_collapse/idle_enabled "1"
-    write /sys/module/msm_pm/modes/cpu0/retention/idle_enabled "0"
-    write /sys/module/msm_pm/modes/cpu1/retention/idle_enabled "0"
-    write /sys/module/msm_pm/modes/cpu2/retention/idle_enabled "0"
-    write /sys/module/msm_pm/modes/cpu3/retention/idle_enabled "0"
-
-    write /sys/module/cpubw_krait/parameters/enable "1"
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq "300000"
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq "300000"
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq "300000"
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq "300000"
-    chown system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-    chown system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    chown root.system /sys/devices/system/cpu/mfreq
-    chmod 220 /sys/devices/system/cpu/mfreq
-    chown root.system /sys/devices/system/cpu/cpu1/online
-    chown root.system /sys/devices/system/cpu/cpu2/online
-    chown root.system /sys/devices/system/cpu/cpu3/online
-    chmod 664 /sys/devices/system/cpu/cpu1/online
-    chmod 664 /sys/devices/system/cpu/cpu2/online
-    chmod 664 /sys/devices/system/cpu/cpu3/online
-    write /dev/cpuctl/apps/cpu.notify_on_migrate "1"
-
-    write /sys/module/cpu_boost/parameters/boost_ms "20"
-    write /sys/module/cpu_boost/parameters/sync_threshold "1728000"
-    write /sys/module/cpu_boost/parameters/input_boost_freq "1497600"
-    write /sys/module/cpu_boost/parameters/input_boost_ms "40"
-
-on property:init.svc.bootanim=running
-    # Switch to NOOP and performance mode while booting
-    setprop sys.perf.profile 2
-    write /sys/block/mmcblk0/queue/scheduler noop
-
-on property:init.svc.bootanim=stopped
-    # Switch to ROW and balanced mode after boot for better UX
-    setprop sys.perf.profile 1
-    write /sys/block/mmcblk0/queue/scheduler row
+    write /sys/module/lpm_resources/enable_low_power/l2 2
+    write /sys/module/lpm_resources/enable_low_power/pxo 1
+    write /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu0/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu0/standalone_power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/standalone_power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu0/power_collapse/idle_enabled 1
+    write /sys/devices/system/cpu/cpu1/online 1
+    write /sys/devices/system/cpu/cpu2/online 1
+    write /sys/devices/system/cpu/cpu3/online 1
 
 # CM Performance Profiles
+# Powersave
 on property:sys.perf.profile=0
-    write /sys/class/devfreq/qcom,cpubw.42/governor "powersave"
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor conservative
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor conservative
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor conservative
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor conservative
-    write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
     start mpdecision
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "conservative"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "conservative"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "conservative"
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "conservative"
 
+# Balanced
 on property:sys.perf.profile=1
-    write /sys/class/devfreq/qcom,cpubw.42/governor "msm_cpufreq"
+    start mpdecision
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "ondemand"
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "ondemand"
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "ondemand"
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "ondemand"
+    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold 90
+    write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 50000
+    write /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy 1
+    write /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor 4
+    write /sys/devices/system/cpu/cpufreq/ondemand/down_differential 10
+    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_multi_core 70
+    write /sys/devices/system/cpu/cpufreq/ondemand/down_differential_multi_core 3
+    write /sys/devices/system/cpu/cpufreq/ondemand/optimal_freq 300000
+    write /sys/devices/system/cpu/cpufreq/ondemand/sync_freq 300000
+    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load 80
+    write /sys/class/kgsl/kgsl-3d0/devfreq/governor "ondemand"
 
-    write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate "50000"
-    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold "90"
-    write /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy "1"
-    write /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor "2"
-    write /sys/devices/system/cpu/cpufreq/ondemand/down_differential "10"
-    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_multi_core "70"
-    write /sys/devices/system/cpu/cpufreq/ondemand/down_differential_multi_core "3"
-    write /sys/devices/system/cpu/cpufreq/ondemand/optimal_freq "960000"
-    write /sys/devices/system/cpu/cpufreq/ondemand/sync_freq "960000"
-    write /sys/devices/system/cpu/cpufreq/ondemand/input_boost "1190400"
-    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load "80"
-    write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
-    start mpdecision
-
+# High performance
 on property:sys.perf.profile=2
     stop mpdecision
     write /sys/devices/system/cpu/cpu0/online 1
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
-    write /sys/class/devfreq/qcom,cpubw.42/governor "performance"
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor performance
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor performance
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor performance
-    write /sys/class/kgsl/kgsl-3d0/devfreq/governor performance
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "performance"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "performance"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "performance"
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "performance"
+    write /sys/class/kgsl/kgsl-3d0/devfreq/governor "performance"
