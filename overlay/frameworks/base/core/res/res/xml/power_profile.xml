@@ -50,6 +50,11 @@
         <value>998400</value>
         <value>1094400</value>
         <value>1190400</value>
+        <value>1305600</value>
+        <value>1344000</value>
+        <value>1401600</value>
+        <value>1497600</value>
+        <value>1593600</value>
     </array>
     <item name="cpu.idle">2.52</item>
     <array name="cpu.active">
@@ -59,6 +64,11 @@
         <value>84.6</value>
         <value>92.88</value>
         <value>109.44</value>
+        <value>110.52</value>
+        <value>115.56</value>
+        <value>127.8</value>
+        <value>128.88</value>
+        <value>141.48</value>
     </array>
     <item name="battery.capacity">2522</item>
     <array name="wifi.batchedscan">
