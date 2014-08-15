@@ -308,7 +308,7 @@ lib/hw/sensors.msm8226.so
 
 # Time
 bin/time_daemon
-vendor/lib/libtime_genoff.so
+-vendor/lib/libtime_genoff.so
 
 # TrustZone
 etc/firmware/hcheck.b00

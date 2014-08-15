@@ -21,6 +21,8 @@
 # definition file).
 #
 
+TARGET_OTA_ASSERT_DEVICE := a5,a5dug,a5dwg,a5ul
+
 BOARD_VENDOR := htc
 
 # Bootloader
@@ -49,7 +51,8 @@ BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x02008000 --tags_offset 0x01e00000
-BOARD_CUSTOM_BOOTIMG_MK := device/htc/a5-common/mkbootimg.mk
+BOARD_CUSTOM_BOOTIMG_MK := device/htc/a5/mkbootimg.mk
+TARGET_KERNEL_CONFIG := a5dwg_defconfig
 TARGET_KERNEL_SOURCE := kernel/htc/a5
 
 # QCOM hardware
@@ -68,7 +71,7 @@ AUDIO_FEATURE_DISABLED_MULTI_VOICE_SESSIONS := true
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/htc/a5-common/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/htc/a5/bluetooth
 
 # Camera
 COMMON_GLOBAL_CFLAGS += -DHTC_CAMERA_HARDWARE
@@ -76,7 +79,7 @@ COMMON_GLOBAL_CFLAGS += -DPROPERTY_PERMS_APPEND='{"htc.camera.sensor.", AID_CAME
 USE_DEVICE_SPECIFIC_CAMERA := true
 
 # Graphics
-BOARD_EGL_CFG := device/htc/a5-common/configs/egl.cfg
+BOARD_EGL_CFG := device/htc/a5/configs/egl.cfg
 TARGET_DISPLAY_USE_RETIRE_FENCE := true
 TARGET_USES_C2D_COMPOSITION := true
 TARGET_USES_ION := true
@@ -96,6 +99,12 @@ TARGET_POWERHAL_VARIANT := qcom
 # RIL
 BOARD_PROVIDES_LIBRIL := true
 
+# RPC
+TARGET_NO_RPC := true
+
+# Time services
+BOARD_USES_QC_TIME_SERVICES := true
+
 # Wifi
 BOARD_HAS_QCOM_WLAN := true
 BOARD_WLAN_DEVICE := qcwcn
@@ -110,7 +119,7 @@ WIFI_DRIVER_FW_PATH_AP := "ap"
 
 # SELinux
 BOARD_SEPOLICY_DIRS += \
-    device/htc/a5-common/sepolicy
+    device/htc/a5/sepolicy
 
 BOARD_SEPOLICY_UNION += \
     app.te \
@@ -148,18 +157,23 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/htc_lpm/lpm_mode
 
 # Recovery
-TARGET_RECOVERY_FSTAB := device/htc/a5-common/rootdir/etc/fstab.qcom
+TARGET_RECOVERY_FSTAB := device/htc/a5/rootdir/etc/fstab.qcom
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 BOARD_RECOVERY_SWIPE := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+
+# Vendor Init
+TARGET_UNIFIED_DEVICE := true
+TARGET_INIT_VENDOR_LIB := libinit_a5
+TARGET_LIBINIT_DEFINES_FILE := device/htc/a5/init/init_a5.c
 
 # Webkit
 ENABLE_WEBGL := true
 TARGET_FORCE_CPU_UPLOAD := true
 
 # inherit from the proprietary version
--include vendor/htc/a5-common/BoardConfigVendor.mk
+-include vendor/htc/a5/BoardConfigVendor.mk
 
 #TWRP
 DEVICE_RESOLUTION := 720x1280

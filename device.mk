@@ -17,7 +17,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 # overlays
-DEVICE_PACKAGE_OVERLAYS += device/htc/a5-common/overlay
+DEVICE_PACKAGE_OVERLAYS += device/htc/a5/overlay
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1280
@@ -198,86 +198,3 @@ PRODUCT_COPY_FILES += \
 
 # We have enough space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
-
-# build.prop
-# RIL
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.baseband.arch=msm \
-    ro.data.large_tcp_window_size=true \
-    ro.ril.hsdpa.category=24 \
-    ro.ril.hsupa.category=6 \
-    ro.ril.hsxpa=4 \
-    ro.ril.disable.cpc=1 \
-    ro.use_data_netmgrd=true \
-    persist.data.netmgrd.qos.enable=true \
-    persist.rild.nitz_plmn="" \
-    persist.rild.nitz_long_ons_0="" \
-    persist.rild.nitz_long_ons_1="" \
-    persist.rild.nitz_long_ons_2="" \
-    persist.rild.nitz_long_ons_3="" \
-    persist.rild.nitz_short_ons_0="" \
-    persist.rild.nitz_short_ons_1="" \
-    persist.rild.nitz_short_ons_2="" \
-    persist.rild.nitz_short_ons_3="" \
-    ril.subscription.types=NV,RUIM \
-    DEVICE_PROVISIONED=1
-
-# QCOM
-PRODUCT_PROPERTY_OVERRIDES += \
-    com.qc.hardware=true \
-    persist.thermal.monitor=true \
-    ro.qc.sdk.sensors.gestures=true \
-    ro.vendor.extension_library=/vendor/lib/libqc-opt.so
-
-# Audio
-PRODUCT_PROPERTY_OVERRIDES += \
-    audio.offload.buffer.size.kb=1024 \
-    audio.offload.gapless.enabled=true \
-    av.offload.enable=0 \
-    ro.qc.sdk.audio.fluencetype=none \
-    af.resampler.quality=4
-
-# AV
-PRODUCT_PROPERTY_OVERRIDES += \
-    mm.enable.smoothstreaming=true \
-    media.aac_51_output_enabled=true
-
-# GPS
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.gps.qc_nlp_in_use=0 \
-    ro.gps.agps_provider=1 \
-    ro.qc.sdk.izat.premium_enabled=0 \
-    ro.qc.sdk.izat.service_mask=0x0
-
-# Graphics
-PRODUCT_PROPERTY_OVERRIDES += \
-    debug.composition.type=dyn \
-    debug.egl.hw=1 \
-    debug.mdpcomp.logs=0 \
-    debug.sf.hw=1 \
-    dev.pm.dyn_samplingrate=1 \
-    persist.hwc.mdpcomp.enable=true \
-    ro.sf.lcd_density=320 \
-    ro.opengles.version=196608
-
-# Recovery
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.cwm.forbid_format=/boot,/devlog,/fataldevlog,/ramdump,/carrier,/custdata,/firmware/radio,/firmware/adsp,/firmware/wcnss \
-    ro.cwm.forbid_mount=/boot,/devlog,/fataldevlog,/ramdump,/carrier,/custdata,/firmware/radio,/firmware/adsp,/firmware/wcnss
-
-# Time services
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.timed.enable=true
-
-# Input
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.input.noresample=1
-
-# USB
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp,adb \
-    ro.adb.secure=0
-
-# Wifi
-PRODUCT_PROPERTY_OVERRIDES += \
-    wifi.interface=wlan0
