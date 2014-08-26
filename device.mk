@@ -23,6 +23,13 @@ DEVICE_PACKAGE_OVERLAYS += device/htc/a5/overlay
 TARGET_SCREEN_HEIGHT := 1280
 TARGET_SCREEN_WIDTH := 720
 
+# We have enough space to hold precise GC data
+PRODUCT_TAGS += dalvik.gc.type-precise
+
+PRODUCT_BOOT_JARS += qcmediaplayer
+
+PRODUCT_PACKAGES += qcmediaplayer
+
 # Camera
 PRODUCT_PACKAGES += \
     camera.msm8226
@@ -195,6 +202,3 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/p2p_supplicant_overlay.conf:/system/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wpa_supplicant_overlay.conf:/system/etc/wifi/wpa_supplicant_overlay.conf
-
-# We have enough space to hold precise GC data
-PRODUCT_TAGS += dalvik.gc.type-precise

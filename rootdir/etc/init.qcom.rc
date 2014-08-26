@@ -426,22 +426,18 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     oneshot
 
 service ril-daemon1 /system/bin/rild -c 1
-    class core
+    class main
     socket rild1 stream 660 root radio
     socket rild-debug1 stream 660 radio system
     user root
     disabled
-    group radio cache inet misc audio sdcard_r sdcard_rw diag qcom_diag log
+    group radio cache inet misc audio sdcard_r sdcard_rw qcom_oncrpc diag qcom_diag log
 
 # Properties start here
 on property:persist.radio.multisim.config=dsds
-    stop ril-daemon
-    start ril-daemon
     start ril-daemon1
 
 on property:persist.radio.multisim.config=dsda
-    stop ril-daemon
-    start ril-daemon
     start ril-daemon1
 
 on property:bluetooth.hciattach=true
