@@ -57,18 +57,18 @@ void vendor_load_properties()
         property_set("ro.build.product", "a5dwg");
         property_set("ro.telephony.default_network", "7");
         property_set("persist.radio.multisim.config", "dsds");
-	property_set("persist.radio.dont_use_dsd", "true");
+        property_set("persist.radio.dont_use_dsd", "true");
         property_set("ro.ril.hsdpa.category", "10");
     } else if (strstr(bootmid, "0P9C70000")) {
         /* a5dug */
         property_set("ro.build.fingerprint", "htc/htc_asia_hk/htc_a5dug:4.4.2/KOT49H/356136.1:user/release-keys");
         property_set("ro.build.description", "1.45.708.1 CL356136 release-keys");
-        property_set("ro.product.model", "Desire 816w");
+        property_set("ro.product.model", "D816w");
         property_set("ro.product.device", "a5dug");
         property_set("ro.build.product", "a5dug");
         property_set("ro.telephony.default_network", "0");
         property_set("persist.radio.multisim.config", "dsda");
-	property_set("persist.radio.dont_use_dsd", "true");
+        property_set("persist.radio.dont_use_dsd", "true");
         property_set("persist.radio.relay_oprt_change", "1");
         property_set("ro.ril.hsdpa.category", "24");
     } else if (strstr(bootmid, "0P9C23000")) {
@@ -80,6 +80,7 @@ void vendor_load_properties()
         property_set("ro.build.product", "a5ul");
         property_set("ro.telephony.default_network", "9");
 	property_set("persist.radio.multisim.config", "");
+        property_set("ro.ril.hsdpa.category", "14");
         property_set("ro.ril.enable.a53", "1");
         property_set("persist.radio.jbims", "1");
         property_set("ro.ril.enable.gea3", "1");

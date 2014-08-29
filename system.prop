@@ -6,7 +6,6 @@ rild.libpath=/vendor/lib/libril-qc-qmi-1.so
 ril.subscription.types=NV,RUIM
 ro.baseband.arch=msm
 ro.data.large_tcp_window_size=true
-ro.ril.hsdpa.category=14
 ro.ril.hsupa.category=6
 ro.ril.hsxpa=4
 ro.ril.disable.cpc=1
