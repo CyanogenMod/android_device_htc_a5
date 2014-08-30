@@ -296,6 +296,9 @@ vendor/lib/libqmi.so
 
 # Radio
 bin/netmgrd
+bin/rild
+lib/libril.so
+lib/libhtc_rilhook.so
 vendor/lib/libnetmgr.so
 vendor/lib/libqc-opt.so
 vendor/lib/libril-qc-qmi-1.so
