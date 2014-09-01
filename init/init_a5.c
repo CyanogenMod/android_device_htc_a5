@@ -57,7 +57,6 @@ void vendor_load_properties()
         property_set("ro.build.product", "a5dwg");
         property_set("ro.telephony.default_network", "7");
         property_set("persist.radio.multisim.config", "dsds");
-        property_set("persist.radio.dont_use_dsd", "true");
         property_set("ro.ril.hsdpa.category", "10");
     } else if (strstr(bootmid, "0P9C70000")) {
         /* a5dug */
@@ -68,7 +67,6 @@ void vendor_load_properties()
         property_set("ro.build.product", "a5dug");
         property_set("ro.telephony.default_network", "0");
         property_set("persist.radio.multisim.config", "dsda");
-        property_set("persist.radio.dont_use_dsd", "true");
         property_set("persist.radio.relay_oprt_change", "1");
         property_set("ro.ril.hsdpa.category", "24");
     } else if (strstr(bootmid, "0P9C23000")) {
