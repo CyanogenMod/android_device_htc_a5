@@ -29,6 +29,6 @@ $(call inherit-product, device/htc/a5/device.mk)
 
 PRODUCT_NAME := full_a5
 PRODUCT_DEVICE := a5
-PRODUCT_BRAND := htc
+PRODUCT_BRAND := HTC
 PRODUCT_MANUFACTURER := HTC
 PRODUCT_MODEL := a5
