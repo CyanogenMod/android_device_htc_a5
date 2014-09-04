@@ -42,6 +42,9 @@ use.voice.path.for.pcm.voip=false
 media.aac_51_output_enabled=true
 mm.enable.smoothstreaming=true
 
+# Camera
+camera2.portability.force_api=1
+
 # GPS
 persist.gps.qc_nlp_in_use=0
 ro.gps.agps_provider=1
