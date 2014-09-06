@@ -167,6 +167,7 @@ TARGET_FORCE_CPU_UPLOAD := true
 
 #TWRP
 DEVICE_RESOLUTION := 720x1280
+TW_NO_SCREEN_BLANK := true
 RECOVERY_SDCARD_ON_DATA := true
 TW_EXTERNAL_STORAGE_PATH := "/external_sd"
 TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
@@ -178,3 +179,17 @@ TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 TW_INCLUDE_JB_CRYPTO := true
 TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 TW_HTC_LED := true
+
+#MultiROM config. MultiROM also uses parts of TWRP config
+MR_INPUT_TYPE := type_b
+MR_INIT_DEVICES := device/htc/a5/mr_init_devices.c
+MR_DPI := hdpi
+MR_DPI_FONT := 216
+MR_FSTAB := device/htc/a5/recovery/twrp.fstab
+MR_KEXEC_MEM_MIN := 0x20000000
+MR_USE_MROM_FSTAB := true
+MR_KEXEC_DTB := true
+MR_CONTINUOUS_FB_UPDATE := true
+MR_USE_QCOM_OVERLAY := true
+MR_QCOM_OVERLAY_HEADER := device/htc/a5/framebuffer_qcom_overlay.h
+MR_QCOM_OVERLAY_CUSTOM_PIXEL_FORMAT := MDP_RGBX_8888
