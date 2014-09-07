@@ -239,6 +239,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
+# Variant linking script
+PRODUCT_PACKAGES += \
+    makelinks.sh
+
 # WiFi
 PRODUCT_PACKAGES += \
     wcnss_service
