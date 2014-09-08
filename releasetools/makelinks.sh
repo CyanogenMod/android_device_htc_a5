@@ -5,7 +5,9 @@ set -e
 modelid=`getprop ro.boot.mid`
 
 case $modelid in
-	0P9C51000|0P9C70000)	variant="dualsim" ;;
+	0P9C51000|0P9C70000)	variant="dualsim" 
+				rm -f /system/bin/rild
+				rm -f /system/lib/libril.so ;;
 	0P9C30000)		variant="chl" ;;
 	*)			variant="gsm" ;;
 esac
