@@ -57,7 +57,7 @@ camera_module_t HAL_MODULE_INFO_SYM = {
          version_major: 1,
          version_minor: 0,
          id: CAMERA_HARDWARE_MODULE_ID,
-         name: "MEMUL Camera Wrapper",
+         name: "A5 Camera Wrapper",
          author: "The CyanogenMod Project",
          methods: &camera_module_methods,
          dso: NULL, /* remove compilation warnings */
@@ -170,7 +170,7 @@ static char *camera_fixup_getparams(int id, const char *settings)
     }
     if (id == 1) {
         params.set(android::CameraParameters::KEY_FOCAL_LENGTH, "2.79");
-		params.set(android::CameraParameters::KEY_HORIZONTAL_VIEW_ANGLE, "54.2");
+        params.set(android::CameraParameters::KEY_HORIZONTAL_VIEW_ANGLE, "54.2");
         params.set(android::CameraParameters::KEY_VERTICAL_VIEW_ANGLE, "42");
     }
 
