@@ -123,9 +123,9 @@ static char *camera_fixup_getparams(int id, const char *settings)
     }
 
     /* Disable face detection */
-    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "0");
+    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "10");
     params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_SW, "0");
-    params.set("qc-max-num-requested-faces", "0");
+    params.set("qc-max-num-requested-faces", "5");
     params.set(android::CameraParameters::KEY_FACE_DETECTION, "off");
 
     /* Advertise video HDR values */
@@ -170,6 +170,8 @@ static char *camera_fixup_getparams(int id, const char *settings)
     }
     if (id == 1) {
         params.set(android::CameraParameters::KEY_FOCAL_LENGTH, "2.79");
+		params.set(android::CameraParameters::KEY_HORIZONTAL_VIEW_ANGLE, "54.2");
+        params.set(android::CameraParameters::KEY_VERTICAL_VIEW_ANGLE, "42");
     }
 
 #ifdef LOG_PARAMETERS
@@ -210,9 +212,9 @@ static char *camera_fixup_setparams(int id, const char *settings)
     }
 
     /* Disable face detection */
-    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "0");
+    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "10");
     params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_SW, "0");
-    params.set("qc-max-num-requested-faces", "0");
+    params.set("qc-max-num-requested-faces", "5");
     params.set(android::CameraParameters::KEY_FACE_DETECTION, "off");
 
     /* Enable fixed fps mode */
