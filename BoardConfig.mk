@@ -166,6 +166,9 @@ TARGET_RELEASETOOLS_EXTENSIONS := device/htc/a5/releasetools
 ENABLE_WEBGL := true
 TARGET_FORCE_CPU_UPLOAD := true
 
+# Hardware
+BOARD_HARDWARE_CLASS := device/htc/a5/cmhw
+
 # inherit from the proprietary version
 -include vendor/htc/a5/BoardConfigVendor.mk
 
