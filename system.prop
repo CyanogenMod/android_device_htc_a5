@@ -30,6 +30,8 @@ ro.vendor.extension_library=/vendor/lib/libqc-opt.so
 audio.offload.buffer.size.kb=1024
 audio.offload.gapless.enabled=true
 av.offload.enable=0
+audio.offload.24bit.enable=1
+audio.offload.pcm.enable=true
 ro.qc.sdk.audio.fluencetype=none
 af.resampler.quality=4
 
