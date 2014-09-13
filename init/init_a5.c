@@ -58,6 +58,7 @@ void vendor_load_properties()
         property_set("ro.build.product", "a5dwg");
         property_set("persist.radio.multisim.config", "dsds");
         property_set("ro.ril.hsdpa.category", "10");
+        property_set("ro.telephony.ril_class", "A5RIL");
     } else if (strstr(bootmid, "0P9C70000")) {
         /* a5dug */
         gsm_properties("0");
@@ -69,6 +70,7 @@ void vendor_load_properties()
         property_set("persist.radio.multisim.config", "dsda");
         property_set("persist.radio.relay_oprt_change", "1");
         property_set("ro.ril.hsdpa.category", "24");
+        property_set("ro.telephony.ril_class", "A5RIL");
     } else if (strstr(bootmid, "0P9C30000")) {
         /* a5chl */
         cdma_properties("8", "000000", "Chameleon");
