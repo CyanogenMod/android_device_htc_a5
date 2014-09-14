@@ -79,7 +79,6 @@ on init
     chmod 0220 /sys/class/power_supply/battery/disable_limit_chg
 # HTC SSD Battery - END
 
-# On emmc mount the partition containing firmware
 on fs
     mkdir /devlog 0700 root root
     mkdir /fataldevlog 0700 root root
@@ -175,6 +174,14 @@ on post-fs-data
     #Create a folder for SRS to be able to create a usercfg file
     mkdir /data/data/media 0770 media media
 
+    # Hardware tunables
+    chown root system /sys/devices/platform/kcal_ctrl.0/kcal
+    chown root system /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
+    chmod 0664 /sys/devices/platform/kcal_ctrl.0/kcal
+    chmod 0664 /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
+    restorecon /sys/devices/platform/kcal_ctrl.0/kcal
+    restorecon /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
+
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
     setrlimit 8 67108864 67108864
@@ -194,6 +201,8 @@ on boot
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
     write /sys/module/msm_thermal/core_control/enabled 1
+
+    chmod 0644 /proc/cmdline
 
     # bluetooth
     chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
@@ -219,6 +228,10 @@ on boot
     # Torch
     chown system system /sys/class/leds/flashlight/brightness
     chmod 0666 /sys/class/leds/flashlight/brightness
+
+    # For Flashlight Restriction
+    chown system system /sys/camera_led_status/led_hotspot_status
+    chown radio system /sys/camera_led_status/led_ril_status
 
 # Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
@@ -431,7 +444,7 @@ service ril-daemon1 /system/bin/rild -c 1
     socket rild-debug1 stream 660 radio system
     user root
     disabled
-    group radio cache inet misc audio sdcard_r sdcard_rw qcom_oncrpc diag qcom_diag log
+    group radio cache inet misc audio sdcard_r sdcard_rw diag qcom_diag log
 
 # Properties start here
 on property:persist.radio.multisim.config=dsds
@@ -455,17 +468,6 @@ on property:init.svc.bootanim=stopped
     write /sys/module/lowmemorykiller/parameters/adj "2,4,7,8,9,12"
     write /sys/module/lowmemorykiller/parameters/minfree "15360,18432,21504,23040,34576,40720"
 
-on property:init.svc.thermal-engine=stopped
-    write /sys/power/pnpmgr/thermal/thermal_final 9999999
-    write /sys/power/pnpmgr/thermal/thermal_final_cpu 9999999
-    write /sys/power/pnpmgr/thermal/thermal_c0 9999999
-    write /sys/power/pnpmgr/thermal/thermal_c1 9999999
-    write /sys/power/pnpmgr/thermal/thermal_c2 9999999
-    write /sys/power/pnpmgr/thermal/thermal_c3 9999999
-    write /sys/power/pnpmgr/thermal/thermal_g0 999999999
-    write /sys/power/pnpmgr/thermal/thermal_final_gpu 999999999
-    write /sys/power/pnpmgr/thermal/thermal_batt 0
-
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
 
@@ -480,18 +482,15 @@ on property:sys.boot_completed=1
 
 # Performance
 on property:service.bootanim.exit=1
-    write /sys/module/lpm_resources/enable_low_power/l2 "2"
-    write /sys/module/lpm_resources/enable_low_power/pxo "1"
-    write /sys/module/lpm_resources/enable_low_power/vdd_dig "1"
-    write /sys/module/lpm_resources/enable_low_power/vdd_mem "1"
+    write /sys/module/lpm_levels/enable_low_power/l2 "4"
     write /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled "1"
     write /sys/module/msm_pm/modes/cpu1/power_collapse/suspend_enabled "1"
     write /sys/module/msm_pm/modes/cpu2/power_collapse/suspend_enabled "1"
     write /sys/module/msm_pm/modes/cpu3/power_collapse/suspend_enabled "1"
     write /sys/module/msm_pm/modes/cpu0/power_collapse/idle_enabled "1"
-    write /sys/module/msm_pm/modes/cpu1/power_collapse/idle_enabled "0"
-    write /sys/module/msm_pm/modes/cpu2/power_collapse/idle_enabled "0"
-    write /sys/module/msm_pm/modes/cpu3/power_collapse/idle_enabled "0"
+    write /sys/module/msm_pm/modes/cpu1/power_collapse/idle_enabled "1"
+    write /sys/module/msm_pm/modes/cpu2/power_collapse/idle_enabled "1"
+    write /sys/module/msm_pm/modes/cpu3/power_collapse/idle_enabled "1"
     write /sys/module/msm_pm/modes/cpu0/standalone_power_collapse/suspend_enabled "1"
     write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/suspend_enabled "1"
     write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/suspend_enabled "1"
@@ -500,12 +499,11 @@ on property:service.bootanim.exit=1
     write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/idle_enabled "1"
     write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/idle_enabled "1"
     write /sys/module/msm_pm/modes/cpu3/standalone_power_collapse/idle_enabled "1"
-    write /sys/module/msm_pm/modes/cpu0/retention/idle_enabled "0"
-    write /sys/module/msm_pm/modes/cpu1/retention/idle_enabled "0"
-    write /sys/module/msm_pm/modes/cpu2/retention/idle_enabled "0"
-    write /sys/module/msm_pm/modes/cpu3/retention/idle_enabled "0"
+    write /sys/module/msm_pm/modes/cpu0/retention/idle_enabled "1"
+    write /sys/module/msm_pm/modes/cpu1/retention/idle_enabled "1"
+    write /sys/module/msm_pm/modes/cpu2/retention/idle_enabled "1"
+    write /sys/module/msm_pm/modes/cpu3/retention/idle_enabled "1"
 
-    write /sys/module/cpubw_krait/parameters/enable "1"
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq "300000"
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq "300000"
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq "300000"
