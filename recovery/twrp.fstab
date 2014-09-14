@@ -1,8 +1,0 @@
-# mount point   fstype      device  [device2]                                [parameters]
-/boot           emmc        /dev/block/platform/msm_sdcc.1/by-name/boot
-/cache          ext4        /dev/block/platform/msm_sdcc.1/by-name/cache
-/data           ext4        /dev/block/platform/msm_sdcc.1/by-name/userdata
-/system         ext4        /dev/block/platform/msm_sdcc.1/by-name/system
-
-/external_sd    vfat        /dev/block/mmcblk1p1    /dev/block/mmcblk1 flags=display="Micro SDcard";storage;wipeingui;removable
-/usb-otg        auto        /dev/block/sda1  /dev/block/sda                  flags=display="USB OTG";storage;wipeingui;removable

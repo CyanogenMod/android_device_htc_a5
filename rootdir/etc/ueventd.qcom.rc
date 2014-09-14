@@ -121,6 +121,7 @@
 /dev/adsprpc-smd          0664   system     system
 /dev/htc_msgservice       0660   system     system
 /dev/simlock              0660   radio      radio
+/dev/pn544                0600   nfc        nfc
 
 #permissions for audio
 /dev/msm_qcelp            0660   system     audio
@@ -195,6 +196,9 @@
 # wlan
 /dev/wcnss_wlan           0660   system     system
 /dev/wcnss_ctrl           0660   system     system
+
+#nfc permissions
+/dev/nfc-nci              0660    nfc         nfc
 
 # HtcCarGPS
 /dev/ttyHSUSB1            0600   system     system

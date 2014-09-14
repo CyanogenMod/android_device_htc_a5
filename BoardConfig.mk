@@ -1,11 +1,10 @@
-#
-# Copyright (C) 2013 The CyanogenMod Project
+# Copyright (C) 2014 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-# http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -69,6 +68,7 @@ BOARD_USES_ALSA_AUDIO := true
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
+BLUETOOTH_HCI_USE_MCT := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/htc/a5/bluetooth
 
 # Camera
@@ -79,7 +79,6 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 # Graphics
 TARGET_USES_ION := true
 TARGET_USES_C2D_COMPOSITION := true
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno305
 USE_OPENGL_RENDERER := true
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 BOARD_EGL_CFG := device/htc/a5/configs/egl.cfg
@@ -152,6 +151,7 @@ BOARD_CHARGING_MODE_BOOTING_LPM := /sys/htc_lpm/lpm_mode
 TARGET_RECOVERY_FSTAB := device/htc/a5/rootdir/etc/fstab.qcom
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
+TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_RECOVERY_SWIPE := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 
@@ -172,32 +172,3 @@ BOARD_HARDWARE_CLASS := device/htc/a5/cmhw
 
 # inherit from the proprietary version
 -include vendor/htc/a5/BoardConfigVendor.mk
-
-#TWRP
-DEVICE_RESOLUTION := 720x1280
-TW_NO_SCREEN_BLANK := true
-RECOVERY_SDCARD_ON_DATA := true
-TW_EXTERNAL_STORAGE_PATH := "/external_sd"
-TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
-TW_EXTERNAL_STORAGE_PATH := "/usb-otg"
-TW_EXTERNAL_STORAGE_MOUNT_POINT := "usb-otg"
-TW_NO_USB_STORAGE := true
-RECOVERY_GRAPHICS_USE_LINELENGTH := true
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-TW_INCLUDE_JB_CRYPTO := true
-TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
-TW_HTC_LED := true
-
-#MultiROM config. MultiROM also uses parts of TWRP config
-MR_INPUT_TYPE := type_b
-MR_INIT_DEVICES := device/htc/a5/mr_init_devices.c
-MR_DPI := hdpi
-MR_DPI_FONT := 216
-MR_FSTAB := device/htc/a5/recovery/twrp.fstab
-MR_KEXEC_MEM_MIN := 0x20000000
-MR_USE_MROM_FSTAB := true
-MR_KEXEC_DTB := true
-MR_CONTINUOUS_FB_UPDATE := true
-MR_USE_QCOM_OVERLAY := true
-MR_QCOM_OVERLAY_HEADER := device/htc/a5/framebuffer_qcom_overlay.h
-MR_QCOM_OVERLAY_CUSTOM_PIXEL_FORMAT := MDP_RGBX_8888
