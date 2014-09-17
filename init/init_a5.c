@@ -58,6 +58,7 @@ void vendor_load_properties()
         property_set("ro.build.product", "a5dwg");
         property_set("persist.radio.multisim.config", "dsds");
         property_set("ro.telephony.ril_class", "A5RIL");
+        property_set("ro.telephony.ril.v3", "signalstrength");
         property_set("ro.ril.hsdpa.category", "10");
     } else if (strstr(bootmid, "0P9C50000")) {
         /* a5dwg (chinese) */
@@ -69,6 +70,7 @@ void vendor_load_properties()
         property_set("ro.telephony.default_network", "7");
         property_set("persist.radio.multisim.config", "dsds");
         property_set("ro.telephony.ril_class", "A5RIL");
+        property_set("ro.telephony.ril.v3", "signalstrength");
         property_set("ro.ril.enable.pre_r8fd", "1");
         property_set("ro.ril.enable.sdr", "0");
         property_set("ro.ril.enable.r8fd", "1");
@@ -86,6 +88,7 @@ void vendor_load_properties()
         property_set("persist.radio.multisim.config", "dsda");
         property_set("persist.radio.relay_oprt_change", "1");
         property_set("ro.telephony.ril_class", "A5RIL");
+        property_set("ro.telephony.ril.v3", "signalstrength");
         property_set("ro.ril.hsdpa.category", "24");
     } else if (strstr(bootmid, "0P9C30000")) {
         /* a5chl */
