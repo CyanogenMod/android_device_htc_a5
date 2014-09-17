@@ -4,8 +4,8 @@
 rild.libargs=-d /dev/smd0
 rild.libpath=/vendor/lib/libril-qc-qmi-1.so
 ril.subscription.types=NV,RUIM
-mobiledata.interfaces=rmnet0,rmnet1
 ro.baseband.arch=msm
+ro.telephony.ril.v3=signalstrength
 ro.data.large_tcp_window_size=true
 ro.telephony.call_ring.multiple=false
 ro.use_data_netmgrd=true
