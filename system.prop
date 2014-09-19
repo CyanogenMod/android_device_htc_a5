@@ -27,8 +27,17 @@ ro.qc.sdk.sensors.gestures=true
 ro.vendor.extension_library=/vendor/lib/libqc-opt.so
 
 # Audio
-af.resampler.quality=4
+audio.offload.buffer.size.kb=32
+audio.offload.gapless.enabled=false
+av.offload.enable=true
+av.streaming.offload.enable=true
+audio.offload.24bit.enable=1
+audio.offload.pcm.enable=true
+persist.audio.fluence.voicecall=true
+persist.audio.fluence.speaker=true
 ro.qc.sdk.audio.fluencetype=fluence
+tunnel.audio.encode=true
+af.resampler.quality=4
 
 # AV
 media.aac_51_output_enabled=true
