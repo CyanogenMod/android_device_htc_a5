@@ -57,7 +57,6 @@ etc/tfa/voip_l.drc
 etc/tfa/voip_l.eq
 etc/tfa/voip_l.preset
 etc/tfa/voip.preset
-lib/soundfx/libqcompostprocbundle.so
 vendor/lib/libacdbloader.so
 vendor/lib/libacdbmapper.so
 vendor/lib/libacdbrtac.so
