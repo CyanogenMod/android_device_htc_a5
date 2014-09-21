@@ -103,6 +103,9 @@ on init
     chown nfc nfc /sys/class/NFC_sensor/comn/nxp_uicc_swp
     chmod 0664 /sys/class/NFC_sensor/comn/nxp_uicc_swp
 
+# Vibrator permission
+    chown system /sys/devices/virtual/timed_output/vibrator/pwm_value_1p
+
 on fs
     mkdir /devlog 0700 root root
     mkdir /fataldevlog 0700 root root
