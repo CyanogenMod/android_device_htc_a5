@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- Version: A5 20140220_add_bt_wb -->
+<!-- Version: A5 20140304_add_voice_call_with_enforce_shutter_sound -->
 <mixer>
 <!-- These are the initial mixer settings -->
      <ctl name="Voice Rx Device Mute" id="0" value="0" />
@@ -87,6 +87,7 @@
      <ctl name="RX2 MIX2 INP1" value="ZERO" />
      <ctl name="RX1 MIX2 INP2" value="ZERO" />
      <ctl name="RX1 MIX2 INP1" value="ZERO" />
+     <ctl name="RX4 MIX1 INP2 Mux" value="ZERO" />
      <ctl name="RX4 MIX1 INP1" value="ZERO" />
      <ctl name="RX3 MIX1 INP2 Mux" value="ZERO" />
      <ctl name="RX3 MIX1 INP1" value="ZERO" />
@@ -387,11 +388,7 @@
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia1" value="1" />
      </path>
 
-     <path name="deep-buffer-playback voice-speaker">
-          <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia1" value="1" />
-     </path>
-
-     <path name="deep-buffer-playback speaker-and-headphones">
+     <path name="deep-buffer-playback speaker-headset">
           <ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia1" value="1" />
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia1" value="1" />
      </path>
@@ -405,10 +402,6 @@
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia5" value="1" />
      </path>
 
-     <path name="low-latency-playback voice-speaker">
-          <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia5" value="1" />
-     </path>
-
      <path name="low-latency-playback speaker-headset">
           <ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia5" value="1" />
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia5" value="1" />
@@ -417,11 +410,6 @@
      <path name="low-latency-playback speaker-and-hdmi">
           <path name="low-latency-playback hdmi" />
           <path name="low-latency-playback speaker" />
-     </path>
-
-     <path name="low-latency-playback speaker-and-headphones">
-          <ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia5" value="1" />
-          <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia5" value="1" />
      </path>
 
      <path name="compress-offload-playback">
@@ -436,11 +424,15 @@
           <ctl name="HDMI Mixer MultiMedia4" value="1" />
      </path>
 
+     <path name="low-latency-playback voice-speaker">
+          <path name="low-latency-playback speaker" />
+     </path>
+
      <path name="compress-offload-playback speaker">
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia4" value="1" />
      </path>
 
-     <path name="compress-offload-playback speaker-and-headphones">
+     <path name="compress-offload-playback speaker-headset">
           <ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia4" value="1" />
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia4" value="1" />
      </path>
@@ -450,13 +442,13 @@
           <path name="compress-offload-playback speaker" />
      </path>
 
-     <path name="voice-call voice-speaker">
+     <path name="voice-call speaker">
           <ctl name="TERT_MI2S_RX_Voice Mixer CSVoice" value="1" />
           <ctl name="Voice_Tx Mixer SLIM_0_TX_Voice" value="1" />
           <ctl name="VOC_EXT_EC MUX" value="TERT_MI2S_TX" />
      </path>
 
-     <path name="voice-call voice-speaker-headset">
+     <path name="voice-call speaker-headset">
           <path name="voice-call" />
      </path>
 
@@ -466,7 +458,7 @@
           <ctl name="VOC_EXT_EC MUX" value="TERT_MI2S_TX" />
      </path>
 
-     <path name="voice2-call speaker-and-headphones">
+     <path name="voice2-call speaker-headset">
           <path name="voice2-call" />
      </path>
 
@@ -510,7 +502,7 @@
           <ctl name="VOC_EXT_EC MUX" value="TERT_MI2S_TX" />
      </path>
 
-     <path name="volte-call speaker-and-headphones">
+     <path name="volte-call speaker-headset">
           <path name="volte-call" />
      </path>
 
@@ -532,7 +524,7 @@
           <ctl name="Voip_Tx Mixer SLIM_0_TX_Voip" value="1" />
      </path>
 
-     <path name="compress-voip-call speaker-and-headphones">
+     <path name="compress-voip-call speaker-headset">
           <path name="compress-voip-call" />
      </path>
 
@@ -971,11 +963,11 @@
      </path>
 
      <path name="speaker-mic">
-          <path name="dmic-endfire" />
+          <path name="speaker-dmic-endfire" />
      </path>
 
      <path name="handset">
-          <path name="earpiece-voice" />
+          <path name="earpiece" />
      </path>
 
      <path name="handset-mic">
@@ -1001,15 +993,15 @@
      </path>
 
      <path name="voice-handset-tmus">
-          <path name="handset" />
+          <path name="earpiece-voice" />
      </path>
 
      <path name="voice-speaker">
           <path name="speaker" />
-     </path>
+    </path>
 
      <path name="voice-speaker-mic">
-          <path name="line-vr" />
+          <path name="speaker-dmic-endfire" />
      </path>
 
      <path name="voice-headphones">
@@ -1021,6 +1013,7 @@
      </path>
 
      <path name="voice-speaker-and-headphones">
+          <path name="headphones-voice" />
      </path>
 
      <path name="low-latency-playback voice-speaker-and-headphones">
@@ -1035,8 +1028,16 @@
           <path name="compress-offload-playback speaker" />
      </path>
 
+     <path name="voice-call voice-speaker-and-headphones">
+          <path name="voice-call" />
+     </path>
+
      <path name="speaker-and-headphones">
           <path name="headphones" />
+          <ctl name="RX4 MIX1 INP1" value="RX1" />
+          <ctl name="RX4 MIX1 INP2 Mux" value="RX2" />
+          <ctl name="SPK DAC Switch" value="1" />
+          <ctl name="COMP0 Switch" value="1" />
      </path>
 
      <path name="usb-headphones">
@@ -1069,6 +1070,7 @@
      <path name="speaker-and-anc-headphones">
           <path name="anc-headphones" />
           <ctl name="RX4 MIX1 INP1" value="RX1" />
+          <ctl name="RX4 MIX1 INP2 Mux" value="RX2" />
           <ctl name="SPK DAC Switch" value="1" />
      </path>
 
@@ -1080,6 +1082,7 @@
      <path name="speaker-and-anc-fb-headphones">
           <path name="anc-fb-headphones" />
           <ctl name="RX4 MIX1 INP1" value="RX1" />
+          <ctl name="RX4 MIX1 INP2 Mux" value="RX2" />
           <ctl name="SPK DAC Switch" value="1" />
      </path>
 
