@@ -15,47 +15,11 @@ import java.util.ArrayList;
 
 public class A5RIL extends RIL implements CommandsInterface {
 
-    static final int RIL_REQUEST_HTC_GET_DATA_CALL_PROFILE = 5505;
-    static final int RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION = 5506;
-    static final int RIL_REQUEST_HTC_SET_DATA_SUBSCRIPTION = 5507;
-    static final int RIL_UNSOL_HTC_UICC_SUBSCRIPTION_STATUS_CHANGED = 5760;
+    private static final int RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION = 5506;
 
     public A5RIL(Context paramContext, int paramInt1,
            int paramInt2, Integer paramInteger) {
          super(paramContext, paramInt1, paramInt2, paramInteger);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void getCellInfoList(Message result) {
-        if (RILJ_LOGD) riljLog("[STUB] > getCellInfoList");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setCellInfoListRate(int rateInMillis, Message response) {
-        if (RILJ_LOGD) riljLog("[STUB] > setCellInfoListRate");
-    }
-
-    @Override
-    public void
-    getDataCallProfile(int appType, Message result) {
-        RILRequest rr = RILRequest.obtain(
-                RIL_REQUEST_HTC_GET_DATA_CALL_PROFILE, result);
-
-        // count of ints
-        rr.mParcel.writeInt(1);
-        rr.mParcel.writeInt(appType);
-
-        if (RILJ_LOGD) {
-            riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
-                   + " : " + appType);
-        }
-        send(rr);
     }
 
     @Override
@@ -74,44 +38,6 @@ public class A5RIL extends RIL implements CommandsInterface {
         rr.mParcel.writeInt(subStatus);
 
         send(rr);
-    }
-
-    @Override
-    public void setDataSubscription(Message result) {
-        RILRequest rr = RILRequest.obtain(RIL_REQUEST_HTC_SET_DATA_SUBSCRIPTION, result);
-        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
-        send(rr);
-    }
-
-    @Override
-    protected void
-    processUnsolicited (Parcel p) {
-        Object ret;
-        int dataPosition = p.dataPosition(); // save off position within the Parcel
-        int response = p.readInt();
-
-        switch(response) {
-            case RIL_UNSOL_HTC_UICC_SUBSCRIPTION_STATUS_CHANGED: ret = responseInts(p); break;
-            default:
-                // Rewind the Parcel
-                p.setDataPosition(dataPosition);
-
-                // Forward responses that we are not overriding to the super class
-                super.processUnsolicited(p);
-                return;
-        }
-
-        switch(response) {
-            case RIL_UNSOL_HTC_UICC_SUBSCRIPTION_STATUS_CHANGED: {
-                if (RILJ_LOGD) unsljLogRet(response, ret);
-
-                if (mSubscriptionStatusRegistrants != null) {
-                    mSubscriptionStatusRegistrants.notifyRegistrants(
-                                        new AsyncResult (null, ret, null));
-                }
-                break;
-            }
-        }
     }
 
     @Override
@@ -256,7 +182,7 @@ public class A5RIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_REPORT_SMS_MEMORY_STATUS: ret = responseVoid(p); break;
             case RIL_REQUEST_REPORT_STK_SERVICE_IS_RUNNING: ret = responseVoid(p); break;
             case RIL_REQUEST_CDMA_GET_SUBSCRIPTION_SOURCE: ret =  responseInts(p); break;
-            case RIL_REQUEST_GET_DATA_CALL_PROFILE: case RIL_REQUEST_HTC_GET_DATA_CALL_PROFILE: ret =  responseGetDataCallProfile(p); break;
+            case RIL_REQUEST_GET_DATA_CALL_PROFILE: ret =  responseGetDataCallProfile(p); break;
             case RIL_REQUEST_ISIM_AUTHENTICATION: ret =  responseString(p); break;
             case RIL_REQUEST_ACKNOWLEDGE_INCOMING_GSM_SMS_WITH_PDU: ret = responseVoid(p); break;
             case RIL_REQUEST_STK_SEND_ENVELOPE_WITH_STATUS: ret = responseICC_IO(p); break;
@@ -266,8 +192,8 @@ public class A5RIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_SET_INITIAL_ATTACH_APN: ret = responseVoid(p); break;
             case RIL_REQUEST_IMS_REGISTRATION_STATE: ret = responseInts(p); break;
             case RIL_REQUEST_IMS_SEND_SMS: ret =  responseSMS(p); break;
-            case RIL_REQUEST_SET_UICC_SUBSCRIPTION: case RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION: ret = responseVoid(p); break;
-            case RIL_REQUEST_SET_DATA_SUBSCRIPTION: case RIL_REQUEST_HTC_SET_DATA_SUBSCRIPTION: ret = responseVoid(p); break;
+            case RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION: ret = responseVoid(p); break;
+            case RIL_REQUEST_SET_DATA_SUBSCRIPTION: ret = responseVoid(p); break;
             default:
                 throw new RuntimeException("Unrecognized solicited response: " + rr.mRequest);
             //break;
@@ -445,7 +371,7 @@ public class A5RIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_REPORT_SMS_MEMORY_STATUS: return "RIL_REQUEST_REPORT_SMS_MEMORY_STATUS";
             case RIL_REQUEST_REPORT_STK_SERVICE_IS_RUNNING: return "RIL_REQUEST_REPORT_STK_SERVICE_IS_RUNNING";
             case RIL_REQUEST_CDMA_GET_SUBSCRIPTION_SOURCE: return "RIL_REQUEST_CDMA_GET_SUBSCRIPTION_SOURCE";
-            case RIL_REQUEST_GET_DATA_CALL_PROFILE: case RIL_REQUEST_HTC_GET_DATA_CALL_PROFILE: return "RIL_REQUEST_GET_DATA_CALL_PROFILE";
+            case RIL_REQUEST_GET_DATA_CALL_PROFILE: return "RIL_REQUEST_GET_DATA_CALL_PROFILE";
             case RIL_REQUEST_ISIM_AUTHENTICATION: return "RIL_REQUEST_ISIM_AUTHENTICATION";
             case RIL_REQUEST_ACKNOWLEDGE_INCOMING_GSM_SMS_WITH_PDU: return "RIL_REQUEST_ACKNOWLEDGE_INCOMING_GSM_SMS_WITH_PDU";
             case RIL_REQUEST_STK_SEND_ENVELOPE_WITH_STATUS: return "RIL_REQUEST_STK_SEND_ENVELOPE_WITH_STATUS";
@@ -455,69 +381,9 @@ public class A5RIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_SET_INITIAL_ATTACH_APN: return "RIL_REQUEST_SET_INITIAL_ATTACH_APN";
             case RIL_REQUEST_IMS_REGISTRATION_STATE: return "RIL_REQUEST_IMS_REGISTRATION_STATE";
             case RIL_REQUEST_IMS_SEND_SMS: return "RIL_REQUEST_IMS_SEND_SMS";
-            case RIL_REQUEST_SET_UICC_SUBSCRIPTION: case RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION: return "RIL_REQUEST_SET_UICC_SUBSCRIPTION";
-            case RIL_REQUEST_SET_DATA_SUBSCRIPTION: case RIL_REQUEST_HTC_SET_DATA_SUBSCRIPTION: return "RIL_REQUEST_SET_DATA_SUBSCRIPTION";
+            case RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION: return "RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION";
+            case RIL_REQUEST_SET_DATA_SUBSCRIPTION: return "RIL_REQUEST_SET_DATA_SUBSCRIPTION";
             default: return "<unknown request>";
-        }
-    }
-
-    static String
-    responseToString(int request)
-    {
-/*
- cat libs/telephony/ril_unsol_commands.h \
- | egrep "^ *{RIL_" \
- | sed -re 's/\{RIL_([^,]+),[^,]+,([^}]+).+/case RIL_\1: return "\1";/'
-*/
-        switch(request) {
-            case RIL_UNSOL_RESPONSE_RADIO_STATE_CHANGED: return "UNSOL_RESPONSE_RADIO_STATE_CHANGED";
-            case RIL_UNSOL_RESPONSE_CALL_STATE_CHANGED: return "UNSOL_RESPONSE_CALL_STATE_CHANGED";
-            case RIL_UNSOL_RESPONSE_VOICE_NETWORK_STATE_CHANGED: return "UNSOL_RESPONSE_VOICE_NETWORK_STATE_CHANGED";
-            case RIL_UNSOL_RESPONSE_NEW_SMS: return "UNSOL_RESPONSE_NEW_SMS";
-            case RIL_UNSOL_RESPONSE_NEW_SMS_STATUS_REPORT: return "UNSOL_RESPONSE_NEW_SMS_STATUS_REPORT";
-            case RIL_UNSOL_RESPONSE_NEW_SMS_ON_SIM: return "UNSOL_RESPONSE_NEW_SMS_ON_SIM";
-            case RIL_UNSOL_ON_USSD: return "UNSOL_ON_USSD";
-            case RIL_UNSOL_ON_USSD_REQUEST: return "UNSOL_ON_USSD_REQUEST";
-            case RIL_UNSOL_NITZ_TIME_RECEIVED: return "UNSOL_NITZ_TIME_RECEIVED";
-            case RIL_UNSOL_SIGNAL_STRENGTH: return "UNSOL_SIGNAL_STRENGTH";
-            case RIL_UNSOL_DATA_CALL_LIST_CHANGED: return "UNSOL_DATA_CALL_LIST_CHANGED";
-            case RIL_UNSOL_SUPP_SVC_NOTIFICATION: return "UNSOL_SUPP_SVC_NOTIFICATION";
-            case RIL_UNSOL_STK_SESSION_END: return "UNSOL_STK_SESSION_END";
-            case RIL_UNSOL_STK_PROACTIVE_COMMAND: return "UNSOL_STK_PROACTIVE_COMMAND";
-            case RIL_UNSOL_STK_EVENT_NOTIFY: return "UNSOL_STK_EVENT_NOTIFY";
-            case RIL_UNSOL_STK_CALL_SETUP: return "UNSOL_STK_CALL_SETUP";
-            case RIL_UNSOL_SIM_SMS_STORAGE_FULL: return "UNSOL_SIM_SMS_STORAGE_FULL";
-            case RIL_UNSOL_SIM_REFRESH: return "UNSOL_SIM_REFRESH";
-            case RIL_UNSOL_CALL_RING: return "UNSOL_CALL_RING";
-            case RIL_UNSOL_RESPONSE_SIM_STATUS_CHANGED: return "UNSOL_RESPONSE_SIM_STATUS_CHANGED";
-            case RIL_UNSOL_RESPONSE_CDMA_NEW_SMS: return "UNSOL_RESPONSE_CDMA_NEW_SMS";
-            case RIL_UNSOL_RESPONSE_NEW_BROADCAST_SMS: return "UNSOL_RESPONSE_NEW_BROADCAST_SMS";
-            case RIL_UNSOL_CDMA_RUIM_SMS_STORAGE_FULL: return "UNSOL_CDMA_RUIM_SMS_STORAGE_FULL";
-            case RIL_UNSOL_RESTRICTED_STATE_CHANGED: return "UNSOL_RESTRICTED_STATE_CHANGED";
-            case RIL_UNSOL_ENTER_EMERGENCY_CALLBACK_MODE: return "UNSOL_ENTER_EMERGENCY_CALLBACK_MODE";
-            case RIL_UNSOL_CDMA_CALL_WAITING: return "UNSOL_CDMA_CALL_WAITING";
-            case RIL_UNSOL_CDMA_OTA_PROVISION_STATUS: return "UNSOL_CDMA_OTA_PROVISION_STATUS";
-            case RIL_UNSOL_CDMA_INFO_REC: return "UNSOL_CDMA_INFO_REC";
-            case RIL_UNSOL_OEM_HOOK_RAW: return "UNSOL_OEM_HOOK_RAW";
-            case RIL_UNSOL_RINGBACK_TONE: return "UNSOL_RINGBACK_TONE";
-            case RIL_UNSOL_RESEND_INCALL_MUTE: return "UNSOL_RESEND_INCALL_MUTE";
-            case RIL_UNSOL_CDMA_SUBSCRIPTION_SOURCE_CHANGED: return "CDMA_SUBSCRIPTION_SOURCE_CHANGED";
-            case RIL_UNSOl_CDMA_PRL_CHANGED: return "UNSOL_CDMA_PRL_CHANGED";
-            case RIL_UNSOL_EXIT_EMERGENCY_CALLBACK_MODE: return "UNSOL_EXIT_EMERGENCY_CALLBACK_MODE";
-            case RIL_UNSOL_RIL_CONNECTED: return "UNSOL_RIL_CONNECTED";
-            case RIL_UNSOL_VOICE_RADIO_TECH_CHANGED: return "UNSOL_VOICE_RADIO_TECH_CHANGED";
-            case RIL_UNSOL_CELL_INFO_LIST: return "UNSOL_CELL_INFO_LIST";
-            case RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED:
-                return "UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED";
-            case RIL_UNSOL_ON_SS: return "UNSOL_ON_SS";
-            case RIL_UNSOL_STK_CC_ALPHA_NOTIFY: return "UNSOL_STK_CC_ALPHA_NOTIFY";
-            case RIL_UNSOL_UICC_SUBSCRIPTION_STATUS_CHANGED:
-            case RIL_UNSOL_HTC_UICC_SUBSCRIPTION_STATUS_CHANGED:
-                    return "RIL_UNSOL_UICC_SUBSCRIPTION_STATUS_CHANGED";
-
-            case RIL_UNSOL_STK_SEND_SMS_RESULT: return "RIL_UNSOL_STK_SEND_SMS_RESULT";
-
-            default: return "<unknown response>";
         }
     }
 
