@@ -388,7 +388,11 @@
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia1" value="1" />
      </path>
 
-     <path name="deep-buffer-playback speaker-headset">
+     <path name="deep-buffer-playback voice-speaker">
+          <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia1" value="1" />
+     </path>
+
+     <path name="deep-buffer-playback speaker-and-headphones">
           <ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia1" value="1" />
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia1" value="1" />
      </path>
@@ -402,6 +406,10 @@
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia5" value="1" />
      </path>
 
+     <path name="low-latency-playback voice-speaker">
+          <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia5" value="1" />
+     </path>
+
      <path name="low-latency-playback speaker-headset">
           <ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia5" value="1" />
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia5" value="1" />
@@ -410,6 +418,11 @@
      <path name="low-latency-playback speaker-and-hdmi">
           <path name="low-latency-playback hdmi" />
           <path name="low-latency-playback speaker" />
+     </path>
+
+     <path name="low-latency-playback speaker-and-headphones">
+          <ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia5" value="1" />
+          <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia5" value="1" />
      </path>
 
      <path name="compress-offload-playback">
@@ -424,15 +437,11 @@
           <ctl name="HDMI Mixer MultiMedia4" value="1" />
      </path>
 
-     <path name="low-latency-playback voice-speaker">
-          <path name="low-latency-playback speaker" />
-     </path>
-
      <path name="compress-offload-playback speaker">
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia4" value="1" />
      </path>
 
-     <path name="compress-offload-playback speaker-headset">
+     <path name="compress-offload-playback speaker-and-headphones">
           <ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia4" value="1" />
           <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia4" value="1" />
      </path>
@@ -442,13 +451,13 @@
           <path name="compress-offload-playback speaker" />
      </path>
 
-     <path name="voice-call speaker">
+     <path name="voice-call voice-speaker">
           <ctl name="TERT_MI2S_RX_Voice Mixer CSVoice" value="1" />
           <ctl name="Voice_Tx Mixer SLIM_0_TX_Voice" value="1" />
           <ctl name="VOC_EXT_EC MUX" value="TERT_MI2S_TX" />
      </path>
 
-     <path name="voice-call speaker-headset">
+     <path name="voice-call voice-speaker-headset">
           <path name="voice-call" />
      </path>
 
@@ -458,7 +467,7 @@
           <ctl name="VOC_EXT_EC MUX" value="TERT_MI2S_TX" />
      </path>
 
-     <path name="voice2-call speaker-headset">
+     <path name="voice2-call speaker-and-headphones">
           <path name="voice2-call" />
      </path>
 
@@ -502,7 +511,7 @@
           <ctl name="VOC_EXT_EC MUX" value="TERT_MI2S_TX" />
      </path>
 
-     <path name="volte-call speaker-headset">
+     <path name="volte-call speaker-and-headphones">
           <path name="volte-call" />
      </path>
 
@@ -524,7 +533,7 @@
           <ctl name="Voip_Tx Mixer SLIM_0_TX_Voip" value="1" />
      </path>
 
-     <path name="compress-voip-call speaker-headset">
+     <path name="compress-voip-call speaker-and-headphones">
           <path name="compress-voip-call" />
      </path>
 
@@ -967,7 +976,7 @@
      </path>
 
      <path name="handset">
-          <path name="earpiece" />
+          <path name="earpiece-voice" />
      </path>
 
      <path name="handset-mic">
@@ -998,7 +1007,7 @@
 
      <path name="voice-speaker">
           <path name="speaker" />
-    </path>
+     </path>
 
      <path name="voice-speaker-mic">
           <path name="speaker-dmic-endfire" />
@@ -1034,10 +1043,6 @@
 
      <path name="speaker-and-headphones">
           <path name="headphones" />
-          <ctl name="RX4 MIX1 INP1" value="RX1" />
-          <ctl name="RX4 MIX1 INP2 Mux" value="RX2" />
-          <ctl name="SPK DAC Switch" value="1" />
-          <ctl name="COMP0 Switch" value="1" />
      </path>
 
      <path name="usb-headphones">
