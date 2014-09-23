@@ -28,12 +28,6 @@ TARGET_SCREEN_WIDTH := 720
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
-# We have enough space to hold precise GC data
-PRODUCT_TAGS += dalvik.gc.type-precise
-
-# Set build date
-PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
-
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.qcom \
@@ -122,10 +116,6 @@ PRODUCT_PACKAGES += \
     memtrack.msm8226 \
     libgenlock \
     liboverlay
-
-# Gps
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/gps.conf:system/etc/gps.conf
 
 # Keylayouts and Keychars
 PRODUCT_COPY_FILES += \

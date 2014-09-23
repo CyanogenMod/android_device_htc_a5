@@ -91,6 +91,8 @@ on init
     chmod 0220 /sys/class/power_supply/battery/full_level_dis_batt_chg
     chown radio radio /sys/class/power_supply/battery/phone_call
     chmod 0660 /sys/class/power_supply/battery/phone_call
+    chown media media /sys/class/power_supply/battery/play_music
+    chmod 0220 /sys/class/power_supply/battery/play_music
     chown radio radio /sys/class/power_supply/battery/network_search
     chmod 0220 /sys/class/power_supply/battery/network_search
     chown system system /sys/class/power_supply/battery/navigation
@@ -163,10 +165,6 @@ on post-fs-data
     chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.4/polling
 
-    # NFC local data and nfcee xml storage
-    mkdir /data/nfc 0770 nfc nfc
-    mkdir /data/nfc/param 0770 nfc nfc
-
     #Create the symlink to qcn wpa_supplicant folder for ar6000 wpa_supplicant
     mkdir /data/system 0775 system system
 
@@ -233,13 +231,11 @@ on boot
     write /sys/devices/system/cpu/cpu3/online 1
     write /sys/module/msm_thermal/core_control/enabled 1
 
+    chmod 0644 /proc/cmdline
+
     # bluetooth
     chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
     chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
-
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
-    chmod 0660 /sys/class/rfkill/rfkill0/state
 
     # Create QMUX deamon socket area
     mkdir /dev/socket/qmux_radio 0770 radio radio
@@ -262,20 +258,21 @@ on boot
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
     setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
     setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
-    setprop net.tcp.buffersize.lte     524288,1048576,5120000,262144,524288,1220608
-    setprop net.tcp.buffersize.hspap   4096,174760,1572864,4096,16384,1220608
-    setprop net.tcp.buffersize.hspa    4096,174760,1572864,4096,16384,1220608
-    setprop net.tcp.buffersize.hsupa   4096,174760,1572864,4096,16384,1220608
-    setprop net.tcp.buffersize.hsdpa   4096,174760,1572864,4096,16384,1220608
-    setprop net.tcp.buffersize.umts    4096,174760,1572864,4096,16384,110208
+    setprop net.tcp.buffersize.lte     4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.umts    4094,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.hspap   4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.hspa    4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.hsupa   4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.hsdpa   4094,87380,1220608,4096,16384,1220608
     setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
     setprop net.tcp.buffersize.gprs    4092,8760,11680,4096,8760,11680
-    setprop net.tcp.buffersize.evdo_b  4094,87380,262144,4096,16384,262144
+    setprop net.tcp.buffersize.evdo_b  8188,174160,524400,64860,129720,1220608
+    setprop net.tcp.buffersize.evdo    8188,174160,524400,64860,129720,1220608
 
 # Assign TCP buffer thresholds to be ceiling value of technology maximums
 # Increased technology maximums should be reflected here.
-    write /proc/sys/net/core/rmem_max  1220608
-    write /proc/sys/net/core/wmem_max  1220608
+    write /proc/sys/net/core/rmem_max  2097152
+    write /proc/sys/net/core/wmem_max  2097152
 
 #SSD_HDMI start
     # setup permissions for fb1 related nodes
@@ -327,7 +324,12 @@ on boot
 # load ADSP
     write /sys/kernel/boot_adsp/boot 1
 
-# Services start here
+## Service start here
+service adsprpcd /system/bin/adsprpcd
+    class main
+    user media
+    group media
+
 service akmd /system/bin/akmd
     class main
     user system
@@ -515,6 +517,11 @@ service qrngp /system/bin/qrngp
     group root
     oneshot
     disabled
+
+service qseecomd /system/bin/qseecomd
+   class main
+   user root
+   group root
 
 service rmt_storage /system/bin/rmt_storage modem_st1 modem_st2 fsc recovery radio_config cdma_record
     class core

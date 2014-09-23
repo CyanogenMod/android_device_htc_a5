@@ -1,3 +1,13 @@
+# ADSP
+bin/adsprpcd
+vendor/lib/libadsprpc.so
+vendor/lib/libfastcvadsp_stub.so
+vendor/lib/libfastcvopt.so
+vendor/lib/rfsa/adsp/libadsp_denoise_skel.so
+vendor/lib/rfsa/adsp/libfastcvadsp.so
+vendor/lib/rfsa/adsp/libfastcvadsp_skel.so
+vendor/lib/rfsa/adsp/libdspCV_skel.so
+
 # Audio
 etc/Bluetooth_cal.acdb
 etc/General_cal.acdb
@@ -72,7 +82,6 @@ etc/firmware/ILP0100_IPM_Code_out.bin
 etc/firmware/ILP0100_IPM_Data_out.bin
 etc/firmware/lscbuffer_rev2.bin
 lib/hw/camera.vendor.msm8226.so
-vendor/lib/libadsprpc.so
 vendor/lib/libawb_calibration.so
 vendor/lib/libBeautyChat.so
 vendor/lib/libcamera_aec.so
@@ -139,7 +148,6 @@ vendor/lib/libchromatix_skuf_ov5648_p5v23c_common.so
 vendor/lib/libchromatix_skuf_ov5648_p5v23c_default_video.so
 vendor/lib/libchromatix_skuf_ov5648_p5v23c_preview.so
 vendor/lib/libchromatix_skuf_ov5648_p5v23c_snapshot.so
-vendor/lib/libfastcvadsp_stub.so
 vendor/lib/libfastcvopt.so
 vendor/lib/libhtccamera.so
 vendor/lib/libmmcamera2_c2d_module.so
@@ -204,13 +212,9 @@ vendor/lib/libtuning_af_3.so
 vendor/lib/libtuning_af.so
 vendor/lib/libtuning_awb_ov13850.so
 vendor/lib/libtuning_awb_s5k5e_onelane.so
-vendor/lib/rfsa/adsp/libadsp_denoise_skel.so
-vendor/lib/rfsa/adsp/libdspCV_skel.so
-vendor/lib/rfsa/adsp/libfastcvadsp_skel.so
-vendor/lib/rfsa/adsp/libfastcvadsp.so
 
 # GPS
-etc/agps_rm
+etc/gps.conf
 lib/hw/gps.default.so
 lib/libgps.utils.so
 lib/libloc_api_v02.so
@@ -249,6 +253,9 @@ vendor/lib/librs_adreno_sha1.so
 vendor/lib/librs_adreno.so
 vendor/lib/libRSDriver_adreno.so
 vendor/lib/libsc-a3xx.so
+
+# IRSC
+bin/irsc_util
 
 # Media
 etc/firmware/venus.b00
@@ -402,6 +409,7 @@ etc/firmware/hcheck.b03
 etc/firmware/hcheck.mdt
 
 # DRM
+bin/qseecomd
 vendor/firmware/cmnlib.b00
 vendor/firmware/cmnlib.b01
 vendor/firmware/cmnlib.b02
