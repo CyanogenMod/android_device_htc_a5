@@ -35,7 +35,7 @@ public class VibratorHW {
         return 53;
     }
     public static int getWarningThreshold()  {
-        return 85;
+        return 92;
     }
     public static int getCurIntensity()  {
         return Integer.parseInt(FileUtils.readOneLine(AMP_PATH).replace("%", ""));
