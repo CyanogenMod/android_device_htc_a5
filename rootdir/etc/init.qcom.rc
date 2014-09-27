@@ -101,10 +101,6 @@ on init
     chmod 0220 /sys/class/power_supply/battery/disable_limit_chg
 # HTC SSD Battery - END
 
-    # permissions for NFC
-    chown nfc nfc /sys/class/NFC_sensor/comn/nxp_uicc_swp
-    chmod 0664 /sys/class/NFC_sensor/comn/nxp_uicc_swp
-
 # Vibrator permission
     chown system /sys/devices/virtual/timed_output/vibrator/pwm_value_1p
 
@@ -232,6 +228,10 @@ on boot
     write /sys/module/msm_thermal/core_control/enabled 1
 
     chmod 0644 /proc/cmdline
+
+    # NFC
+    mkdir /data/nfc 0770 nfc nfc
+    mkdir /data/nfc/param 0770 nfc nfc
 
     # bluetooth
     chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
