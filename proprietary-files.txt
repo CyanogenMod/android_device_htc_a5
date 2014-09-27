@@ -276,7 +276,7 @@ vendor/lib/libqomx_jpegdec.so
 vendor/lib/libqomx_jpegenc.so
 
 # NFC
-lib/hw/nfc_nci.a5.so
+lib/hw/nfc_nci.msm8226.so
 vendor/firmware/libpn547_fw.so
 
 # Power
