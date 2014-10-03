@@ -407,7 +407,7 @@
      </path>
 
      <path name="low-latency-playback voice-speaker">
-          <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia5" value="1" />
+          <path name="low-latency-playback speaker" />
      </path>
 
      <path name="low-latency-playback speaker-headset">
@@ -976,7 +976,7 @@
      </path>
 
      <path name="handset">
-          <path name="earpiece-voice" />
+          <path name="earpiece" />
      </path>
 
      <path name="handset-mic">
