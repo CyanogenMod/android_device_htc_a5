@@ -286,8 +286,8 @@ bin/thermal-engine
 vendor/lib/libthermalclient.so
 
 # QMI
+bin/rmt_storage
 blobs/gsm/bin/qmuxd
-blobs/gsm/bin/rmt_storage
 blobs/gsm/vendor/lib/libdiag.so
 blobs/gsm/vendor/lib/libdsi_netctrl.so
 blobs/gsm/vendor/lib/libdsnetutils.so
@@ -300,13 +300,10 @@ blobs/gsm/vendor/lib/libqmi_cci.so
 blobs/gsm/vendor/lib/libqmi_client_qmux.so
 blobs/gsm/vendor/lib/libqmi_common_so.so
 blobs/gsm/vendor/lib/libqmi_csi.so
-blobs/gsm/vendor/lib/libqmi_csvt_srvc.so
 blobs/gsm/vendor/lib/libqmi_encdec.so
 blobs/gsm/vendor/lib/libqmiservices.so
 blobs/gsm/vendor/lib/libqmi.so
-
 blobs/chl/bin/qmuxd
-blobs/chl/bin/rmt_storage
 blobs/chl/vendor/lib/libdiag.so
 blobs/chl/vendor/lib/libdsi_netctrl.so
 blobs/chl/vendor/lib/libdsnetutils.so
@@ -330,15 +327,13 @@ blobs/gsm/bin/rild
 blobs/gsm/lib/libril.so
 blobs/gsm/lib/libhtc_rilhook.so
 blobs/gsm/vendor/lib/libnetmgr.so
-blobs/gsm/vendor/lib/libqc-opt.so
 blobs/gsm/vendor/lib/libril-qc-qmi-1.so
 blobs/gsm/vendor/lib/libril-qcril-hook-oem.so
-
 blobs/chl/bin/netmgrd
 blobs/chl/vendor/lib/libnetmgr.so
-blobs/chl/vendor/lib/libqc-opt.so
 blobs/chl/vendor/lib/libril-qc-qmi-1.so
 blobs/chl/vendor/lib/libril-qcril-hook-oem.so
+vendor/lib/libqc-opt.so
 
 # Sensors
 bin/akmd
