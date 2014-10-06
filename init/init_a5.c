@@ -34,42 +34,48 @@
 #include "log.h"
 #include "util.h"
 
-void dualsim_properties(char type[])
+void dualsim_properties(char multisim_config[])
 {
-        property_set("persist.radio.multisim.config", type);
-        property_set("persist.radio.dont_use_dsd", "true");
-        property_set("ro.telephony.ril_class", "A5RIL");
-        property_set("ro.telephony.ril.v3", "signalstrength");
+    property_set("persist.radio.multisim.config", multisim_config);
+    property_set("persist.radio.dont_use_dsd", "true");
+    property_set("ro.telephony.ril_class", "A5RIL");
+    property_set("ro.telephony.ril.v3", "signalstrength");
 }
 
 void gsm_properties(char default_network[])
 {
-        property_set("ro.telephony.default_network", default_network);
-        property_set("ro.ril.hsupa.category", "6");
-        property_set("ro.ril.hsxpa", "4");
-        property_set("ro.ril.disable.cpc", "1");
-        property_set("ro.ril.air.enabled", "1");
-        property_set("ro.ril.enable.pre_r8fd", "1");
-        property_set("ro.ril.enable.sdr", "1");
-        property_set("ro.ril.enable.r8fd", "1");
-        property_set("ro.ril.disable.fd.plmn.prefix", "23402,23410,23411,23420,23594,27202,27205");
+    property_set("ro.telephony.default_network", default_network);
+    property_set("ro.ril.hsupa.category", "6");
+    property_set("ro.ril.hsxpa", "4");
+    property_set("ro.ril.disable.cpc", "1");
+    property_set("ro.ril.air.enabled", "1");
+    property_set("ro.ril.enable.pre_r8fd", "1");
+    property_set("ro.ril.enable.sdr", "1");
+    property_set("ro.ril.enable.r8fd", "1");
+    property_set("ro.ril.disable.fd.plmn.prefix", "23402,23410,23411,23420,23594,27202,27205");
 }
 
-void cdma_properties(char default_network[], char operator_numeric[], char operator_alpha[])
+void cdma_properties(char default_cdma_sub[], char default_network[],
+                     char operator_numeric[], char operator_alpha[])
 {
-        property_set("ro.telephony.default_network", default_network);
-        property_set("ro.cdma.home.operator.numeric", operator_numeric);
-        property_set("gsm.sim.operator.numeric", operator_numeric);
-        property_set("ro.cdma.home.operator.alpha", operator_alpha);
-        property_set("gsm.operator.numeric", operator_numeric);
-        property_set("gsm.sim.operator.alpha", operator_alpha);
-        property_set("gsm.operator.alpha", operator_alpha);
+    property_set("ro.telephony.default_cdma_sub", default_cdma_sub);
+    property_set("ro.telephony.default_network", default_network);
+    property_set("ro.cdma.home.operator.numeric", operator_numeric);
+    property_set("gsm.sim.operator.numeric", operator_numeric);
+    property_set("gsm.operator.numeric", operator_numeric);
+    property_set("ro.cdma.home.operator.alpha", operator_alpha);
+    property_set("gsm.sim.operator.alpha", operator_alpha);
+    property_set("gsm.operator.alpha", operator_numeric);
 
-        property_set("telephony.lteOnCdmaDevice", "1");
-        property_set("ro.ril.disable.fd.plmn.prefix", "23402,23410,23411,23420");
-        property_set("ro.ril.enable.sdr", "0");
-        property_set("persist.radio.snapshot_enabled", "1");
-        property_set("persist.radio.snapshot_timer", "22");
+    property_set("telephony.lteOnCdmaDevice", "1");
+    property_set("ro.cdma.subscribe_on_ruim_ready", "true");
+    property_set("ro.ril.svdo", "true");
+    property_set("ro.ril.disable.fd.plmn.prefix", "23402,23410,23411,23420");
+    property_set("ro.ril.enable.sdr", "0");
+    property_set("ro.ril.enable.gea3", "1");
+    property_set("ro.ril.enable.a53", "1");
+    property_set("persist.radio.snapshot_enabled", "1");
+    property_set("persist.radio.snapshot_timer", "22");
 }
 
 void vendor_load_properties()
@@ -85,16 +91,17 @@ void vendor_load_properties()
 
     property_get("ro.boot.mid", bootmid);
 
-    if (strstr(bootmid, "0P9C51000")) {
-        /* a5dwg (international) */
-        gsm_properties("7");
-        dualsim_properties("dsds");
-        property_set("ro.build.fingerprint", "htc/htc_asia_india/htc_a5dwg:4.4.2/KOT49H/334435.1:user/release-keys");
-        property_set("ro.build.description", "1.24.720.1 CL334435 release-keys");
-        property_set("ro.product.model", "Desire 816 dual sim");
-        property_set("ro.product.device", "a5dwg");
-        property_set("ro.build.product", "a5dwg");
-        property_set("ro.ril.hsdpa.category", "10");
+    if (strstr(bootmid, "0P9C30000")) {
+        /* a5chl */
+        cdma_properties("1", "8", "310120", "Sprint");
+        property_set("ro.build.fingerprint", "htc/sprint_wwe_vm/htc_a5chl:4.4.2/KOT49H/338737.1:user/release-keys");
+        property_set("ro.build.description", "1.13.652.1 CL338737 release-keys");
+        property_set("ro.product.model", "710C");
+        property_set("ro.product.device", "a5chl");
+        property_set("ro.build.product", "a5chl");
+        property_set("telephony.sms.pseudo_multipart", "1");
+        property_set("ro.ril.oem.ecclist", "911");
+        property_set("ro.ril.set.mtusize", "1422");
     } else if (strstr(bootmid, "0P9C50000")) {
         /* a5dwg (chinese) */
         dualsim_properties("dsds");
@@ -110,6 +117,16 @@ void vendor_load_properties()
         property_set("ro.ril.disable.fd.plmn.prefix", "23402,23410,23411,23420,27202");
         property_set("ro.ril.oem.ecclist", "110,112,119,120,911,999");
         property_set("ro.ril.set.mtusize", "1420");
+    } else if (strstr(bootmid, "0P9C51000")) {
+        /* a5dwg (international) */
+        gsm_properties("7");
+        dualsim_properties("dsds");
+        property_set("ro.build.fingerprint", "htc/htc_asia_india/htc_a5dwg:4.4.2/KOT49H/334435.1:user/release-keys");
+        property_set("ro.build.description", "1.24.720.1 CL334435 release-keys");
+        property_set("ro.product.model", "Desire 816 dual sim");
+        property_set("ro.product.device", "a5dwg");
+        property_set("ro.build.product", "a5dwg");
+        property_set("ro.ril.hsdpa.category", "10");
     } else if (strstr(bootmid, "0P9C70000")) {
         /* a5dug */
         gsm_properties("0");
@@ -120,16 +137,6 @@ void vendor_load_properties()
         property_set("ro.product.device", "a5dug");
         property_set("ro.build.product", "a5dug");
         property_set("ro.ril.hsdpa.category", "24");
-    } else if (strstr(bootmid, "0P9C30000")) {
-        /* a5chl */
-        cdma_properties("8", "000000", "Sprint");
-        property_set("ro.build.fingerprint", "htc/sprint_wwe_vm/htc_a5chl:4.4.2/KOT49H/338737.1:user/release-keys");
-        property_set("ro.build.description", "1.13.652.1 CL338737 release-keys");
-        property_set("ro.product.model", "710C");
-        property_set("ro.product.device", "a5chl");
-        property_set("ro.build.product", "a5chl");
-        property_set("ro.ril.oem.ecclist", "911");
-        property_set("ro.ril.set.mtusize", "1422");
     } else {
         /* a5ul */
         gsm_properties("9");
