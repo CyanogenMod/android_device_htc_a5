@@ -48,7 +48,6 @@ void gsm_properties(char default_network[])
     property_set("ro.ril.hsupa.category", "6");
     property_set("ro.ril.hsxpa", "4");
     property_set("ro.ril.disable.cpc", "1");
-    property_set("ro.ril.air.enabled", "1");
     property_set("ro.ril.enable.pre_r8fd", "1");
     property_set("ro.ril.enable.sdr", "1");
     property_set("ro.ril.enable.r8fd", "1");
@@ -83,6 +82,7 @@ void vendor_load_properties()
     char platform[PROP_VALUE_MAX];
     char bootmid[PROP_VALUE_MAX];
     char device[PROP_VALUE_MAX];
+    char carrier[PROP_VALUE_MAX];
     int rc;
 
     rc = property_get("ro.board.platform", platform);
@@ -90,6 +90,7 @@ void vendor_load_properties()
         return;
 
     property_get("ro.boot.mid", bootmid);
+    property_get("ro.boot.carrier", carrier);
 
     if (strstr(bootmid, "0P9C30000")) {
         /* a5chl */
@@ -127,16 +128,28 @@ void vendor_load_properties()
         property_set("ro.product.device", "a5dwg");
         property_set("ro.build.product", "a5dwg");
         property_set("ro.ril.hsdpa.category", "10");
+        property_set("ro.ril.air.enabled", "1");
     } else if (strstr(bootmid, "0P9C70000")) {
         /* a5dug */
         gsm_properties("0");
         dualsim_properties("dsda");
-        property_set("ro.build.fingerprint", "htc/htc_asia_hk/htc_a5dug:4.4.2/KOT49H/356136.1:user/release-keys");
-        property_set("ro.build.description", "1.45.708.1 CL356136 release-keys");
-        property_set("ro.product.model", "D816w");
         property_set("ro.product.device", "a5dug");
         property_set("ro.build.product", "a5dug");
+        property_set("persist.radio.relay_oprt_change", "1");
         property_set("ro.ril.hsdpa.category", "24");
+        if (strstr(carrier, "HTC-Russia")) {
+            /* russian */
+            property_set("ro.build.fingerprint", "htc/htc_europe/htc_a5dug:4.4.2/KOT49H/372006.1:user/release-keys");
+            property_set("ro.build.description", "1.56.401.1 CL372006 release-keys");
+            property_set("ro.product.model", "Desire 816 dual sim");
+            property_set("ro.ril.enable.a53", "1");
+        } else {
+            /* chinese */
+            property_set("ro.build.fingerprint", "htc/htc_asia_hk/htc_a5dug:4.4.2/KOT49H/356136.1:user/release-keys");
+            property_set("ro.build.description", "1.45.708.1 CL356136 release-keys");
+            property_set("ro.product.model", "D816w");
+            property_set("ro.ril.air.enabled", "1");
+        }
     } else {
         /* a5ul */
         gsm_properties("9");
@@ -147,6 +160,7 @@ void vendor_load_properties()
         property_set("ro.build.product", "a5ul");
         property_set("ro.telephony.default_network", "9");
         property_set("ro.ril.hsdpa.category", "14");
+        property_set("ro.ril.air.enabled", "1");
         property_set("ro.ril.enable.a53", "1");
         property_set("persist.radio.jbims", "1");
         property_set("ro.ril.enable.gea3", "1");
@@ -154,5 +168,5 @@ void vendor_load_properties()
     }
 
     property_get("ro.product.device", device);
-    ERROR("Found bootmid %s setting build properties for %s device\n", bootmid, device);
+    ERROR("Found bootmid %s and carrier %s setting build properties for %s device\n", bootmid, carrier, device);
 }
