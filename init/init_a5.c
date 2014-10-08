@@ -137,15 +137,17 @@ void vendor_load_properties()
         property_set("ro.build.product", "a5dug");
         property_set("persist.radio.relay_oprt_change", "1");
         property_set("ro.ril.hsdpa.category", "24");
+        property_set("ro.ril.disable.cpc", "0");
+        property_set("ro.ril.enable.sdr", "0");
         if (strstr(carrier, "HTC-Russia")) {
             /* russian */
             property_set("ro.build.fingerprint", "htc/htc_europe/htc_a5dug:4.4.2/KOT49H/372006.1:user/release-keys");
-            property_set("ro.build.description", "1.56.401.1 CL372006 release-keys");
+            property_set("ro.build.description", "2.06.1402.2 CL377269 release-keys");
             property_set("ro.product.model", "Desire 816 dual sim");
             property_set("ro.ril.enable.a53", "1");
         } else {
             /* chinese */
-            property_set("ro.build.fingerprint", "htc/htc_asia_hk/htc_a5dug:4.4.2/KOT49H/356136.1:user/release-keys");
+            property_set("ro.build.fingerprint", "htc/htccn_chs_cu/htc_a5dug:4.4.2/KOT49H/377269.2:user/release-keys");
             property_set("ro.build.description", "1.45.708.1 CL356136 release-keys");
             property_set("ro.product.model", "D816w");
             property_set("ro.ril.air.enabled", "1");
