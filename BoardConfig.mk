@@ -136,9 +136,8 @@ BOARD_SEPOLICY_UNION += \
     mediaserver.te \
     rild.te \
     surfaceflinger.te \
-    system.te \
+    system_server.te \
     ueventd.te \
-    wpa_socket.te \
     wpa.te
 
 # Partitions
