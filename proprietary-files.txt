@@ -73,6 +73,9 @@ vendor/lib/libacdbrtac.so
 vendor/lib/libadiertac.so
 vendor/lib/libaudcal.so
 
+# Bluetooth
+bin/hci_qcomm_init
+
 # Camera
 bin/mm-qcamera-daemon
 etc/firmware/cpp_firmware_v1_1_1.fw
