@@ -87,6 +87,9 @@ BOARD_EGL_CFG := device/htc/a5/configs/egl.cfg
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
 
+# Logging
+TARGET_USES_LOGD := false
+
 # Power
 TARGET_POWERHAL_VARIANT := qcom
 
