@@ -60,10 +60,6 @@ ro.opengles.version=196608
 # Input
 ro.input.noresample=1
 
-# Recovery
-ro.cwm.forbid_format=/boot,/devlog,/fataldevlog,/ramdump,/carrier,/custdata,/firmware/radio,/firmware/adsp,/firmware/wcnss
-ro.cwm.forbid_mount=/boot,/devlog,/fataldevlog,/ramdump,/carrier,/custdata,/firmware/radio,/firmware/adsp,/firmware/wcnss
-
 # Time services
 persist.timed.enable=true
 
