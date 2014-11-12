@@ -84,6 +84,9 @@ USE_OPENGL_RENDERER := true
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 BOARD_EGL_CFG := device/htc/a5/configs/egl.cfg
 
+# Includes
+TARGET_SPECIFIC_HEADER_PATH := device/htc/a5/include
+
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
 
