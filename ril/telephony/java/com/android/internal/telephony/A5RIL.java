@@ -6,19 +6,22 @@ import android.content.Context;
 import android.os.AsyncResult;
 import android.os.Message;
 import android.os.Parcel;
+import android.telephony.CellInfo;
 import android.telephony.Rlog;
 
-import com.android.internal.telephony.dataconnection.DataProfileOmh;
+import com.android.internal.telephony.uicc.IccIoResult;
+import com.android.internal.telephony.dataconnection.ApnProfileOmh;
+import com.android.internal.telephony.dataconnection.ApnSetting;
 import com.android.internal.telephony.dataconnection.DataProfile;
 
 import java.util.ArrayList;
 
 public class A5RIL extends RIL implements CommandsInterface {
 
-    static final int RIL_REQUEST_HTC_GET_DATA_CALL_PROFILE = 5505;
-    static final int RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION = 5506;
-    static final int RIL_REQUEST_HTC_SET_DATA_SUBSCRIPTION = 5507;
-    static final int RIL_UNSOL_HTC_UICC_SUBSCRIPTION_STATUS_CHANGED = 5760;
+    private static final int RIL_REQUEST_HTC_GET_DATA_CALL_PROFILE = 5505;
+    private static final int RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION = 5506;
+    private static final int RIL_REQUEST_HTC_SET_DATA_PROFILE = 5507;
+    private static final int RIL_UNSOL_HTC_UICC_SUBSCRIPTION_STATUS_CHANGED = 5760;
 
     public A5RIL(Context paramContext, int paramInt1,
            int paramInt2, Integer paramInteger) {
@@ -28,8 +31,7 @@ public class A5RIL extends RIL implements CommandsInterface {
     @Override
     public void
     getDataCallProfile(int appType, Message result) {
-        RILRequest rr = RILRequest.obtain(
-                RIL_REQUEST_HTC_GET_DATA_CALL_PROFILE, result);
+        RILRequest rr = RILRequest.obtain(RIL_REQUEST_HTC_GET_DATA_CALL_PROFILE, result);
 
         // count of ints
         rr.mParcel.writeInt(1);
@@ -61,9 +63,20 @@ public class A5RIL extends RIL implements CommandsInterface {
     }
 
     @Override
-    public void setDataSubscription(Message result) {
-        RILRequest rr = RILRequest.obtain(RIL_REQUEST_HTC_SET_DATA_SUBSCRIPTION, result);
-        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
+    public void setDataProfile(DataProfile[] dps, Message result) {
+        if (RILJ_LOGD) riljLog("Set RIL_REQUEST_SET_DATA_PROFILE");
+
+        RILRequest rr = RILRequest.obtain(RIL_REQUEST_HTC_SET_DATA_PROFILE, null);
+        DataProfile.toParcel(rr.mParcel, dps);
+
+        if (RILJ_LOGD) {
+            riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
+                    + " with " + dps + " Data Profiles : ");
+            for (int i = 0; i < dps.length; i++) {
+                riljLog(dps[i].toString());
+            }
+        }
+
         send(rr);
     }
 
@@ -242,10 +255,23 @@ public class A5RIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_GET_CELL_INFO_LIST: ret = responseCellInfoList(p); break;
             case RIL_REQUEST_SET_UNSOL_CELL_INFO_LIST_RATE: ret = responseVoid(p); break;
             case RIL_REQUEST_SET_INITIAL_ATTACH_APN: ret = responseVoid(p); break;
+            case RIL_REQUEST_HTC_SET_DATA_PROFILE: ret = responseVoid(p); break;
             case RIL_REQUEST_IMS_REGISTRATION_STATE: ret = responseInts(p); break;
             case RIL_REQUEST_IMS_SEND_SMS: ret =  responseSMS(p); break;
+            case RIL_REQUEST_SIM_TRANSMIT_APDU_BASIC: ret =  responseICC_IO(p); break;
+            case RIL_REQUEST_SIM_OPEN_CHANNEL: ret  = responseInts(p); break;
+            case RIL_REQUEST_SIM_CLOSE_CHANNEL: ret  = responseVoid(p); break;
+            case RIL_REQUEST_SIM_TRANSMIT_APDU_CHANNEL: ret = responseICC_IO(p); break;
+            case RIL_REQUEST_SIM_GET_ATR: ret = responseString(p); break;
+            case RIL_REQUEST_NV_READ_ITEM: ret = responseString(p); break;
+            case RIL_REQUEST_NV_WRITE_ITEM: ret = responseVoid(p); break;
+            case RIL_REQUEST_NV_WRITE_CDMA_PRL: ret = responseVoid(p); break;
+            case RIL_REQUEST_NV_RESET_CONFIG: ret = responseVoid(p); break;
             case RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION: ret = responseVoid(p); break;
-            case RIL_REQUEST_HTC_SET_DATA_SUBSCRIPTION: ret = responseVoid(p); break;
+            case RIL_REQUEST_ALLOW_DATA: ret = responseVoid(p); break;
+            case RIL_REQUEST_GET_HARDWARE_CONFIG: ret = responseHardwareConfig(p); break;
+            case RIL_REQUEST_SIM_AUTHENTICATION: ret =  responseICC_IOBase64(p); break;
+            case RIL_REQUEST_SHUTDOWN: ret = responseVoid(p); break;
             default:
                 throw new RuntimeException("Unrecognized solicited response: " + rr.mRequest);
             //break;
@@ -262,6 +288,14 @@ public class A5RIL extends RIL implements CommandsInterface {
                 }
                 return rr;
             }
+        }
+
+        if (rr.mRequest == RIL_REQUEST_SHUTDOWN) {
+            // Set RADIO_STATE to RADIO_UNAVAILABLE to continue shutdown process
+            // regardless of error code to continue shutdown procedure.
+            riljLog("Response to RIL_REQUEST_SHUTDOWN received. Error is " +
+                    error + " Setting Radio State to Unavailable regardless of error.");
+            setRadioState(RadioState.RADIO_UNAVAILABLE);
         }
 
         // Here and below fake RIL_UNSOL_RESPONSE_SIM_STATUS_CHANGED, see b/7255789.
@@ -431,10 +465,22 @@ public class A5RIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_GET_CELL_INFO_LIST: return "RIL_REQUEST_GET_CELL_INFO_LIST";
             case RIL_REQUEST_SET_UNSOL_CELL_INFO_LIST_RATE: return "RIL_REQUEST_SET_CELL_INFO_LIST_RATE";
             case RIL_REQUEST_SET_INITIAL_ATTACH_APN: return "RIL_REQUEST_SET_INITIAL_ATTACH_APN";
+            case RIL_REQUEST_HTC_SET_DATA_PROFILE: return "RIL_REQUEST_SET_DATA_PROFILE";
             case RIL_REQUEST_IMS_REGISTRATION_STATE: return "RIL_REQUEST_IMS_REGISTRATION_STATE";
             case RIL_REQUEST_IMS_SEND_SMS: return "RIL_REQUEST_IMS_SEND_SMS";
+            case RIL_REQUEST_SIM_TRANSMIT_APDU_BASIC: return "RIL_REQUEST_SIM_TRANSMIT_APDU_BASIC";
+            case RIL_REQUEST_SIM_OPEN_CHANNEL: return "RIL_REQUEST_SIM_OPEN_CHANNEL";
+            case RIL_REQUEST_SIM_CLOSE_CHANNEL: return "RIL_REQUEST_SIM_CLOSE_CHANNEL";
+            case RIL_REQUEST_SIM_TRANSMIT_APDU_CHANNEL: return "RIL_REQUEST_SIM_TRANSMIT_APDU_CHANNEL";
+            case RIL_REQUEST_NV_READ_ITEM: return "RIL_REQUEST_NV_READ_ITEM";
+            case RIL_REQUEST_NV_WRITE_ITEM: return "RIL_REQUEST_NV_WRITE_ITEM";
+            case RIL_REQUEST_NV_WRITE_CDMA_PRL: return "RIL_REQUEST_NV_WRITE_CDMA_PRL";
+            case RIL_REQUEST_NV_RESET_CONFIG: return "RIL_REQUEST_NV_RESET_CONFIG";
             case RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION: return "RIL_REQUEST_SET_UICC_SUBSCRIPTION";
-            case RIL_REQUEST_HTC_SET_DATA_SUBSCRIPTION: return "RIL_REQUEST_SET_DATA_SUBSCRIPTION";
+            case RIL_REQUEST_ALLOW_DATA: return "RIL_REQUEST_ALLOW_DATA";
+            case RIL_REQUEST_GET_HARDWARE_CONFIG: return "GET_HARDWARE_CONFIG";
+            case RIL_REQUEST_SIM_AUTHENTICATION: return "RIL_REQUEST_SIM_AUTHENTICATION";
+            case RIL_REQUEST_SHUTDOWN: return "RIL_REQUEST_SHUTDOWN";
             default: return "<unknown request>";
         }
     }
@@ -487,29 +533,67 @@ public class A5RIL extends RIL implements CommandsInterface {
             case RIL_UNSOL_CELL_INFO_LIST: return "UNSOL_CELL_INFO_LIST";
             case RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED:
                 return "UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED";
-            case RIL_UNSOL_ON_SS: return "UNSOL_ON_SS";
-            case RIL_UNSOL_STK_CC_ALPHA_NOTIFY: return "UNSOL_STK_CC_ALPHA_NOTIFY";
-            case RIL_UNSOL_UICC_SUBSCRIPTION_STATUS_CHANGED:
             case RIL_UNSOL_HTC_UICC_SUBSCRIPTION_STATUS_CHANGED:
                     return "RIL_UNSOL_UICC_SUBSCRIPTION_STATUS_CHANGED";
-            case RIL_UNSOL_STK_SEND_SMS_RESULT: return "RIL_UNSOL_STK_SEND_SMS_RESULT";
-
+            case RIL_UNSOL_SRVCC_STATE_NOTIFY:
+                    return "UNSOL_SRVCC_STATE_NOTIFY";
+            case RIL_UNSOL_HARDWARE_CONFIG_CHANGED: return "RIL_UNSOL_HARDWARE_CONFIG_CHANGED";
+            case RIL_UNSOL_ON_SS: return "UNSOL_ON_SS";
+            case RIL_UNSOL_STK_CC_ALPHA_NOTIFY: return "UNSOL_STK_CC_ALPHA_NOTIFY";
             default: return "<unknown response>";
         }
     }
 
-    private ArrayList<DataProfile> responseGetDataCallProfile(Parcel p) {
+    private Object
+   responseHardwareConfig(Parcel p) {
+      int num;
+      ArrayList<HardwareConfig> response;
+      HardwareConfig hw;
+
+      num = p.readInt();
+      response = new ArrayList<HardwareConfig>(num);
+
+      if (RILJ_LOGV) {
+         riljLog("responseHardwareConfig: num=" + num);
+      }
+      for (int i = 0 ; i < num ; i++) {
+         int type = p.readInt();
+         switch(type) {
+            case HardwareConfig.DEV_HARDWARE_TYPE_MODEM: {
+               hw = new HardwareConfig(type);
+               hw.assignModem(p.readString(), p.readInt(), p.readInt(),
+                  p.readInt(), p.readInt(), p.readInt(), p.readInt());
+               break;
+            }
+            case HardwareConfig.DEV_HARDWARE_TYPE_SIM: {
+               hw = new HardwareConfig(type);
+               hw.assignSim(p.readString(), p.readInt(), p.readString());
+               break;
+            }
+            default: {
+               throw new RuntimeException(
+                  "RIL_REQUEST_GET_HARDWARE_CONFIG invalid hardward type:" + type);
+            }
+         }
+
+         response.add(hw);
+      }
+
+      return response;
+   }
+
+    private ArrayList<ApnSetting> responseGetDataCallProfile(Parcel p) {
         int nProfiles = p.readInt();
         if (RILJ_LOGD) riljLog("# data call profiles:" + nProfiles);
 
-        ArrayList<DataProfile> response = new ArrayList<DataProfile>(nProfiles);
+        ArrayList<ApnSetting> response = new ArrayList<ApnSetting>(nProfiles);
 
         int profileId = 0;
         int priority = 0;
         for (int i = 0; i < nProfiles; i++) {
             profileId = p.readInt();
             priority = p.readInt();
-            DataProfileOmh profile = new DataProfileOmh(profileId, priority);
+            ApnProfileOmh profile = new ApnProfileOmh(profileId, priority);
             if (RILJ_LOGD) {
                 riljLog("responseGetDataCallProfile()" +
                         profile.getProfileId() + ":" + profile.getPriority());
@@ -519,4 +603,43 @@ public class A5RIL extends RIL implements CommandsInterface {
 
         return response;
     }
+
+    private ArrayList<CellInfo> responseCellInfoList(Parcel p) {
+        int numberOfInfoRecs;
+        ArrayList<CellInfo> response;
+
+        /**
+         * Loop through all of the information records unmarshalling them
+         * and converting them to Java Objects.
+         */
+        numberOfInfoRecs = p.readInt();
+        response = new ArrayList<CellInfo>(numberOfInfoRecs);
+
+        for (int i = 0; i < numberOfInfoRecs; i++) {
+            CellInfo InfoRec = CellInfo.CREATOR.createFromParcel(p);
+            response.add(InfoRec);
+        }
+
+        return response;
+    }
+
+    private Object
+    responseICC_IOBase64(Parcel p) {
+        int sw1, sw2;
+        Message ret;
+
+        sw1 = p.readInt();
+        sw2 = p.readInt();
+
+        String s = p.readString();
+
+        if (RILJ_LOGV) riljLog("< iccIO: "
+                + " 0x" + Integer.toHexString(sw1)
+                + " 0x" + Integer.toHexString(sw2) + " "
+                + s);
+
+
+        return new IccIoResult(sw1, sw2, android.util.Base64.decode(s, android.util.Base64.DEFAULT));
+    }
+
 }
