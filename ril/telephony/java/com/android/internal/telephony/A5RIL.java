@@ -20,7 +20,7 @@ public class A5RIL extends RIL implements CommandsInterface {
 
     private static final int RIL_REQUEST_HTC_GET_DATA_CALL_PROFILE = 5505;
     private static final int RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION = 5506;
-    private static final int RIL_REQUEST_HTC_SET_DATA_PROFILE = 5507;
+    private static final int RIL_REQUEST_HTC_ALLOW_DATA = 5507;
     private static final int RIL_UNSOL_HTC_UICC_SUBSCRIPTION_STATUS_CHANGED = 5760;
 
     public A5RIL(Context paramContext, int paramInt1,
@@ -63,20 +63,13 @@ public class A5RIL extends RIL implements CommandsInterface {
     }
 
     @Override
-    public void setDataProfile(DataProfile[] dps, Message result) {
-        if (RILJ_LOGD) riljLog("Set RIL_REQUEST_SET_DATA_PROFILE");
+    public void setDataAllowed(boolean allowed, Message result) {
+        RILRequest rr = RILRequest.obtain(RIL_REQUEST_HTC_ALLOW_DATA, result);
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
+                + " " + allowed);
 
-        RILRequest rr = RILRequest.obtain(RIL_REQUEST_HTC_SET_DATA_PROFILE, null);
-        DataProfile.toParcel(rr.mParcel, dps);
-
-        if (RILJ_LOGD) {
-            riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
-                    + " with " + dps + " Data Profiles : ");
-            for (int i = 0; i < dps.length; i++) {
-                riljLog(dps[i].toString());
-            }
-        }
-
+        rr.mParcel.writeInt(1);
+        rr.mParcel.writeInt(allowed ? 1 : 0);
         send(rr);
     }
 
@@ -255,7 +248,7 @@ public class A5RIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_GET_CELL_INFO_LIST: ret = responseCellInfoList(p); break;
             case RIL_REQUEST_SET_UNSOL_CELL_INFO_LIST_RATE: ret = responseVoid(p); break;
             case RIL_REQUEST_SET_INITIAL_ATTACH_APN: ret = responseVoid(p); break;
-            case RIL_REQUEST_HTC_SET_DATA_PROFILE: ret = responseVoid(p); break;
+            case RIL_REQUEST_SET_DATA_PROFILE: ret = responseVoid(p); break;
             case RIL_REQUEST_IMS_REGISTRATION_STATE: ret = responseInts(p); break;
             case RIL_REQUEST_IMS_SEND_SMS: ret =  responseSMS(p); break;
             case RIL_REQUEST_SIM_TRANSMIT_APDU_BASIC: ret =  responseICC_IO(p); break;
@@ -268,7 +261,7 @@ public class A5RIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_NV_WRITE_CDMA_PRL: ret = responseVoid(p); break;
             case RIL_REQUEST_NV_RESET_CONFIG: ret = responseVoid(p); break;
             case RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION: ret = responseVoid(p); break;
-            case RIL_REQUEST_ALLOW_DATA: ret = responseVoid(p); break;
+            case RIL_REQUEST_HTC_ALLOW_DATA: ret = responseVoid(p); break;
             case RIL_REQUEST_GET_HARDWARE_CONFIG: ret = responseHardwareConfig(p); break;
             case RIL_REQUEST_SIM_AUTHENTICATION: ret =  responseICC_IOBase64(p); break;
             case RIL_REQUEST_SHUTDOWN: ret = responseVoid(p); break;
@@ -465,7 +458,7 @@ public class A5RIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_GET_CELL_INFO_LIST: return "RIL_REQUEST_GET_CELL_INFO_LIST";
             case RIL_REQUEST_SET_UNSOL_CELL_INFO_LIST_RATE: return "RIL_REQUEST_SET_CELL_INFO_LIST_RATE";
             case RIL_REQUEST_SET_INITIAL_ATTACH_APN: return "RIL_REQUEST_SET_INITIAL_ATTACH_APN";
-            case RIL_REQUEST_HTC_SET_DATA_PROFILE: return "RIL_REQUEST_SET_DATA_PROFILE";
+            case RIL_REQUEST_SET_DATA_PROFILE: return "RIL_REQUEST_SET_DATA_PROFILE";
             case RIL_REQUEST_IMS_REGISTRATION_STATE: return "RIL_REQUEST_IMS_REGISTRATION_STATE";
             case RIL_REQUEST_IMS_SEND_SMS: return "RIL_REQUEST_IMS_SEND_SMS";
             case RIL_REQUEST_SIM_TRANSMIT_APDU_BASIC: return "RIL_REQUEST_SIM_TRANSMIT_APDU_BASIC";
@@ -477,7 +470,7 @@ public class A5RIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_NV_WRITE_CDMA_PRL: return "RIL_REQUEST_NV_WRITE_CDMA_PRL";
             case RIL_REQUEST_NV_RESET_CONFIG: return "RIL_REQUEST_NV_RESET_CONFIG";
             case RIL_REQUEST_HTC_SET_UICC_SUBSCRIPTION: return "RIL_REQUEST_SET_UICC_SUBSCRIPTION";
-            case RIL_REQUEST_ALLOW_DATA: return "RIL_REQUEST_ALLOW_DATA";
+            case RIL_REQUEST_HTC_ALLOW_DATA: return "RIL_REQUEST_ALLOW_DATA";
             case RIL_REQUEST_GET_HARDWARE_CONFIG: return "GET_HARDWARE_CONFIG";
             case RIL_REQUEST_SIM_AUTHENTICATION: return "RIL_REQUEST_SIM_AUTHENTICATION";
             case RIL_REQUEST_SHUTDOWN: return "RIL_REQUEST_SHUTDOWN";
