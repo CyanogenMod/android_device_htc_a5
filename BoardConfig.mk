@@ -74,6 +74,9 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 # Charge mode
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/htc_lpm/lpm_mode
 
+# Font
+EXTENDED_FONT_FOOTPRINT := true
+
 # Graphics
 TARGET_USES_ION := true
 TARGET_USES_C2D_COMPOSITION := true
