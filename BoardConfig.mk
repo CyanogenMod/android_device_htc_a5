@@ -93,6 +93,9 @@ TARGET_PROVIDES_LIBLIGHT := true
 # Logging
 TARGET_USES_LOGD := false
 
+# NFC
+BOARD_NFC_CHIPSET := pn547
+
 # Power
 TARGET_POWERHAL_VARIANT := qcom
 

@@ -168,7 +168,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     NfcNci \
     Tag \
-    com.android.nfc_extras
+    com.android.nfc_extras \
+    nfc_nci.pn54x.default
 
 # OMX
 PRODUCT_PACKAGES += \
