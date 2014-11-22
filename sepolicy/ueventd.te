@@ -1,0 +1,3 @@
+allow ueventd camera_socket:chr_file { create setattr };
+allow ueventd vfat:dir search;
+allow ueventd vfat:file r_file_perms;
