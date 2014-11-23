@@ -711,8 +711,8 @@
           <ctl name="SLIM_0_RX Channels" value="Two" />
           <ctl name="SLIM RX1 MUX" value="AIF1_PB" />
           <ctl name="SLIM RX2 MUX" value="AIF1_PB" />
-          <ctl name="RX1 MIX1 INP1" value="RX2" />
-          <ctl name="RX2 MIX1 INP1" value="RX1" />
+          <ctl name="RX1 MIX1 INP1" value="RX1" />
+          <ctl name="RX2 MIX1 INP1" value="RX2" />
           <ctl name="CLASS_H_DSM MUX" value="RX_HPHL" />
           <ctl name="HPHL DAC Switch" value="1" />
      </path>
@@ -721,8 +721,8 @@
           <ctl name="SLIM_0_RX Channels" value="Two" />
           <ctl name="SLIM RX1 MUX" value="AIF1_PB" />
           <ctl name="SLIM RX2 MUX" value="AIF1_PB" />
-          <ctl name="RX1 MIX1 INP1" value="RX2" />
-          <ctl name="RX2 MIX1 INP1" value="RX1" />
+          <ctl name="RX1 MIX1 INP1" value="RX1" />
+          <ctl name="RX2 MIX1 INP1" value="RX2" />
           <ctl name="CLASS_H_DSM MUX" value="RX_HPHL" />
           <ctl name="HPHL DAC Switch" value="1" />
      </path>
@@ -1074,8 +1074,8 @@
 
      <path name="speaker-and-anc-headphones">
           <path name="anc-headphones" />
-          <ctl name="RX4 MIX1 INP1" value="RX1" />
-          <ctl name="RX4 MIX1 INP2 Mux" value="RX2" />
+          <ctl name="RX4 MIX1 INP1" value="RX2" />
+          <ctl name="RX4 MIX1 INP2 Mux" value="RX1" />
           <ctl name="SPK DAC Switch" value="1" />
      </path>
 
@@ -1086,8 +1086,8 @@
 
      <path name="speaker-and-anc-fb-headphones">
           <path name="anc-fb-headphones" />
-          <ctl name="RX4 MIX1 INP1" value="RX1" />
-          <ctl name="RX4 MIX1 INP2 Mux" value="RX2" />
+          <ctl name="RX4 MIX1 INP1" value="RX2" />
+          <ctl name="RX4 MIX1 INP2 Mux" value="RX1" />
           <ctl name="SPK DAC Switch" value="1" />
      </path>
 
