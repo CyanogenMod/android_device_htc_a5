@@ -92,7 +92,22 @@ void vendor_load_properties()
     property_get("ro.boot.mid", bootmid);
     property_get("ro.boot.carrier", carrier);
 
-    if (strstr(bootmid, "0P9C30000")) {
+    if (strstr(bootmid, "0P9C10000")) {
+        /* a5tl */
+        gsm_properties("9");
+        property_set("ro.build.fingerprint", "htc/htccn_chs_cmcc/htc_a5tl:4.4.2/KOT49H/391137.3:user/release-keys");
+        property_set("ro.build.description", "2.07.1403.3 CL391137 release-keys");
+        property_set("ro.product.model", "D816t");
+        property_set("ro.product.device", "a5tl");
+        property_set("ro.build.product", "a5tl");
+        property_set("ro.ril.hsdpa.category", "10");
+        property_set("ro.ril.hsxpa", "2");
+        property_set("ro.ril.enable.sdr", "0");
+        property_set("ro.ril.enable.a53", "1");
+        property_set("ro.ril.disable.fd.plmn.prefix", "23402,23410,23411,23420,27202");
+        property_set("ro.ril.oem.ecclist", "112,000,08,110,118,119,911,999,120,122");
+        property_set("ro.ril.set.mtusize", "1420");
+    } else if (strstr(bootmid, "0P9C30000")) {
         /* a5chl */
         cdma_properties("1", "8", "310120", "Sprint");
         property_set("ro.build.fingerprint", "htc/sprint_wwe_vm/htc_a5chl:4.4.2/KOT49H/338737.1:user/release-keys");
@@ -160,7 +175,6 @@ void vendor_load_properties()
         property_set("ro.product.model", "Desire 816");
         property_set("ro.product.device", "a5ul");
         property_set("ro.build.product", "a5ul");
-        property_set("ro.telephony.default_network", "9");
         property_set("ro.ril.hsdpa.category", "14");
         property_set("ro.ril.air.enabled", "1");
         property_set("ro.ril.enable.a53", "1");
