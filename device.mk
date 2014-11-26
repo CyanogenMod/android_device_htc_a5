@@ -191,11 +191,6 @@ PRODUCT_BOOT_JARS += \
 PRODUCT_PACKAGES += \
     power.msm8226
 
-# QCOM rngd
-PRODUCT_PACKAGES += \
-    qrngd \
-    qrngp
-
 # Thermal
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal-engine.conf:system/etc/thermal-engine.conf
