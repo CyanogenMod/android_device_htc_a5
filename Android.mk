@@ -15,9 +15,7 @@
 
 ifeq ($(TARGET_DEVICE),a5)
 
-LOCAL_PATH := $(call my-dir)
-
-include $(call all-subdir-makefiles,$(LOCAL_PATH))
+include $(call all-subdir-makefiles)
 
 include $(CLEAR_VARS)
 
