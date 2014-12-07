@@ -103,6 +103,7 @@ on init
 
 # Vibrator permission
     chown system /sys/devices/virtual/timed_output/vibrator/pwm_value_1p
+    restorecon /sys/devices/virtual/timed_output/vibrator/pwm_value_1p
 
 on fs
     mkdir /devlog 0700 root root

@@ -146,14 +146,18 @@ BOARD_SEPOLICY_DIRS += device/htc/a5/sepolicy
 
 BOARD_SEPOLICY_UNION += \
     file_contexts \
+    file.te \
     init.te \
+    kcal_dev.te \
     mediaserver.te \
     mm-qcamerad.te \
     mpdecision.te \
     platform_app.te \
     rmt_storage.te \
+    system_app.te \
     thermal-engine.te \
     ueventd.te \
+    vibe_dev.te \
     vold.te
 
 # Vendor Init
