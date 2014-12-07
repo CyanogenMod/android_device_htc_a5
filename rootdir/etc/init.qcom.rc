@@ -555,9 +555,13 @@ service ril-daemon1 /system/bin/rild -c 1
 
 # Properties start here
 on property:persist.radio.multisim.config=dsds
+    symlink rild1 /dev/socket/rild2
+    symlink rild-debug1 /dev/socket/rild-debug2
     start ril-daemon1
 
 on property:persist.radio.multisim.config=dsda
+    symlink rild1 /dev/socket/rild2
+    symlink rild-debug1 /dev/socket/rild-debug2
     start ril-daemon1
 
 on property:bluetooth.hciattach=true
