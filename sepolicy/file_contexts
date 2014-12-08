@@ -12,6 +12,9 @@
 /dev/tfa9887			u:object_r:audio_device:s0
 /dev/tfa9887l			u:object_r:audio_device:s0
 
+/dev/akm8963(.*)		u:object_r:sensors_device:s0
+/dev/cm3602			u:object_r:sensors_device:s0
+
 /dev/rawchip(.*)		u:object_r:camera_socket:s0
 /data/cam_socket1		u:object_r:camera_socket:s0
 /data/cam_socket2		u:object_r:camera_socket:s0
