@@ -20,7 +20,7 @@
 # definition file).
 #
 
-TARGET_OTA_ASSERT_DEVICE := a5,a5dug,a5dwg,a5chl,a5ul
+TARGET_OTA_ASSERT_DEVICE := a5,a5tl,a5dug,a5dwg,a5chl,a5ul
 
 BOARD_VENDOR := htc
 
