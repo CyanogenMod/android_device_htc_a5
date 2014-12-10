@@ -160,6 +160,7 @@ BOARD_SEPOLICY_UNION += \
     platform_app.te \
     rmt_storage.te \
     system_app.te \
+    system_server.te \
     thermal-engine.te \
     ueventd.te \
     vibe_dev.te \
