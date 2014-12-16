@@ -26,9 +26,9 @@
 #
 
 # the DIAG device node is not world writable/readable.
-/dev/diag                 0660   radio      radio
 /dev/diag_mdm             0660   radio      radio
 /dev/htcdiag              0660   radio      radio
+/dev/htc_diag             0660   radio      radio
 /dev/diag_arm9            0660   radio      radio
 /dev/btdiag               0660   radio      radio
 /dev/diag_qsc             0660   radio      radio
