@@ -997,7 +997,7 @@
      </path>
 
      <path name="handset-mic">
-          <path name="dmic-endfire" />
+          <path name="line-vr" />
      </path>
 
      <path name="anc-handset">
