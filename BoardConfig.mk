@@ -41,9 +41,6 @@ TARGET_CPU_SMP := true
 TARGET_CPU_VARIANT := cortex-a7
 TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
 
-# Flags
-COMMON_GLOBAL_CFLAGS += -DHTCLOG
-
 # Kernel
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom user_debug=31 ehci-hcd.park=3 zcache
 BOARD_KERNEL_BASE := 0x00000000
@@ -93,6 +90,7 @@ TARGET_SPECIFIC_HEADER_PATH := device/htc/a5/include
 TARGET_PROVIDES_LIBLIGHT := true
 
 # Logging
+COMMON_GLOBAL_CFLAGS += -DHTCLOG -DMOTOROLA_LOG
 TARGET_USES_LOGD := false
 
 # NFC

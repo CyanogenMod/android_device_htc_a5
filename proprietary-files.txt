@@ -238,6 +238,7 @@ bin/charging
 bin/mpdecision
 bin/thermal-engine
 vendor/lib/libthermalclient.so
+vendor/lib/libthermalioctl.so
 
 # QMI
 bin/rmt_storage
