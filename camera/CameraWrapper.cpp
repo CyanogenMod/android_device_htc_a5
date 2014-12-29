@@ -165,16 +165,6 @@ static char *camera_fixup_getparams(int id, const char *settings)
                 android::CameraParameters::SCENE_MODE_HDR);
     }
 
-    /* Set sensor parameters */
-    if (id == 0) {
-        params.set(android::CameraParameters::KEY_FOCAL_LENGTH, "3.81");
-        params.set(android::CameraParameters::KEY_HORIZONTAL_VIEW_ANGLE, "62.7");
-        params.set(android::CameraParameters::KEY_VERTICAL_VIEW_ANGLE, "48.7");
-    }
-    if (id == 1) {
-        params.set(android::CameraParameters::KEY_FOCAL_LENGTH, "2.79");
-    }
-
 #ifdef LOG_PARAMETERS
     ALOGV("%s: fixed parameters:", __FUNCTION__);
     params.dump();
