@@ -1,24 +1,30 @@
+/system/bin/akmd		u:object_r:akmd_exec:s0
+
 /system/blobs/gsm/bin/netmgrd	u:object_r:netmgrd_exec:s0
 /system/blobs/gsm/bin/qmuxd	u:object_r:qmuxd_exec:s0
 /system/blobs/chl/bin/netmgrd	u:object_r:netmgrd_exec:s0
 /system/blobs/chl/bin/qmuxd	u:object_r:qmuxd_exec:s0
 
+/dev/block/mmcblk0p(.*)		u:object_r:mmc_block_device:s0
+
+/dev/htcdiag			u:object_r:diag_device:s0
+
+/dev/akm8963_dev		u:object_r:sensors_device:s0
+/dev/cm3602			u:object_r:sensors_device:s0
+/dev/lightsensor		u:object_r:sensors_device:s0
+
 /dev/socket/rild1		u:object_r:rild_socket:s0
 /dev/socket/rild-debug1		u:object_r:rild_debug_socket:s0
 
-/dev/block/mmcblk0p(.*)		u:object_r:mmc_block_device:s0
-
-/dev/rt5501			u:object_r:audio_device:s0
 /dev/tfa9887			u:object_r:audio_device:s0
 /dev/tfa9887l			u:object_r:audio_device:s0
 
-/dev/akm8963(.*)		u:object_r:sensors_device:s0
-/dev/cm3602			u:object_r:sensors_device:s0
+/dev/time_helper		u:object_r:time_helper_device:s0
 
-/dev/rawchip(.*)		u:object_r:camera_socket:s0
 /data/cam_socket1		u:object_r:camera_socket:s0
 /data/cam_socket2		u:object_r:camera_socket:s0
-/data/cam_socket3		u:object_r:camera_socket:s0
+
+/data/misc/akmd_set.txt		u:object_r:sensors_data_file:s0
 
 /data/system/default_values	u:object_r:mpctl_data_file:s0
 

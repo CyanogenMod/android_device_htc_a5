@@ -150,14 +150,19 @@ include device/qcom/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += device/htc/a5/sepolicy
 
 BOARD_SEPOLICY_UNION += \
+    akmd.te \
+    device.te \
     file_contexts \
     file.te \
     init.te \
     kcal_dev.te \
+    kernel.te \
     mediaserver.te \
     mm-qcamerad.te \
     mpdecision.te \
     platform_app.te \
+    property_contexts \
+    recovery.te \
     rmt_storage.te \
     system_app.te \
     system_server.te \
