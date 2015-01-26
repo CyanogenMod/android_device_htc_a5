@@ -810,8 +810,8 @@
           <path name="earpiece-generic" />
           <ctl name="RX3 Digital Volume" value="83" />
           <ctl name="RX4 Digital Volume" value="83" />
-          <ctl name="LINEOUT1 Volume" value="4" />
-          <ctl name="LINEOUT2 Volume" value="4" />
+          <ctl name="LINEOUT1 Volume" value="10" />
+          <ctl name="LINEOUT2 Volume" value="10" />
      </path>
 
      <!-- LINEOUT = -6 dB, DEC = -1 dB -->
@@ -828,8 +828,8 @@
           <path name="earpiece-generic" />
           <ctl name="RX3 Digital Volume" value="83" />
           <ctl name="RX4 Digital Volume" value="83" />
-          <ctl name="LINEOUT1 Volume" value="6" />
-          <ctl name="LINEOUT2 Volume" value="6" />
+          <ctl name="LINEOUT1 Volume" value="10" />
+          <ctl name="LINEOUT2 Volume" value="10" />
      </path>
 
      <path name="headset-mic-generic">
