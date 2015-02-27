@@ -120,6 +120,7 @@ on fs
     mkdir /vendor/firmware 0771 system system
 
     mount_all /fstab.qcom
+    swapon_all /fstab.qcom
 
     setprop ro.crypto.fuse_sdcard true
 
@@ -312,9 +313,6 @@ on boot
 
 # load ADSP
     write /sys/kernel/boot_adsp/boot 1
-
-# Activate ZRAM
-    swapon_all fstab.qcom
 
 ## Service start here
 service adsprpcd /system/bin/adsprpcd
