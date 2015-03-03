@@ -38,7 +38,7 @@ void dualsim_properties(char multisim_config[])
 {
     property_set("persist.radio.multisim.config", multisim_config);
     property_set("persist.radio.dont_use_dsd", "true");
-    property_set("ro.telephony.ril_class", "A5RIL");
+    property_set("ro.telephony.ril_class", "A5dualsimRIL");
 }
 
 void gsm_properties(char default_network[])
@@ -115,6 +115,7 @@ void vendor_load_properties()
         property_set("ro.build.product", "a5chl");
         property_set("ro.ril.oem.ecclist", "911");
         property_set("ro.ril.set.mtusize", "1422");
+        property_set("ro.telephony.ril_class", "A5sprRIL");
     } else if (strstr(bootmid, "0P9C50000")) {
         /* a5dwg (chinese) */
         dualsim_properties("dsds");
