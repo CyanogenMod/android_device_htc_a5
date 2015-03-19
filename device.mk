@@ -194,8 +194,8 @@ PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
 # Variant linking script
-PRODUCT_PACKAGES += \
-    makelinks.sh
+PRODUCT_COPY_FILES += \
+    device/htc/a5/releasetools/makelinks.sh:install/bin/makelinks.sh
 
 # Wifi firmware
 PRODUCT_PACKAGES += \
