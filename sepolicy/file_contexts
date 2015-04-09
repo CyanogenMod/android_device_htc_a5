@@ -28,6 +28,5 @@
 
 /data/system/default_values	u:object_r:mpctl_data_file:s0
 
-/sys/devices/platform/kcal_ctrl.0(/.*)?		u:object_r:kcal_dev:s0
-/sys/bus/platform/drivers/kcal_ctrl(/.*)?	u:object_r:kcal_dev:s0
+/sys/devices/virtual/graphics/fb0/rgb			u:object_r:display_sysfs:s0
 /sys/devices/virtual/timed_output/vibrator/pwm_value_1p u:object_r:vibe_dev:s0
