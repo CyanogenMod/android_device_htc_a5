@@ -155,7 +155,6 @@ BOARD_SEPOLICY_UNION += \
     file_contexts \
     file.te \
     init.te \
-    kcal_dev.te \
     kernel.te \
     mediaserver.te \
     mm-qcamerad.te \
