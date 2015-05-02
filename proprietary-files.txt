@@ -30,6 +30,7 @@ bin/hci_qcomm_init
 
 # Camera
 bin/mm-qcamera-daemon
+etc/firmware/alIAF_InData_4M2M
 etc/firmware/cpp_firmware_v1_1_1.fw
 etc/firmware/cpp_firmware_v1_1_6.fw
 etc/firmware/cpp_firmware_v1_2_0.fw
@@ -52,58 +53,11 @@ vendor/lib/libchromatix_ov13850_hfr.so
 vendor/lib/libchromatix_ov13850_preview.so
 vendor/lib/libchromatix_ov13850_qtr.so
 vendor/lib/libchromatix_ov13850_zoe.so
-vendor/lib/libchromatix_ov5648_oty5f03_common.so
-vendor/lib/libchromatix_ov5648_oty5f03_default_video.so
-vendor/lib/libchromatix_ov5648_oty5f03_preview.so
-vendor/lib/libchromatix_ov5648_oty5f03_snapshot.so
-vendor/lib/libchromatix_ov8865_q8v18a_common.so
-vendor/lib/libchromatix_ov8865_q8v18a_default_video.so
-vendor/lib/libchromatix_ov8865_q8v18a_hfr_120fps.so
-vendor/lib/libchromatix_ov8865_q8v18a_hfr_60fps.so
-vendor/lib/libchromatix_ov8865_q8v18a_hfr_90fps.so
-vendor/lib/libchromatix_ov8865_q8v18a_liveshot.so
-vendor/lib/libchromatix_ov8865_q8v18a_preview.so
-vendor/lib/libchromatix_ov8865_q8v18a_snapshot.so
-vendor/lib/libchromatix_ov8865_q8v18a_video_hd.so
-vendor/lib/libchromatix_ov8865_q8v18a_zsl.so
 vendor/lib/libchromatix_s5k5e_onelane_common.so
 vendor/lib/libchromatix_s5k5e_onelane_default_video.so
 vendor/lib/libchromatix_s5k5e_onelane_hdr.so
 vendor/lib/libchromatix_s5k5e_onelane_preview.so
 vendor/lib/libchromatix_s5k5e_onelane_video_16_9.so
-vendor/lib/libchromatix_SKUAA_ST_gc0339_common.so
-vendor/lib/libchromatix_SKUAA_ST_gc0339_default_video.so
-vendor/lib/libchromatix_SKUAA_ST_gc0339_preview.so
-vendor/lib/libchromatix_skuab_shinetech_gc0339_common.so
-vendor/lib/libchromatix_skuab_shinetech_gc0339_default_video.so
-vendor/lib/libchromatix_skuab_shinetech_gc0339_liveshot.so
-vendor/lib/libchromatix_skuab_shinetech_gc0339_preview.so
-vendor/lib/libchromatix_skuab_shinetech_gc0339_snapshot.so
-vendor/lib/libchromatix_skuab_shinetech_gc0339_zsl.so
-vendor/lib/libchromatix_SKUAB_ST_s5k4e1_common.so
-vendor/lib/libchromatix_SKUAB_ST_s5k4e1_default_video.so
-vendor/lib/libchromatix_SKUAB_ST_s5k4e1_hfr_120fps.so
-vendor/lib/libchromatix_SKUAB_ST_s5k4e1_hfr_60fps.so
-vendor/lib/libchromatix_SKUAB_ST_s5k4e1_hfr_90fps.so
-vendor/lib/libchromatix_SKUAB_ST_s5k4e1_liveshot.so
-vendor/lib/libchromatix_SKUAB_ST_s5k4e1_preview.so
-vendor/lib/libchromatix_SKUAB_ST_s5k4e1_snapshot.so
-vendor/lib/libchromatix_SKUAB_ST_s5k4e1_video_hd.so
-vendor/lib/libchromatix_SKUAB_ST_s5k4e1_zsl.so
-vendor/lib/libchromatix_skuf_ov12830_p12v01c_common.so
-vendor/lib/libchromatix_skuf_ov12830_p12v01c_default_video.so
-vendor/lib/libchromatix_skuf_ov12830_p12v01c_hfr_120fps.so
-vendor/lib/libchromatix_skuf_ov12830_p12v01c_hfr_60fps.so
-vendor/lib/libchromatix_skuf_ov12830_p12v01c_hfr_90fps.so
-vendor/lib/libchromatix_skuf_ov12830_p12v01c_preview.so
-vendor/lib/libchromatix_skuf_ov12830_p12v01c_snapshot.so
-vendor/lib/libchromatix_skuf_ov12830_p12v01c_video_hd.so
-vendor/lib/libchromatix_skuf_ov12830_p12v01c_zsl.so
-vendor/lib/libchromatix_skuf_ov5648_p5v23c_common.so
-vendor/lib/libchromatix_skuf_ov5648_p5v23c_default_video.so
-vendor/lib/libchromatix_skuf_ov5648_p5v23c_preview.so
-vendor/lib/libchromatix_skuf_ov5648_p5v23c_snapshot.so
-vendor/lib/libfastcvopt.so
 vendor/lib/libhtccamera.so
 vendor/lib/libmmcamera2_c2d_module.so
 vendor/lib/libmmcamera2_cpp_module.so
@@ -121,23 +75,10 @@ vendor/lib/libmmcamera_hdr_gb_lib.so
 vendor/lib/libmmcamera_hdr_lib.so
 vendor/lib/libmmcamera_imglib.so
 vendor/lib/libmmcamera_interface.so
-vendor/lib/libmmcamera_ofilm_oty5f03_eeprom.so
 vendor/lib/libmmcamera_ov13850.so
-vendor/lib/libmmcamera_ov5648_oty5f03.so
-vendor/lib/libmmcamera_ov8865_q8v18a.so
 vendor/lib/libmmcamera_s5k5e_onelane.so
-vendor/lib/libmmcamera_SKUAA_ST_gc0339.so
-vendor/lib/libmmcamera_skuab_shinetech_gc0339.so
-vendor/lib/libmmcamera_SKUAB_ST_s5k4e1.so
-vendor/lib/libmmcamera_skuf_ov12830_p12v01c.so
-vendor/lib/libmmcamera_skuf_ov5648_p5v23c.so
-vendor/lib/libmmcamera_sp1628.so
-vendor/lib/libmmcamera_sunny_p12v01m_eeprom.so
-vendor/lib/libmmcamera_sunny_p5v23c_eeprom.so
-vendor/lib/libmmcamera_sunny_q8v18a_eeprom.so
 vendor/lib/libmmcamera_tintless_algo.so
 vendor/lib/libmmcamera_tintless_bg_pca_algo.so
-vendor/lib/libmmcamera_truly_cm7700_eeprom.so
 vendor/lib/libmmcamera_tuning.so
 vendor/lib/libmmcamera_wavelet_lib.so
 vendor/lib/libmmipl.so
@@ -198,6 +139,7 @@ vendor/lib/egl/libq3dtools_adreno.so
 vendor/lib/libadreno_utils.so
 vendor/lib/libC2D2.so
 vendor/lib/libc2d30-a3xx.so
+vendor/lib/libc2d30-a4xx.so
 vendor/lib/libc2d30.so
 vendor/lib/libCB.so
 vendor/lib/libgsl.so
@@ -234,7 +176,6 @@ vendor/lib/libqomx_jpegenc.so
 vendor/firmware/libpn547_fw.so
 
 # Power
-bin/charging
 bin/mpdecision
 bin/thermal-engine
 vendor/lib/libthermalclient.so
@@ -257,6 +198,7 @@ blobs/gsm/vendor/lib/libqmi_common_so.so
 blobs/gsm/vendor/lib/libqmi_csi.so
 blobs/gsm/vendor/lib/libqmi_encdec.so
 blobs/gsm/vendor/lib/libqmiservices.so
+blobs/gsm/vendor/lib/libqmiservices_ext.so
 blobs/gsm/vendor/lib/libqmi.so
 blobs/chl/bin/qmuxd
 blobs/chl/vendor/lib/libdiag.so
@@ -273,14 +215,12 @@ blobs/chl/vendor/lib/libqmi_common_so.so
 blobs/chl/vendor/lib/libqmi_csi.so
 blobs/chl/vendor/lib/libqmi_csvt_srvc.so
 blobs/chl/vendor/lib/libqmi_encdec.so
+blobs/chl/vendor/lib/libqmiservices_ext.so
 blobs/chl/vendor/lib/libqmiservices.so
 blobs/chl/vendor/lib/libqmi.so
 
 # Radio
 blobs/gsm/bin/netmgrd
-blobs/gsm/bin/rild
-blobs/gsm/lib/libril.so
-blobs/gsm/lib/libhtc_rilhook.so
 blobs/gsm/vendor/lib/libnetmgr.so
 blobs/gsm/vendor/lib/libril-qc-qmi-1.so
 blobs/gsm/vendor/lib/libril-qcril-hook-oem.so

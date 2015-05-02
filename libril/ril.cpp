@@ -4702,6 +4702,10 @@ void RIL_onUnsolicitedResponse(int unsolResponse, void *data,
 #endif
         switch (unsolResponse) {
           case RIL_UNSOL_ENTER_LPM: unsolResponseIndex = htc_base + 0; break;
+          case RIL_UNSOL_CDMA_3G_INDICATOR_M7:
+            // remap to RIL_UNSOL_CDMA_3G_INDICATOR
+            RLOGD("m7 supported unsolicited response code %d", unsolResponse);
+            unsolResponse = RIL_UNSOL_CDMA_3G_INDICATOR;
           case RIL_UNSOL_CDMA_3G_INDICATOR: unsolResponseIndex = htc_base + 1; break;
           case RIL_UNSOL_CDMA_ENHANCE_ROAMING_INDICATOR: unsolResponseIndex = htc_base + 2; break;
           case RIL_UNSOL_CDMA_NETWORK_BASE_PLUSCODE_DIAL: unsolResponseIndex = htc_base + 3; break;
@@ -5104,6 +5108,7 @@ requestToString(int request) {
         case RIL_UNSOL_ON_SS: return "UNSOL_ON_SS";
         case RIL_UNSOL_STK_CC_ALPHA_NOTIFY: return "UNSOL_STK_CC_ALPHA_NOTIFY";
         case RIL_UNSOL_ENTER_LPM: return "UNSOL_ENTER_LPM";
+        case RIL_UNSOL_CDMA_3G_INDICATOR_M7:
         case RIL_UNSOL_CDMA_3G_INDICATOR: return "UNSOL_CDMA_3G_INDICATOR";
         case RIL_UNSOL_CDMA_ENHANCE_ROAMING_INDICATOR: return "UNSOL_CDMA_ENHANCE_ROAMING_INDICATOR";
         case RIL_UNSOL_CDMA_NETWORK_BASE_PLUSCODE_DIAL: return "UNSOL_CDMA_NETWORK_BASE_PLUSCODE_DIAL";

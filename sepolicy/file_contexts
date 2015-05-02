@@ -13,9 +13,6 @@
 /dev/cm3602			u:object_r:sensors_device:s0
 /dev/lightsensor		u:object_r:sensors_device:s0
 
-/dev/socket/rild1		u:object_r:rild_socket:s0
-/dev/socket/rild-debug1		u:object_r:rild_debug_socket:s0
-
 /dev/tfa9887			u:object_r:audio_device:s0
 /dev/tfa9887l			u:object_r:audio_device:s0
 

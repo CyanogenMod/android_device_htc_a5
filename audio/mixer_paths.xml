@@ -14,8 +14,8 @@
      <ctl name="TTY Mode" value="Off" />
      <ctl name="LINEOUT1 Volume" value="0" />
      <ctl name="LINEOUT2 Volume" value="0" />
-     <ctl name="HPHL Volume" value="14" />
-     <ctl name="HPHR Volume" value="14" />
+     <ctl name="HPHL Volume" value="20" />
+     <ctl name="HPHR Volume" value="20" />
      <ctl name="RX1 Digital Volume" value="0" />
      <ctl name="RX2 Digital Volume" value="0" />
      <ctl name="RX3 Digital Volume" value="0" />
@@ -747,16 +747,16 @@
      <!-- HPOUT = -1.5 dB, DEC = 0 dB -->
      <path name="headphones">
           <path name="headphones-generic" />
-          <ctl name="HPHL Volume" value="12" />
-          <ctl name="HPHR Volume" value="12" />
+          <ctl name="HPHL Volume" value="18" />
+          <ctl name="HPHR Volume" value="18" />
           <ctl name="RX1 Digital Volume" value="83" />
           <ctl name="RX2 Digital Volume" value="83" />
      </path>
 
      <path name="headphones-srs">
           <path name="headphones-generic" />
-          <ctl name="HPHL Volume" value="14" />
-          <ctl name="HPHR Volume" value="14" />
+          <ctl name="HPHL Volume" value="20" />
+          <ctl name="HPHR Volume" value="20" />
           <ctl name="RX1 Digital Volume" value="84" />
           <ctl name="RX2 Digital Volume" value="84" />
      </path>
@@ -764,8 +764,8 @@
      <!-- HPOUT = 0 dB, DEC = 0 dB -->
      <path name="headphones-voice">
           <path name="headphones-voice-generic" />
-          <ctl name="HPHL Volume" value="14" />
-          <ctl name="HPHR Volume" value="14" />
+          <ctl name="HPHL Volume" value="20" />
+          <ctl name="HPHR Volume" value="20" />
           <ctl name="RX1 Digital Volume" value="84" />
           <ctl name="RX2 Digital Volume" value="84" />
      </path>
@@ -773,8 +773,8 @@
      <!-- HPOUT = -13.5 dB, DEC = 0 dB -->
      <path name="headphones-fm">
           <path name="headphones-generic" />
-          <ctl name="HPHL Volume" value="5" />
-          <ctl name="HPHR Volume" value="5" />
+          <ctl name="HPHL Volume" value="11" />
+          <ctl name="HPHR Volume" value="11" />
           <ctl name="RX1 Digital Volume" value="84" />
           <ctl name="RX2 Digital Volume" value="84" />
      </path>
@@ -782,8 +782,8 @@
      <!-- HPOUT = 0 dB, DEC = 0 dB -->
      <path name="headphones-hw-voip">
           <path name="headphones-generic" />
-          <ctl name="HPHL Volume" value="14" />
-          <ctl name="HPHR Volume" value="14" />
+          <ctl name="HPHL Volume" value="20" />
+          <ctl name="HPHR Volume" value="20" />
           <ctl name="RX1 Digital Volume" value="84" />
           <ctl name="RX2 Digital Volume" value="84" />
      </path>
@@ -801,8 +801,8 @@
           <path name="earpiece-generic" />
           <ctl name="RX3 Digital Volume" value="83" />
           <ctl name="RX4 Digital Volume" value="83" />
-          <ctl name="LINEOUT1 Volume" value="10" />
-          <ctl name="LINEOUT2 Volume" value="10" />
+          <ctl name="LINEOUT1 Volume" value="16" />
+          <ctl name="LINEOUT2 Volume" value="16" />
      </path>
 
      <!-- LINEOUT = -6 dB, DEC = -1 dB -->
@@ -819,8 +819,8 @@
           <path name="earpiece-generic" />
           <ctl name="RX3 Digital Volume" value="83" />
           <ctl name="RX4 Digital Volume" value="83" />
-          <ctl name="LINEOUT1 Volume" value="10" />
-          <ctl name="LINEOUT2 Volume" value="10" />
+          <ctl name="LINEOUT1 Volume" value="16" />
+          <ctl name="LINEOUT2 Volume" value="16" />
      </path>
 
      <!-- LINEOUT = -6 dB, DEC = -1 dB -->
@@ -828,8 +828,8 @@
           <path name="earpiece-generic" />
           <ctl name="RX3 Digital Volume" value="83" />
           <ctl name="RX4 Digital Volume" value="83" />
-          <ctl name="LINEOUT1 Volume" value="10" />
-          <ctl name="LINEOUT2 Volume" value="10" />
+          <ctl name="LINEOUT1 Volume" value="12" />
+          <ctl name="LINEOUT2 Volume" value="12" />
      </path>
 
      <path name="headset-mic-generic">
@@ -889,8 +889,8 @@
      <path name="speaker-headset">
           <path name="headphones-generic" />
           <path name="speaker" />
-          <ctl name="HPHL Volume" value="11" />
-          <ctl name="HPHR Volume" value="11" />
+          <ctl name="HPHL Volume" value="17" />
+          <ctl name="HPHR Volume" value="17" />
           <ctl name="RX1 Digital Volume" value="84" />
           <ctl name="RX2 Digital Volume" value="84" />
      </path>
@@ -911,8 +911,8 @@
      <path name="voice-tty-full-headphones">
           <ctl name="TTY Mode" value="FULL" />
           <path name="headphones-voice-generic" />
-          <ctl name="HPHL Volume" value="14" />
-          <ctl name="HPHR Volume" value="14" />
+          <ctl name="HPHL Volume" value="20" />
+          <ctl name="HPHR Volume" value="20" />
           <ctl name="RX1 Digital Volume" value="84" />
           <ctl name="RX2 Digital Volume" value="84" />
      </path>
@@ -921,8 +921,8 @@
      <path name="voice-tty-vco-headphones">
           <ctl name="TTY Mode" value="VCO" />
           <path name="headphones-voice-generic" />
-          <ctl name="HPHL Volume" value="14" />
-          <ctl name="HPHR Volume" value="14" />
+          <ctl name="HPHL Volume" value="20" />
+          <ctl name="HPHR Volume" value="20" />
           <ctl name="RX1 Digital Volume" value="84" />
           <ctl name="RX2 Digital Volume" value="84" />
      </path>
@@ -993,7 +993,7 @@
      </path>
 
      <path name="handset">
-          <path name="earpiece" />
+          <path name="earpiece-voice" />
      </path>
 
      <path name="handset-mic">
@@ -1019,7 +1019,7 @@
      </path>
 
      <path name="voice-handset-tmus">
-          <path name="earpiece-voice" />
+          <path name="handset" />
      </path>
 
      <path name="voice-speaker">
@@ -1085,8 +1085,8 @@
           <path name="anc" />
           <path name="headphones" />
           <ctl name="COMP1 Switch" value="0" />
-          <ctl name="HPHL Volume" value="8" />
-          <ctl name="HPHR Volume" value="8" />
+          <ctl name="HPHL Volume" value="14" />
+          <ctl name="HPHR Volume" value="14" />
      </path>
 
      <path name="speaker-and-anc-headphones">

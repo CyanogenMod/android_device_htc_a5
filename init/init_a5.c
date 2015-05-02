@@ -39,7 +39,6 @@ void dualsim_properties(char multisim_config[])
     property_set("persist.radio.multisim.config", multisim_config);
     property_set("persist.radio.dont_use_dsd", "true");
     property_set("ro.telephony.ril_class", "A5RIL");
-    property_set("ro.telephony.ril.config", "signalstrength");
 }
 
 void gsm_properties(char default_network[])
@@ -64,7 +63,7 @@ void cdma_properties(char default_cdma_sub[], char default_network[],
     property_set("gsm.operator.numeric", operator_numeric);
     property_set("ro.cdma.home.operator.alpha", operator_alpha);
     property_set("gsm.sim.operator.alpha", operator_alpha);
-    property_set("gsm.operator.alpha", operator_numeric);
+    property_set("gsm.operator.alpha", operator_alpha);
 
     property_set("telephony.lteOnCdmaDevice", "1");
     property_set("ro.ril.svdo", "true");
@@ -108,13 +107,12 @@ void vendor_load_properties()
         property_set("ro.ril.set.mtusize", "1420");
     } else if (strstr(bootmid, "0P9C30000")) {
         /* a5chl */
-        cdma_properties("1", "8", "310120", "Sprint");
-        property_set("ro.build.fingerprint", "htc/sprint_wwe_vm/htc_a5chl:4.4.2/KOT49H/338737.1:user/release-keys");
-        property_set("ro.build.description", "1.13.652.1 CL338737 release-keys");
+        cdma_properties("1", "8", "311490", "Virgin Mobile US");
+        property_set("ro.build.fingerprint", "htc/sprint_wwe_vm/htc_a5chl:5.0.2/LRX22G/510432.2:user/release-keys");
+        property_set("ro.build.description", "2.33.652.2 CL510432 release-keys");
         property_set("ro.product.model", "710C");
         property_set("ro.product.device", "a5chl");
         property_set("ro.build.product", "a5chl");
-        property_set("telephony.sms.pseudo_multipart", "1");
         property_set("ro.ril.oem.ecclist", "911");
         property_set("ro.ril.set.mtusize", "1422");
     } else if (strstr(bootmid, "0P9C50000")) {
@@ -149,9 +147,8 @@ void vendor_load_properties()
         dualsim_properties("dsda");
         property_set("ro.product.device", "a5dug");
         property_set("ro.build.product", "a5dug");
-        property_set("persist.radio.relay_oprt_change", "1");
         property_set("ro.ril.hsdpa.category", "24");
-        property_set("ro.ril.disable.cpc", "0");
+        property_set("ro.ril.disable.cpc", "1");
         property_set("ro.ril.enable.sdr", "0");
         if (strstr(carrier, "HTC-Russia")) {
             /* russian */
@@ -161,10 +158,9 @@ void vendor_load_properties()
             property_set("ro.ril.enable.a53", "1");
         } else {
             /* chinese */
-            property_set("ro.build.fingerprint", "htc/htccn_chs_cu/htc_a5dug:4.4.2/KOT49H/377269.2:user/release-keys");
-            property_set("ro.build.description", "1.45.708.1 CL356136 release-keys");
+            property_set("ro.build.fingerprint", "htc/htccn_chs_cu/htc_a5dug:5.0.2/LRX22G/510432.1:user/release-keys");
+            property_set("ro.build.description", "2.34.1402.1 CL510432 release-keyss");
             property_set("ro.product.model", "D816w");
-            property_set("ro.ril.air.enabled", "1");
         }
     } else {
         /* a5ul */
