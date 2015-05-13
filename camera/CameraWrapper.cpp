@@ -34,9 +34,6 @@
 #include <camera/Camera.h>
 #include <camera/CameraParameters.h>
 
-const char KEY_VIDEO_HDR[] = "video-hdr";
-const char KEY_VIDEO_HDR_VALUES[] = "video-hdr-values";
-
 static android::Mutex gCameraWrapperLock;
 static camera_module_t *gVendorModule = 0;
 
@@ -102,8 +99,6 @@ static int check_vendor_module()
 static char *camera_fixup_getparams(int id, const char *settings)
 {
     int rotation = 0;
-    const char *captureMode = "normal";
-    const char *videoHdr = "false";
 
     android::CameraParameters params;
     params.unflatten(android::String8(settings));
@@ -113,16 +108,8 @@ static char *camera_fixup_getparams(int id, const char *settings)
     params.dump();
 #endif
 
-    if (params.get(android::CameraParameters::KEY_CAPTURE_MODE)) {
-        captureMode = params.get(android::CameraParameters::KEY_CAPTURE_MODE);
-    }
-
     if (params.get(android::CameraParameters::KEY_ROTATION)) {
         rotation = atoi(params.get(android::CameraParameters::KEY_ROTATION));
-    }
-
-    if (params.get(KEY_VIDEO_HDR)) {
-        videoHdr = params.get(KEY_VIDEO_HDR);
     }
 
     /* Disable face detection */
@@ -130,17 +117,6 @@ static char *camera_fixup_getparams(int id, const char *settings)
     params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_SW, "0");
     params.set("qc-max-num-requested-faces", "0");
     params.set(android::CameraParameters::KEY_FACE_DETECTION, "off");
-
-    /* Advertise video HDR values */
-    params.set(KEY_VIDEO_HDR_VALUES, "off,on");
-
-    /* Fix video HDR values */
-    if (!strcmp(videoHdr, "true")) {
-        params.set(KEY_VIDEO_HDR, "on");
-    }
-    if (!strcmp(videoHdr, "false")) {
-        params.set(KEY_VIDEO_HDR, "off");
-    }
 
     params.set("preview-frame-rate-mode", "frame-rate-fixed");
 
@@ -159,12 +135,6 @@ static char *camera_fixup_getparams(int id, const char *settings)
             break;
     }
 
-    /* Set HDR mode */
-    if (!strcmp(captureMode, "hdr")) {
-        params.set(android::CameraParameters::KEY_SCENE_MODE,
-                android::CameraParameters::SCENE_MODE_HDR);
-    }
-
 #ifdef LOG_PARAMETERS
     ALOGV("%s: fixed parameters:", __FUNCTION__);
     params.dump();
@@ -179,8 +149,6 @@ static char *camera_fixup_getparams(int id, const char *settings)
 static char *camera_fixup_setparams(int id, const char *settings)
 {
     bool isVideo = false;
-    const char *sceneMode = "auto";
-    const char *videoHdr = "false";
 
     android::CameraParameters params;
     params.unflatten(android::String8(settings));
@@ -192,14 +160,6 @@ static char *camera_fixup_setparams(int id, const char *settings)
 
     if (params.get(android::CameraParameters::KEY_RECORDING_HINT)) {
         isVideo = !strcmp(params.get(android::CameraParameters::KEY_RECORDING_HINT), "true");
-    }
-
-    if (params.get(android::CameraParameters::KEY_SCENE_MODE)) {
-        sceneMode = params.get(android::CameraParameters::KEY_SCENE_MODE);
-    }
-
-    if (params.get(KEY_VIDEO_HDR)) {
-        videoHdr = params.get(KEY_VIDEO_HDR);
     }
 
     /* Disable face detection */
@@ -216,16 +176,6 @@ static char *camera_fixup_setparams(int id, const char *settings)
         params.set(android::CameraParameters::KEY_CONTIBURST_TYPE, "unlimited");
         params.set(android::CameraParameters::KEY_OIS_SUPPORT, "false");
         params.set(android::CameraParameters::KEY_OIS_MODE, "off");
-
-        /* Enable HDR */
-        if (!strcmp(sceneMode, android::CameraParameters::SCENE_MODE_HDR)) {
-            params.set(android::CameraParameters::KEY_SCENE_MODE, "off");
-            params.set(android::CameraParameters::KEY_CAPTURE_MODE, "hdr");
-        } else {
-            params.set(android::CameraParameters::KEY_CAPTURE_MODE, "normal");
-            params.set(android::CameraParameters::KEY_ZSL, "on");
-            params.set(android::CameraParameters::KEY_CAMERA_MODE, "1");
-        }
     }
 
     if (isVideo && id == 1) {
