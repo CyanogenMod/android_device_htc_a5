@@ -28,7 +28,6 @@
 #include <msm8974/platform.h>
 
 #include "tfa9887.h"
-#include "rt5501.h"
 
 #define UNUSED __attribute__((unused))
 
@@ -48,23 +47,6 @@ static int amp_set_mode(amplifier_device_t *device, audio_mode_t mode)
     dev->current_mode = mode;
 
     return ret;
-}
-
-static int amp_set_output_devices(amplifier_device_t *device, uint32_t devices)
-{
-    m8_device_t *dev = (m8_device_t *) device;
-
-    dev->current_output_devices = devices;
-
-    switch (dev->current_output_devices) {
-        case SND_DEVICE_OUT_HEADPHONES:
-        case SND_DEVICE_OUT_VOICE_HEADPHONES:
-        case SND_DEVICE_OUT_VOIP_HEADPHONES:
-        case SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES:
-            rt5501_set_mode(dev->current_mode);
-            break;
-    }
-    return 0;
 }
 
 static int amp_output_stream_start(amplifier_device_t *device,
@@ -120,7 +102,7 @@ static int amp_module_open(const hw_module_t *module, UNUSED const char *name,
     m8_dev->amp_dev.common.close = amp_dev_close;
 
     m8_dev->amp_dev.set_input_devices = NULL;
-    m8_dev->amp_dev.set_output_devices = amp_set_output_devices;
+    m8_dev->amp_dev.set_output_devices = NULL;
     m8_dev->amp_dev.set_mode = amp_set_mode;
     m8_dev->amp_dev.output_stream_start = amp_output_stream_start;
     m8_dev->amp_dev.input_stream_start = NULL;
